@@ -1,0 +1,3 @@
+export default function Documents() {
+  return <section className="document-page"><p className="section-label">Document library</p><h1>Every answer starts here.</h1><p className="lede">A home for your source material, with page references that stay attached to the evidence.</p><div className="empty-state"><h2>Your library is taking shape</h2><p>Upload and sample papers will be available after the document ingestion phase. This preview establishes the workspace and its connection to the research service.</p><span className="availability">PDF upload available in Phase 1</span></div></section>;
+}
