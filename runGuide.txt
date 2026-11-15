@@ -1,0 +1,27 @@
+-- DATABASE AND BACKEND
+
+cd "C:\MOHSIN\LLM projects\New folder"
+
+if (-not (Test-Path .env)) {
+    Copy-Item .env.example .env
+}
+
+docker compose up -d --wait db
+
+cd apps/api
+uv sync --frozen
+uv run alembic upgrade head
+uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000 --no-access-log
+
+
+-- FRONTEND
+
+cd "C:\MOHSIN\LLM projects\New folder\apps\web"
+npm ci
+npm run dev
+
+
+
+App: http://localhost:3000
+API documentation: http://127.0.0.1:8000/docs
+Readiness check: http://127.0.0.1:8000/api/v1/health
