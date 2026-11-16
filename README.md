@@ -2,7 +2,7 @@
 
 A research workspace for evidence-grounded answers across PDFs. Implementation follows the supplied v2.0 guide, one acceptance gate at a time.
 
-Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. PDF ingestion, embeddings, retrieval, generation, agent workflows, and cloud deployment belong to later phases and are not implemented yet.
+Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. All six Phase 1 implementation steps now provide internal validation, text-density detection, Markdown extraction, boundary normalization, traceable chunking, and database-backed restart recovery. The representative-corpus Phase 1 acceptance benchmark is pending. The upload API, embeddings/indexing, retrieval, generation, agent workflows, and cloud deployment are later work.
 
 ## Requirements
 
@@ -44,6 +44,34 @@ The backend reads the root `.env` regardless of working directory. The frontend 
 `EMBEDDING_PROVIDER`, `EMBEDDING_MODEL`, `LLM_PROVIDER`, and `DATABASE_URL` are required. Local provider settings do not load models in Phase 0. Hosted providers require their server-side keys and model configuration. Production settings enforce hosted inference and API embeddings. Public frontend configuration contains only the API base URL.
 
 ## Verify the foundation
+
+To try the PDF validator from `apps/api`, run:
+
+```powershell
+uv run python -m app.services.ingestion.cli 'C:\path\to\paper.pdf'
+```
+
+The command checks the PDF filename, MIME declaration, signature, actual size, structure, encryption, and page count. It returns JSON and deletes its UUID-named temporary copy. See the [Phase 1 step 1 guide](<docs/phases guide/phase-1/phase-1-step-1-pdf-validation.md>) for the service interface, error codes, and focused tests.
+
+To extract page-by-page Markdown, add `--extract`. Optionally save the result to a new UTF-8 JSON file:
+
+```powershell
+uv run python -m app.services.ingestion.cli 'C:\path\to\paper.pdf' --extract --output '.\pages.json'
+```
+
+The pipeline validates first, preserves page numbers and Markdown tables, and deletes its temporary PDF. Existing output files are not overwritten. See the [Phase 1 step 2 guide](<docs/phases guide/phase-1/phase-1-step-2-layout-aware-extraction.md>) for geometric layout mode, shaded-text handling, results, and tests.
+
+Extraction first checks text density: fewer than 50 readable characters makes a page low-text, and more than 80% low-text pages produces `status: "failed"` with `OCR_NOT_SUPPORTED`. Accepted results include a per-page density report. Optional settings are `MIN_TEXT_CHARS_PER_PAGE` and `MAX_LOW_TEXT_PAGE_PERCENT`. See the [Phase 1 step 3 guide](<docs/phases guide/phase-1/phase-1-step-3-scanned-pdf-detection.md>) for boundaries, early abort, mixed PDFs, and the failure contract.
+
+To normalize repeated page-boundary text and generate traceable chunks, use `--prepare`:
+
+```powershell
+uv run python -m app.services.ingestion.cli 'C:\path\to\paper.pdf' --prepare --output '.\prepared.json'
+```
+
+Preparation retains original Markdown, adds normalized-to-source mappings, and targets 600-800 real tokens with up to 100-token overlap. Tables and fenced code stay whole; short page tails and oversized atomic blocks are documented exceptions. The tokenizer vocabulary is bundled for offline use. Settings are `CHUNK_MIN_TOKENS`, `CHUNK_MAX_TOKENS`, and `CHUNK_OVERLAP_TOKENS`. See the [normalization](<docs/phases guide/phase-1/phase-1-step-4-deterministic-normalization.md>) and [chunking](<docs/phases guide/phase-1/phase-1-step-5-markdown-aware-chunking.md>) guides.
+
+Migration `0002_documents` adds persistent ingestion status. After applying migrations, API startup marks queued/processing records last updated more than five minutes ago as failed with `INTERRUPTED_BY_RESTART`, once per process. See the [recovery guide](<docs/phases guide/phase-1/phase-1-step-6-crash-safe-recovery.md>). The local CLI does not enqueue or persist jobs/chunks.
 
 From `apps/api`:
 
@@ -105,6 +133,6 @@ Placeholder directories preserve the guide's structure without pretending later-
 
 Stop terminal servers with Ctrl+C. `docker compose stop` stops the project database without deleting data; `docker compose up -d --wait db` starts it again. The database uses `restart: unless-stopped` so Docker can restart it after an unexpected exit or a Docker restart; an explicitly stopped container stays stopped until started again. If readiness reports `db: "unavailable"`, check `docker compose ps -a` and start the database before retrying. Do not remove the named volume unless you intend to erase this project's database. For the API image, build with `docker build -t research-api apps/api`, then run migrations and the API with your environment supplied externally. Never bake `.env` into an image.
 
-See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The next implementation gate is Phase 1: layout-aware PDF ingestion.
+See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). Next is the Phase 1 representative-corpus acceptance benchmark before advancing to Phase 2 embeddings and indexing.
 
-For the Phase 0 changes, detailed file structure, startup flow, and component responsibilities, read the [Phase 0 project foundation guide](<docs/phases guide/phase-0-project-foundation.md>).
+For the Phase 0 changes, detailed file structure, startup flow, and component responsibilities, read the [Phase 0 project foundation guide](<docs/phases guide/phase-0/phase-0-project-foundation.md>).

@@ -2,7 +2,7 @@
 name = "research-assistant-api"
 version = "0.1.0"
 description = "Agentic Research & Knowledge Assistant API"
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.12,<3.14"
 dependencies = [
   "fastapi>=0.115,<1",
   "uvicorn>=0.34,<1",
@@ -10,26 +10,33 @@ dependencies = [
   "sqlalchemy[asyncio]>=2.0,<2.1",
   "asyncpg>=0.30,<1",
   "alembic>=1.15,<2",
+  "pypdf>=6,<8",
+  "pymupdf4llm>=2.1,<3",
+  "tiktoken>=0.12,<1",
 ]
 
 [dependency-groups]
 dev = ["httpx>=0.28,<1", "pytest>=8,<10", "ruff>=0.11,<1", "mypy>=1.15,<2"]
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "ASYNC"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 strict = true
 plugins = ["pydantic.mypy"]
 files = ["app", "migrations"]
 
 [[tool.mypy.overrides]]
 module = "asyncpg.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pymupdf4llm.*"
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

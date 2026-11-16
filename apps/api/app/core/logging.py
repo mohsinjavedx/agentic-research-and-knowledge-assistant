@@ -16,7 +16,14 @@ class JsonFormatter(logging.Formatter):
             "request_id": request_id_context.get(),
         }
         # Explicit allowlist prevents accidental serialization of credentials or exception text.
-        for key in ("method", "endpoint", "status_code", "latency_ms", "error_code"):
+        for key in (
+            "method",
+            "endpoint",
+            "status_code",
+            "latency_ms",
+            "error_code",
+            "recovered_documents",
+        ):
             if hasattr(record, key):
                 payload[key] = getattr(record, key)
         return json.dumps(payload)

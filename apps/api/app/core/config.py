@@ -31,6 +31,11 @@ class Settings(BaseSettings):
     session_ttl_hours: int = Field(default=24, ge=1, le=24)
     max_upload_mb: int = Field(default=20, ge=1, le=20)
     max_pdf_pages: int = Field(default=100, ge=1, le=100)
+    min_text_chars_per_page: int = Field(default=50, ge=1, le=10000)
+    max_low_text_page_percent: int = Field(default=80, ge=0, le=99)
+    chunk_min_tokens: int = Field(default=600, ge=1, le=8000)
+    chunk_max_tokens: int = Field(default=800, ge=1, le=8000)
+    chunk_overlap_tokens: int = Field(default=100, ge=0, le=7999)
     rate_limit_chat_per_minute: int = Field(default=5, ge=1)
     rate_limit_research_per_10min: int = Field(default=2, ge=1)
     max_agent_iterations: int = Field(default=4, ge=1, le=4)
@@ -75,6 +80,8 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def provider_configuration(self) -> "Settings":
+        if not self.chunk_overlap_tokens < self.chunk_min_tokens <= self.chunk_max_tokens:
+            raise ValueError("chunk budgets require overlap < minimum <= maximum")
         if self.embedding_provider == "api" and not self.embedding_api_key.get_secret_value():
             raise ValueError("EMBEDDING_API_KEY is required for the API embedding provider")
         if self.llm_provider == "hosted" and (
