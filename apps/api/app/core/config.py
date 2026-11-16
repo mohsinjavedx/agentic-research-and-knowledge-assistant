@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     embedding_model: str = Field(min_length=1)
     embedding_dim: int = Field(default=384, ge=384, le=384)
     embedding_api_key: SecretStr = SecretStr("")
+    embedding_api_url: str = ""
+    embedding_batch_size: int = Field(default=8, ge=1, le=64)
+    embedding_timeout_seconds: float = Field(default=30, gt=0, le=120)
     llm_provider: Literal["local", "hosted"]
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "llama3.2:3b"
@@ -84,6 +87,21 @@ class Settings(BaseSettings):
             raise ValueError("chunk budgets require overlap < minimum <= maximum")
         if self.embedding_provider == "api" and not self.embedding_api_key.get_secret_value():
             raise ValueError("EMBEDDING_API_KEY is required for the API embedding provider")
+        if self.embedding_provider == "api":
+            endpoint = urlsplit(self.embedding_api_url)
+            if (
+                endpoint.scheme not in {"https", "http"}
+                or not endpoint.hostname
+                or endpoint.username
+                or endpoint.password
+                or endpoint.query
+                or endpoint.fragment
+            ):
+                raise ValueError(
+                    "EMBEDDING_API_URL must be an HTTP(S) endpoint without credentials"
+                )
+            if self.app_env == "production" and endpoint.scheme != "https":
+                raise ValueError("production embedding API requires HTTPS")
         if self.llm_provider == "hosted" and (
             not self.hosted_llm_api_key.get_secret_value() or not self.hosted_llm_model.strip()
         ):
