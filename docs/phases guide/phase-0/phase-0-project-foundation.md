@@ -121,7 +121,10 @@ New folder/
     |-- threat-model.md
     `-- phases guide/
         |-- README.md
-        `-- phase-0-project-foundation.md
+        |-- phase-0/
+        |   |-- README.md
+        |   `-- phase-0-project-foundation.md
+        `-- phase-1/                     # Later-phase guides
 ```
 
 The supplied implementation-guide PDF also remains in the repository root. The local root `.env`, `apps/api/.venv`, `apps/web/node_modules`, and `apps/web/.next` are ignored by Git. `.gitkeep` files preserve otherwise empty directories; they do not implement a service.
@@ -132,34 +135,34 @@ The supplied implementation-guide PDF also remains in the repository root. The l
 
 | File | Responsibility |
 | --- | --- |
-| [app/main.py](../../apps/api/app/main.py) | Defines `create_app()`, creates the exported `app`, attaches settings and database state, installs middleware, and registers routes. |
-| [core/config.py](../../apps/api/app/core/config.py) | Reads the root `.env`, validates settings, masks secrets, and reports invalid field names safely. |
-| [core/logging.py](../../apps/api/app/core/logging.py) | Formats application events as JSON and stores the current request ID in a `ContextVar`. |
-| [core/middleware.py](../../apps/api/app/core/middleware.py) | Preserves or creates a UUID, adds `X-Request-ID`, measures latency, and produces generic responses for unhandled errors before a response has started. |
-| [api/v1/health.py](../../apps/api/app/api/v1/health.py) | Defines the readiness response model and the two health endpoints. |
-| [db/session.py](../../apps/api/app/db/session.py) | Owns the async engine, session factory, connection checks, and engine disposal. |
-| [db/base.py](../../apps/api/app/db/base.py) | Provides the shared SQLAlchemy declarative base; application tables are added in later phases. |
-| [migrations/env.py](../../apps/api/migrations/env.py) | Connects Alembic to the configured database and SQLAlchemy metadata. |
-| [0001_enable_pgvector.py](../../apps/api/migrations/versions/0001_enable_pgvector.py) | Runs `CREATE EXTENSION IF NOT EXISTS vector` and records migration revision `0001_pgvector`. |
-| [pyproject.toml](../../apps/api/pyproject.toml) | Declares dependencies and configures Ruff, mypy, and pytest. |
-| [uv.lock](../../apps/api/uv.lock) | Records resolved Python dependencies for frozen installation. |
-| [Dockerfile](../../apps/api/Dockerfile) | Builds a Python 3.12 API image with runtime dependencies and a non-root runtime user. |
+| [app/main.py](../../../apps/api/app/main.py) | Defines `create_app()`, creates the exported `app`, attaches settings and database state, installs middleware, and registers routes. |
+| [core/config.py](../../../apps/api/app/core/config.py) | Reads the root `.env`, validates settings, masks secrets, and reports invalid field names safely. |
+| [core/logging.py](../../../apps/api/app/core/logging.py) | Formats application events as JSON and stores the current request ID in a `ContextVar`. |
+| [core/middleware.py](../../../apps/api/app/core/middleware.py) | Preserves or creates a UUID, adds `X-Request-ID`, measures latency, and produces generic responses for unhandled errors before a response has started. |
+| [api/v1/health.py](../../../apps/api/app/api/v1/health.py) | Defines the readiness response model and the two health endpoints. |
+| [db/session.py](../../../apps/api/app/db/session.py) | Owns the async engine, session factory, connection checks, and engine disposal. |
+| [db/base.py](../../../apps/api/app/db/base.py) | Provides the shared SQLAlchemy declarative base; application tables are added in later phases. |
+| [migrations/env.py](../../../apps/api/migrations/env.py) | Connects Alembic to the configured database and SQLAlchemy metadata. |
+| [0001_enable_pgvector.py](../../../apps/api/migrations/versions/0001_enable_pgvector.py) | Runs `CREATE EXTENSION IF NOT EXISTS vector` and records migration revision `0001_pgvector`. |
+| [pyproject.toml](../../../apps/api/pyproject.toml) | Declares dependencies and configures Ruff, mypy, and pytest. |
+| [uv.lock](../../../apps/api/uv.lock) | Records resolved Python dependencies for frozen installation. |
+| [Dockerfile](../../../apps/api/Dockerfile) | Builds a Python 3.12 API image with runtime dependencies and a non-root runtime user. |
 
 ### Frontend
 
 | File | Responsibility |
 | --- | --- |
-| [app/layout.tsx](../../apps/web/app/layout.tsx) | Provides page metadata, navigation, skip link, shared page container, and footer. |
-| [app/globals.css](../../apps/web/app/globals.css) | Defines the research workspace's colors, typography, layouts, focus styles, and responsive rules. |
-| [app/page.tsx](../../apps/web/app/page.tsx) | Renders the home page with a workspace link and connection panel. |
-| [app/workspace/page.tsx](../../apps/web/app/workspace/page.tsx) | Renders the empty workspace and live connection panel. |
-| [app/documents/page.tsx](../../apps/web/app/documents/page.tsx) | Explains the document library's current empty state. |
-| [app/research/[id]/page.tsx](../../apps/web/app/research/[id]/page.tsx) | Provides a research route shell; it does not load or execute a research job. |
-| [components/service-status.tsx](../../apps/web/components/service-status.tsx) | Fetches readiness on mount, handles a five-second timeout, shows the result, and supports manual retry. |
-| [lib/api.ts](../../apps/web/lib/api.ts) | Defines the `Health` type, resolves the API base URL, and validates the health response at runtime. |
-| [package.json](../../apps/web/package.json) | Defines development, production, lint, and type-check commands and frontend dependencies. |
-| [package-lock.json](../../apps/web/package-lock.json) | Records the dependency tree consumed by `npm ci`. |
-| [next.config.ts](../../apps/web/next.config.ts) | Enables React strict mode, disables the powered-by header, and limits production build workers. |
+| [app/layout.tsx](../../../apps/web/app/layout.tsx) | Provides page metadata, navigation, skip link, shared page container, and footer. |
+| [app/globals.css](../../../apps/web/app/globals.css) | Defines the research workspace's colors, typography, layouts, focus styles, and responsive rules. |
+| [app/page.tsx](../../../apps/web/app/page.tsx) | Renders the home page with a workspace link and connection panel. |
+| [app/workspace/page.tsx](../../../apps/web/app/workspace/page.tsx) | Renders the empty workspace and live connection panel. |
+| [app/documents/page.tsx](../../../apps/web/app/documents/page.tsx) | Explains the document library's current empty state. |
+| [app/research/[id]/page.tsx](../../../apps/web/app/research/[id]/page.tsx) | Provides a research route shell; it does not load or execute a research job. |
+| [components/service-status.tsx](../../../apps/web/components/service-status.tsx) | Fetches readiness on mount, handles a five-second timeout, shows the result, and supports manual retry. |
+| [lib/api.ts](../../../apps/web/lib/api.ts) | Defines the `Health` type, resolves the API base URL, and validates the health response at runtime. |
+| [package.json](../../../apps/web/package.json) | Defines development, production, lint, and type-check commands and frontend dependencies. |
+| [package-lock.json](../../../apps/web/package-lock.json) | Records the dependency tree consumed by `npm ci`. |
+| [next.config.ts](../../../apps/web/next.config.ts) | Enables React strict mode, disables the powered-by header, and limits production build workers. |
 
 ## 4. How the project works
 
@@ -341,9 +344,9 @@ Remove-Item Env:RUN_DB_TESTS
 
 | Test file | Coverage |
 | --- | --- |
-| [test_config.py](../../apps/api/tests/unit/test_config.py) | Valid local/production settings, invalid provider and limit values, missing settings, and sanitized errors. |
-| [test_health.py](../../apps/api/tests/unit/test_health.py) | Readiness, liveness during a database failure, recovery, CORS, request IDs, generic errors, and JSON logs without query secrets. |
-| [test_database.py](../../apps/api/tests/integration/test_database.py) | Ten consecutive readiness requests with a real database, plus actual vector operations through the session factory. |
+| [test_config.py](../../../apps/api/tests/unit/test_config.py) | Valid local/production settings, invalid provider and limit values, missing settings, and sanitized errors. |
+| [test_health.py](../../../apps/api/tests/unit/test_health.py) | Readiness, liveness during a database failure, recovery, CORS, request IDs, generic errors, and JSON logs without query secrets. |
+| [test_database.py](../../../apps/api/tests/integration/test_database.py) | Ten consecutive readiness requests with a real database, plus actual vector operations through the session factory. |
 
 With the API running, execute the live HTTP probe from the repository root:
 
@@ -363,11 +366,11 @@ npm run build
 
 `npm run typecheck` runs `next typegen` before `tsc --noEmit`, generating route declarations even before a production build.
 
-The [GitHub Actions workflow](../../.github/workflows/ci.yml) has two independent jobs. The backend job starts a pgvector PostgreSQL service, installs frozen Python dependencies, runs lint/format/types, applies and checks migrations, and runs tests with database integration enabled. The frontend job installs with `npm ci` and runs lint, types, and build. CI uses database port 5432 on its runner; local Compose uses host port 55432.
+The [GitHub Actions workflow](../../../.github/workflows/ci.yml) has two independent jobs. The backend job starts a pgvector PostgreSQL service, installs frozen Python dependencies, runs lint/format/types, applies and checks migrations, and runs tests with database integration enabled. The frontend job installs with `npm ci` and runs lint, types, and build. CI uses database port 5432 on its runner; local Compose uses host port 55432.
 
 ## 8. Recorded verification results
 
-These results come from the [14 November acceptance report](../evaluation-report.md). This documentation update reviewed the source; it did not rerun the application test suites.
+These results come from the [14 November acceptance report](../../evaluation-report.md). This documentation update reviewed the source; it did not rerun the application test suites.
 
 | Check | Recorded result |
 | --- | --- |
@@ -403,4 +406,4 @@ Phase 0 provides the working shell, database infrastructure, and quality gates. 
 
 The next phase begins with PDF validation, layout-aware extraction, deterministic text normalization, and provenance-preserving chunking. Those features should extend the existing configuration, lifecycle, tests, and migrations as they become real behavior.
 
-Related documents: [project setup](../../README.md), [architecture](../architecture.md), [API contracts](../api-contracts.md), [threat model](../threat-model.md), and [acceptance evidence](../evaluation-report.md).
+Related documents: [project setup](../../../README.md), [architecture](../../architecture.md), [API contracts](../../api-contracts.md), [threat model](../../threat-model.md), and [acceptance evidence](../../evaluation-report.md).

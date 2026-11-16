@@ -26,3 +26,66 @@ Initial installation/build attempts hit host memory pressure. The database image
 The backend suite emits one upstream Starlette deprecation warning for its currently supported HTTPX TestClient compatibility layer. There are no test failures. No LLM inference, corpus retrieval, ingestion accuracy, citation fidelity, agent completion, container RAM target, or deployment result is claimed in Phase 0. Those measurements await their implementation phases.
 
 Phase 0's local gates pass. GitHub execution and browser visual inspection are recorded as verification limits. Phase 1 may begin with PDF validation, layout-aware extraction, and traceable chunking.
+
+## Phase 1, step 1: PDF pre-validation
+
+Verification date: 15 November 2026. Scope: internal validation service and local CLI, before extraction.
+
+| Check | Result |
+| --- | --- |
+| Focused PDF validation and CLI suite | 45 passed. Includes exact 20 MiB and 100-page boundaries, overflow rejection, misleading MIME/signature, unsafe names, encrypted/malformed PDFs, stream handling, and cleanup. |
+| Full backend suite with real PostgreSQL | 65 passed with `RUN_DB_TESTS=1`; existing upstream Starlette/HTTPX deprecation warning only. |
+| Backend lint, format, and strict types | Passed; mypy checked 18 source files. |
+| Real-file CLI smoke | Supplied implementation guide accepted: 413,203 bytes, 17 pages, SHA-256 reported, UUID temporary file deleted. |
+| Documentation | Local links and code fences validated. |
+
+The validator uses `pypdf` for structural inspection and does not extract text. The upload API, layout-aware extraction, scanned-PDF detection, normalization, chunking, and restart recovery remain pending; Phase 1's full acceptance gate has not been reached. See the [step guide](<phases guide/phase-1/phase-1-step-1-pdf-validation.md>).
+
+## Phase 1, step 2: Layout-aware extraction
+
+Verification date: 15 November 2026. Scope: validation followed by internal page-by-page Markdown extraction and local JSON export.
+
+| Check | Result |
+| --- | --- |
+| Full backend suite, real PostgreSQL enabled | 85 passed; existing upstream Starlette/HTTPX warning only. |
+| Focused extraction and CLI checks | 23 cases passed before the final full-suite run, covering columns, tables, shaded code, blank pages, raw text, cleanup, errors, Unicode, and overwrite protection. |
+| Backend lint/format/types | Ruff passed; 30 Python files formatted; strict mypy passed for 21 source files. |
+| Real-file extraction | Guide: 17/17 nonblank pages, 33,946 Markdown characters, 59 Markdown table lines; source page labels and shaded code page checked. |
+| Temporary-file cleanup | Staged PDF deleted after successful extraction and parser failures; image export disabled. |
+
+The final implementation selects geometric layout mode after the default ONNX-backed mode encountered native allocation failure on the development host. Regression tests cover the in-memory removal of decorative text backgrounds outside tables, which corrected a real shaded-code content loss while retaining Markdown table output. No production memory, ten-paper parsing benchmark, or 98% text-retention result is claimed. Scanned-PDF detection and the remaining Phase 1 steps are pending. See the [step guide](<phases guide/phase-1/phase-1-step-2-layout-aware-extraction.md>).
+
+## Phase 1, step 3: Scanned-PDF detection
+
+Verification date: 15 November 2026. Scope: native-text density preflight, typed failed result, settings, CLI diagnostics, and cleanup.
+
+| Check | Result |
+| --- | --- |
+| Full backend suite | 116 passed; two existing database integration tests skipped because Docker's engine was unavailable and real-database tests were not enabled. |
+| Backend lint/format/types | Ruff passed; 32 Python files formatted; strict mypy passed for 22 source files. |
+| Threshold boundaries | Exactly 50 characters is sufficient; exactly 80% low-text pages is accepted. Strict integer comparisons checked up to 100 pages. |
+| Early abort | Ten rasterized text pages reject at page nine, before layout analysis, decorative cleanup, or OCR. |
+| Mixed PDF and blank pages | Exactly 80% image-only pages can pass when the remaining page has sufficient text; source page order and low-text page metadata are retained. |
+| Failure contract | CLI returns `status: "failed"`, `OCR_NOT_SUPPORTED`, safe density diagnostics, and exit code 2; no export is created. |
+| Real guide extraction | 17 pages accepted, zero low-text pages, minimum readable count 748, temporary PDF deleted. |
+
+The detector counts printable non-whitespace Unicode characters from the original text layer, so generated Markdown cannot inflate the count. An empty Markdown result for a sufficiently populated source page is a separate `PDF_EXTRACTION_FAILED` error. The existing Starlette/HTTPX warning remains nonblocking. No document row is persisted yet; future document/job integration must store the existing failed/error-code contract. Normalization, chunking, and recovery remain pending. See the [step guide](<phases guide/phase-1/phase-1-step-3-scanned-pdf-detection.md>).
+
+## Phase 1, steps 4-6: Normalization, chunking, and recovery
+
+Verification date: 16 November 2026. Scope: internal preparation pipeline and durable startup recovery; representative-corpus acceptance remains separate.
+
+| Check | Result |
+| --- | --- |
+| Unit/general suite | 141 passed; six database cases reserved for a separate run. |
+| Real PostgreSQL suite | Six passed with `RUN_DB_TESTS=1` and `--noconftest tests/integration`; 147 distinct tests passed across both runs. |
+| Ruff and mypy | Lint/format passed for 48 Python files; strict types passed for 33 application/migration files. |
+| Migration | Local PostgreSQL upgraded to `0002_documents`; Alembic reports no pending model operations. |
+| Normalization | Running boundary text removed conservatively; protected Markdown and labelled body text retained; raw Unicode/CRLF mappings checked character by character. |
+| Chunking | Actual offline token counts, ordinary-prose overlap, stable IDs, source ranges, complete normalized coverage, whole tables/code, oversized atomic flags, and Unicode/long words verified. |
+| Recovery | Stale/strict-five-minute/fresh/terminal cases, idempotence, committed lifespan recovery, per-process execution, and 12 concurrent readiness probes verified. |
+| Real guide preparation | 17 pages, 17 chunks, 17 removed boundary lines, no oversized chunks; every raw offset valid and all normalized non-whitespace text covered; temporary PDF deleted. |
+
+Windows virtual-memory exhaustion interrupted initial combined test attempts. Running unit tests with Docker stopped and the lightweight database-only suite after restarting Docker resolved verification without closing unrelated applications. A Linux test-container attempt was also interrupted and is not counted as successful validation. The existing Starlette/HTTPX warning remains nonblocking.
+
+The offline tokenizer uses bundled, checksummed OpenAI `cl100k_base` vocabulary with its MIT license. Python configuration now consistently targets 3.12, matching the existing runtime, CI, and image. Normal-prose chunks target 600-800 tokens; page tails can be shorter and indivisible tables/code can exceed the maximum. No ten-paper/98%-retention result, embedding index, public upload workflow, or production memory claim is made.

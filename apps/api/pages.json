@@ -1,0 +1,15 @@
+{
+  "status": "extracted",
+  "checksum": "3ed9700ac45e4452b0c76ce617a141ff71d0dae9445584b290fdca576da5ec2d",
+  "size_bytes": 31888,
+  "pages": [
+    {
+      "page_number": 1,
+      "raw_text": "# **MOHSIN JAVED**\n\n**Software Engineer | Full-Stack Developer**\n\nLahore, Pakistan | +92 309 1948615 | mohsinjavedx@gmail.com\nGitHub: github.com/Mohsin-Javed48 | LinkedIn: linkedin.com/in/mohsin-javed-b8a44641a | Portfolio: mohsin-javed.online\n\n\nOctober 9, 2026\n\n\nHiring Team\nRuntime Systems\n\nhello@runtimesystems.tech\n\n\n**Re: Application for Associate Full Stack Engineer (Remote, Pakistan)**\n\n\nDear Runtime Systems Hiring Team,\n\n\nI am writing to apply for the Associate Full Stack Engineer position. Over the past 1.5 years at FrontendEx,\n\nworking fully remote, I have built and shipped production features across the whole stack: React and Next.js\ninterfaces, Node.js and NestJS APIs, and the PostgreSQL schemas underneath them. Along the way I have\ntaken four systems live. The role you describe, owning impactful features end to end alongside senior\nengineers, is how I already work and how I want to keep growing.\n\n\nHere is what I would bring to your team:\n\n\n**Reliable back ends.** On an offline-first point-of-sale system, I built the server-side replay of sales queued\nduring network outages and made it exactly-once with a client-generated idempotency key backed by a\n\ndatabase unique constraint, so a sale can never be recorded twice. For a live fulfillment platform, I built\nan asynchronous job queue for FedEx label generation that retries failed jobs automatically, backed by a\n40+ action audit log.\n\n**Practical, responsive front ends.** I built a config-driven, bilingual application wizard that serves six U.S.\n\nstates from one codebase, a role-based permission system with per-screen access, and a debounced\nsearch that loads large school and city lists 50 records at a time instead of all at once.\n\n**Debugging and performance across the stack.** I kept offline product search under 200ms across 1,000+\ncached items, added a global interceptor so expired sessions are handled cleanly, and stopped manifest\n\nre-imports from creating duplicate orders or overwriting shipments already in transit.\n\n\nI also work with several of your nice-to-haves, including Redis, Docker, CI/CD workflows and AWS, and I use\nClaude Code for AI-assisted development, which helps me move quickly while I still review and verify every\nchange. In a distributed team I rely on clear written communication, from pull request descriptions to stand\nup updates, because that is often where the real collaboration happens.\n\n\nI would welcome the chance to walk you through any of these projects in more detail. My code is at\ngithub.com/Mohsin-Javed48 and my project write-ups are at mohsin-javed.online. Thank you for your time\nand consideration.\n\n\nSincerely,\nMohsin Javed\n\n\n"
+    }
+  ],
+  "parser": "pymupdf4llm",
+  "parser_version": "2.1",
+  "page_count": 1,
+  "temporary_file_deleted": true
+}

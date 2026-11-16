@@ -1,11 +1,13 @@
 import asyncio
+import logging
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app.core.config import Settings
+from app.workers.recovery import recover_interrupted_documents
 
-SCHEMA_REVISION = "0001_pgvector"
+SCHEMA_REVISION = "0002_documents"
 
 
 class Database:
@@ -21,6 +23,21 @@ class Database:
             hide_parameters=True,
         )
         self.sessions = async_sessionmaker(self.engine, expire_on_commit=False)
+        self._recovery_lock = asyncio.Lock()
+        self._recovery_complete = False
+
+    async def _ensure_recovery(self) -> None:
+        if self._recovery_complete:
+            return
+        async with self._recovery_lock:
+            if self._recovery_complete:
+                return
+            async with self.sessions() as session, session.begin():
+                recovered = await recover_interrupted_documents(session)
+            self._recovery_complete = True
+            logging.getLogger("research.recovery").info(
+                "startup.ingestion_recovery_completed", extra={"recovered_documents": recovered}
+            )
 
     async def check(self) -> str:
         async with asyncio.timeout(self.timeout):
@@ -37,7 +54,10 @@ class Database:
                 revision = await connection.scalar(text("SELECT version_num FROM alembic_version"))
                 if distance != 0 or revision != SCHEMA_REVISION:
                     raise RuntimeError("DATABASE_NOT_MIGRATED")
-                return str(version)
+            # Release the probe connection before acquiring a transactional session;
+            # concurrent startup/health requests must not exhaust the pool.
+            await self._ensure_recovery()
+            return str(version)
 
     async def close(self) -> None:
         await self.engine.dispose()

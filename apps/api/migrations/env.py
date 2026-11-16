@@ -6,6 +6,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.core.config import load_settings
+from app.db import models  # noqa: F401 -- register migration metadata
 from app.db.base import Base
 
 
