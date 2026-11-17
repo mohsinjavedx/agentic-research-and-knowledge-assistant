@@ -53,6 +53,11 @@ def test_ordinary_database_outage_keeps_liveness_available(monkeypatch: pytest.M
     database = AsyncMock()
     database.check.side_effect = OSError("database offline")
     monkeypatch.setattr("app.main.Database", lambda config: database)
+
+    async def wait_for_shutdown(database: AsyncMock) -> None:
+        await asyncio.Event().wait()
+
+    monkeypatch.setattr("app.main.run_expired_document_cleanup", wait_for_shutdown)
     with TestClient(create_app(settings())) as client:
         assert client.get("/api/v1/health/live").status_code == 200
         assert client.get("/api/v1/health").status_code == 503

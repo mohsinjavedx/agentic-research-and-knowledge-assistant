@@ -8,7 +8,7 @@ from app.core.config import Settings
 from app.db.embedding_compatibility import assert_embedding_compatibility
 from app.workers.recovery import recover_interrupted_documents
 
-SCHEMA_REVISION = "0003_chunk_indexes"
+SCHEMA_REVISION = "0004_session_lifecycle"
 
 
 class Database:

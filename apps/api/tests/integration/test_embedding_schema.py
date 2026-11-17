@@ -37,7 +37,8 @@ def test_actual_vector_column_and_generated_fts_indexes() -> None:
                     (
                         await session.execute(
                             text(
-                                "SELECT indexname, indexdef FROM pg_indexes WHERE tablename = 'chunks'"
+                                "SELECT indexname, indexdef FROM pg_indexes "
+                                "WHERE tablename IN ('chunks', 'documents')"
                             )
                         )
                     ).all()
@@ -45,6 +46,12 @@ def test_actual_vector_column_and_generated_fts_indexes() -> None:
                 assert "USING hnsw" in indexes["ix_chunks_embedding_hnsw"]
                 assert "vector_cosine_ops" in indexes["ix_chunks_embedding_hnsw"]
                 assert "USING gin" in indexes["ix_chunks_fts_gin"]
+                assert (
+                    "CREATE UNIQUE INDEX uq_documents_session_checksum"
+                    in indexes["uq_documents_session_checksum"]
+                )
+                assert "session_id" in indexes["uq_documents_session_checksum"]
+                assert "checksum" in indexes["uq_documents_session_checksum"]
                 generated = await session.scalar(
                     text(
                         "SELECT is_generated FROM information_schema.columns "

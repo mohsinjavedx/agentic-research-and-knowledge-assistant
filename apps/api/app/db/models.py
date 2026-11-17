@@ -37,6 +37,13 @@ class Document(Base):
             "page_count IS NULL OR page_count BETWEEN 1 AND 100", name="ck_documents_pages"
         ),
         Index("ix_documents_status_updated_at", "status", "updated_at"),
+        Index(
+            "uq_documents_session_checksum",
+            "session_id",
+            "checksum",
+            unique=True,
+            postgresql_where=text("NOT is_sample AND session_id IS NOT NULL"),
+        ),
     )
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
