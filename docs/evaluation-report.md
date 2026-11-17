@@ -88,4 +88,20 @@ Verification date: 16 November 2026. Scope: internal preparation pipeline and du
 
 Windows virtual-memory exhaustion interrupted initial combined test attempts. Running unit tests with Docker stopped and the lightweight database-only suite after restarting Docker resolved verification without closing unrelated applications. A Linux test-container attempt was also interrupted and is not counted as successful validation. The existing Starlette/HTTPX warning remains nonblocking.
 
-The offline tokenizer uses bundled, checksummed OpenAI `cl100k_base` vocabulary with its MIT license. Python configuration now consistently targets 3.12, matching the existing runtime, CI, and image. Normal-prose chunks target 600-800 tokens; page tails can be shorter and indivisible tables/code can exceed the maximum. No ten-paper/98%-retention result, embedding index, public upload workflow, or production memory claim is made.
+The offline tokenizer uses bundled, checksummed OpenAI `cl100k_base` vocabulary with its MIT license. Python configuration now consistently targets 3.12, matching the existing runtime, CI, and image. Normal-prose chunks target 600-800 tokens; page tails can be shorter and indivisible tables/code can exceed the maximum. At this Phase 1 checkpoint, no ten-paper/98%-retention result, embedding index, public upload workflow, or production memory claim was made.
+
+## Phase 2, steps 3-5: PDF indexing, session idempotency, deletion, and expiry cleanup
+
+Verification date: 18 November 2026. Scope: local PDF embedding/indexing, session/checksum persistence idempotency, owner-scoped document deletion, and periodic expired-session cleanup.
+
+| Check | Result |
+| --- | --- |
+| Backend suite with real PostgreSQL | 183 passed with `RUN_DB_TESTS=1`, including the indexing CLI tests. |
+| Local PDF CLI smoke | The supplied 17-page guide produced 27 chunks with 384-dimensional BGE embeddings. Two persistence runs using one session ID returned the same document ID; the database contained one document, one batch, and 27 chunks. Temporary smoke data was deleted. |
+| Lifecycle coverage | Same-session duplicate indexing (including concurrent calls) returns one document and creates one batch/chunk set; another session may index the same checksum. |
+| Deletion and isolation | Missing session cookie returns 401; another session's document returns 404; owner deletion cascades to batch and chunk rows. |
+| Expiry worker | Lifespan starts the worker; strict `expires_at < NOW()` deletes expired session documents, preserves the equality boundary, and excludes samples. |
+| Migration | `0004_session_lifecycle` applied; `alembic check` reports no pending model operations. |
+| Ruff, formatting, and types | `ruff check .` and `ruff format --check .` pass; mypy passes for 47 application/migration source files. |
+
+No public PDF upload or retrieval endpoint exists yet. Therefore browser upload/deduplication and the PDF's query-isolation acceptance check cannot yet be exercised end-to-end, and the full Phase 2 acceptance gate remains outstanding. See the [step 3 guide](<phases guide/phase-2/phase-2-step-3-vector-fts-indexes.md>), [step 4 guide](<phases guide/phase-2/phase-2-step-4-session-idempotency-deletion.md>), and [step 5 guide](<phases guide/phase-2/phase-2-step-5-expired-session-cleanup.md>).

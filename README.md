@@ -2,7 +2,7 @@
 
 A research workspace for evidence-grounded answers across PDFs. Implementation follows the supplied v2.0 guide, one acceptance gate at a time.
 
-Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. All six Phase 1 implementation steps now provide internal validation, text-density detection, Markdown extraction, boundary normalization, traceable chunking, and database-backed restart recovery. The representative-corpus Phase 1 acceptance benchmark is pending. The upload API, embeddings/indexing, retrieval, generation, agent workflows, and cloud deployment are later work.
+Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. All six Phase 1 implementation steps now provide internal validation, text-density detection, Markdown extraction, boundary normalization, traceable chunking, and database-backed restart recovery. The representative-corpus Phase 1 acceptance benchmark is pending. Phase 2 provides an internal PDF embedding/indexing CLI, session idempotency, deletion, and expiry cleanup; the public upload/retrieval UI, generation, agent workflows, and cloud deployment remain later work.
 
 ## Requirements
 
@@ -71,7 +71,38 @@ uv run python -m app.services.ingestion.cli 'C:\path\to\paper.pdf' --prepare --o
 
 Preparation retains original Markdown, adds normalized-to-source mappings, and targets 600-800 real tokens with up to 100-token overlap. Tables and fenced code stay whole; short page tails and oversized atomic blocks are documented exceptions. The tokenizer vocabulary is bundled for offline use. Settings are `CHUNK_MIN_TOKENS`, `CHUNK_MAX_TOKENS`, and `CHUNK_OVERLAP_TOKENS`. See the [normalization](<docs/phases guide/phase-1/phase-1-step-4-deterministic-normalization.md>) and [chunking](<docs/phases guide/phase-1/phase-1-step-5-markdown-aware-chunking.md>) guides.
 
-Migration `0002_documents` adds persistent ingestion status. After applying migrations, API startup marks queued/processing records last updated more than five minutes ago as failed with `INTERRUPTED_BY_RESTART`, once per process. See the [recovery guide](<docs/phases guide/phase-1/phase-1-step-6-crash-safe-recovery.md>). The local CLI does not enqueue or persist jobs/chunks.
+Migration `0002_documents` adds persistent ingestion status. After applying migrations, API startup marks queued/processing records last updated more than five minutes ago as failed with `INTERRUPTED_BY_RESTART`, once per process. See the [recovery guide](<docs/phases guide/phase-1/phase-1-step-6-crash-safe-recovery.md>). The Phase 1 CLI does not enqueue or persist jobs/chunks.
+
+## Test Phase 2 with a PDF
+
+The Phase 2 CLI embeds a local PDF and prints a summary without writing to the database:
+
+```powershell
+cd apps/api
+uv run python -m app.services.indexing.cli 'C:\path\to\paper.pdf'
+```
+
+For local CPU embeddings, install the optional ONNX runtime group if needed:
+
+```powershell
+uv sync --frozen --group local-embeddings
+```
+
+The first local run may download the pinned BGE tokenizer/model. To persist the document as session-owned and test idempotency, ensure PostgreSQL is running and migrations are current:
+
+```powershell
+uv run alembic upgrade head
+$sessionId = [guid]::NewGuid().ToString()
+$pdf = 'C:\path\to\paper.pdf'
+$first = (uv run python -m app.services.indexing.cli $pdf --persist --session-id $sessionId) | ConvertFrom-Json
+$second = (uv run python -m app.services.indexing.cli $pdf --persist --session-id $sessionId) | ConvertFrom-Json
+$first.document_id
+$second.document_id
+```
+
+Both runs should report the same `document_id`; the second run re-embeds the file but does not insert a second document, batch, or chunk set. Use `--persist --sample` instead to add a global sample. `--output '.\paper-embeddings.json'` exports chunk text, provenance, and vectors to a new file; treat that export as sensitive and do not overwrite an existing file.
+
+See the [Phase 2 step 3 guide](<docs/phases guide/phase-2/phase-2-step-3-vector-fts-indexes.md>) for database verification and session-scoped deletion commands.
 
 From `apps/api`:
 
@@ -133,6 +164,6 @@ Placeholder directories preserve the guide's structure without pretending later-
 
 Stop terminal servers with Ctrl+C. `docker compose stop` stops the project database without deleting data; `docker compose up -d --wait db` starts it again. The database uses `restart: unless-stopped` so Docker can restart it after an unexpected exit or a Docker restart; an explicitly stopped container stays stopped until started again. If readiness reports `db: "unavailable"`, check `docker compose ps -a` and start the database before retrying. Do not remove the named volume unless you intend to erase this project's database. For the API image, build with `docker build -t research-api apps/api`, then run migrations and the API with your environment supplied externally. Never bake `.env` into an image.
 
-See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). Next is the Phase 1 representative-corpus acceptance benchmark before advancing to Phase 2 embeddings and indexing.
+See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 embedding/indexing foundations, the local PDF indexing CLI, and lifecycle Steps 4–5 are implemented. The public upload/retrieval workflow and full end-to-end Phase 2 acceptance run remain outstanding. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>) for scope and verification status.
 
 For the Phase 0 changes, detailed file structure, startup flow, and component responsibilities, read the [Phase 0 project foundation guide](<docs/phases guide/phase-0/phase-0-project-foundation.md>).

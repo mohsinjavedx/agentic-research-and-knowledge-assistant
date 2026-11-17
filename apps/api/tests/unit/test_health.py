@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 from collections.abc import Iterator
@@ -8,6 +9,7 @@ from uuid import UUID, uuid4
 import pytest
 from fastapi.testclient import TestClient
 
+from app.api.v1.sessions import SESSION_COOKIE_NAME
 from app.core.config import Settings
 from app.main import create_app
 
@@ -24,6 +26,11 @@ def client(monkeypatch: pytest.MonkeyPatch) -> Iterator[tuple[TestClient, AsyncM
         embedding_model="BAAI/bge-small-en-v1.5",
         llm_provider="local",
     )
+
+    async def wait_for_shutdown(database: AsyncMock) -> None:
+        await asyncio.Event().wait()
+
+    monkeypatch.setattr("app.main.run_expired_document_cleanup", wait_for_shutdown)
     application = create_app(settings)
 
     @application.get("/test-failure")
@@ -71,6 +78,18 @@ def test_invalid_request_id_is_replaced(client: tuple[TestClient, AsyncMock]) ->
     http, _ = client
     response = http.get("/api/v1/health/live", headers={"X-Request-ID": "arbitrary-secret"})
     assert str(UUID(response.headers["X-Request-ID"])) == response.headers["X-Request-ID"]
+
+
+def test_session_endpoint_sets_private_ttl_cookie(client: tuple[TestClient, AsyncMock]) -> None:
+    http, _ = client
+    response = http.post("/api/v1/session")
+    assert response.status_code == 204
+    cookie = response.cookies[SESSION_COOKIE_NAME]
+    assert str(UUID(cookie)) == cookie
+    assert response.headers["set-cookie"].lower().find("httponly") >= 0
+    assert "samesite=lax" in response.headers["set-cookie"].lower()
+    assert "max-age=86400" in response.headers["set-cookie"].lower()
+    assert response.headers["cache-control"] == "no-store"
 
 
 def test_errors_are_sanitized_and_correlated(client: tuple[TestClient, AsyncMock]) -> None:

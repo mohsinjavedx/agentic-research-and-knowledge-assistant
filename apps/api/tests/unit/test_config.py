@@ -74,6 +74,7 @@ def test_production_provider_configuration() -> None:
             app_env="production",
             embedding_provider="api",
             embedding_api_key="test-embedding-key",
+            embedding_api_url="https://embeddings.example/v1/embeddings",
             llm_provider="hosted",
             hosted_llm_api_key="test-llm-key",
             hosted_llm_model="example-model",

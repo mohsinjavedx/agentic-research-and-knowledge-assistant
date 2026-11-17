@@ -14,7 +14,7 @@ Steps 4-6 retain original source Markdown while indexing a separate normalized r
 | --- | --- | --- |
 | Configuration | Required typed values; sanitized validation errors; secret fields masked | Provider endpoint configuration and deployment secret store |
 | Logs | JSON allowlist; UUID request correlation; no query strings or exception text | Token/cost telemetry and hashed session identifiers |
-| Browser/API | Exact CORS origins; no server secrets in browser settings | HttpOnly sessions and ownership checks before upload/retrieval |
+| Browser/API | Exact CORS origins; no server secrets in browser settings; HttpOnly, SameSite session cookie and owner-scoped document deletion | Ownership checks before future upload/retrieval routes |
 | Database | Loopback-only local port; generated ignored development credentials; named volume | Least-privilege hosted runtime role and database-backed quotas |
 | Parsing and tools | Internal validation, text-density rejection, and geometric Markdown extraction with bounded input and temporary-file cleanup; no parsing or tool execution endpoints | Parser isolation, execution limits, allowlisted read-only tools |
 

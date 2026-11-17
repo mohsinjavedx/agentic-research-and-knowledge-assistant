@@ -5,14 +5,16 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app.core.config import Settings
+from app.db.embedding_compatibility import assert_embedding_compatibility
 from app.workers.recovery import recover_interrupted_documents
 
-SCHEMA_REVISION = "0002_documents"
+SCHEMA_REVISION = "0004_session_lifecycle"
 
 
 class Database:
     def __init__(self, settings: Settings) -> None:
         self.timeout = settings.db_timeout_seconds
+        self.settings = settings
         self.engine = create_async_engine(
             settings.database_url.get_secret_value(),
             pool_pre_ping=True,
@@ -54,6 +56,7 @@ class Database:
                 revision = await connection.scalar(text("SELECT version_num FROM alembic_version"))
                 if distance != 0 or revision != SCHEMA_REVISION:
                     raise RuntimeError("DATABASE_NOT_MIGRATED")
+                await assert_embedding_compatibility(connection, self.settings)
             # Release the probe connection before acquiring a transactional session;
             # concurrent startup/health requests must not exhaust the pool.
             await self._ensure_recovery()

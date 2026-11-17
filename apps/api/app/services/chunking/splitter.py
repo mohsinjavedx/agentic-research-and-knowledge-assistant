@@ -1,6 +1,7 @@
 """Markdown-aware token windows with exact offsets into original page Markdown."""
 
 import re
+from collections.abc import Callable
 from hashlib import sha256
 from uuid import UUID, uuid5
 
@@ -10,24 +11,26 @@ from app.services.chunking.tokenizer import token_count
 from app.services.ingestion.normalization import NormalizedDocument, NormalizedPage
 
 
-def _fit_end(text: str, start: int, budget: int) -> int:
+def _fit_end(text: str, start: int, budget: int, count: Callable[[str], int] = token_count) -> int:
     low, high = start, len(text)
     while low < high:
         middle = (low + high + 1) // 2
-        if token_count(text[start:middle]) <= budget:
+        if count(text[start:middle]) <= budget:
             low = middle
         else:
             high = middle - 1
-    while low > start and token_count(text[start:low]) > budget:
+    while low > start and count(text[start:low]) > budget:
         low -= 1
     return max(start + 1, low)
 
 
-def _overlap_start(text: str, start: int, end: int, budget: int) -> int:
+def _overlap_start(
+    text: str, start: int, end: int, budget: int, count: Callable[[str], int] = token_count
+) -> int:
     low, high = start, end
     while low < high:
         middle = (low + high) // 2
-        if token_count(text[middle:end]) <= budget:
+        if count(text[middle:end]) <= budget:
             high = middle
         else:
             low = middle + 1
@@ -36,13 +39,21 @@ def _overlap_start(text: str, start: int, end: int, budget: int) -> int:
 
 class MarkdownChunker:
     def __init__(
-        self, *, min_tokens: int = 600, max_tokens: int = 800, overlap_tokens: int = 100
+        self,
+        *,
+        min_tokens: int = 600,
+        max_tokens: int = 800,
+        overlap_tokens: int = 100,
+        count_tokens: Callable[[str], int] = token_count,
+        tokenizer_name: str = "cl100k_base",
     ) -> None:
         if not 0 <= overlap_tokens < min_tokens <= max_tokens:
             raise ValueError("Chunk budgets require 0 <= overlap < minimum <= maximum")
         self.min_tokens = min_tokens
         self.max_tokens = max_tokens
         self.overlap_tokens = overlap_tokens
+        self.count_tokens = count_tokens
+        self.tokenizer_name = tokenizer_name
 
     def _page_spans(self, page: NormalizedPage) -> list[tuple[int, int, bool]]:
         text = page.normalized_text
@@ -55,7 +66,7 @@ class MarkdownChunker:
                 start += 1
             if start == len(text):
                 break
-            hard_end = _fit_end(text, start, self.max_tokens)
+            hard_end = _fit_end(text, start, self.max_tokens, self.count_tokens)
             crossing = next((block for block in atomic if block.start < hard_end < block.end), None)
             oversized = False
             if crossing:
@@ -63,7 +74,7 @@ class MarkdownChunker:
                     hard_end = crossing.start
                 else:
                     hard_end = crossing.end
-                    oversized = token_count(text[start:hard_end]) > self.max_tokens
+                    oversized = self.count_tokens(text[start:hard_end]) > self.max_tokens
             end = hard_end
             if hard_end < len(text) and not oversized:
                 # Prefer a section boundary, then paragraphs, sentences, words,
@@ -82,7 +93,7 @@ class MarkdownChunker:
                     eligible = [
                         offset
                         for offset in boundaries
-                        if token_count(text[start:offset]) >= self.min_tokens
+                        if self.count_tokens(text[start:offset]) >= self.min_tokens
                     ]
                     if eligible:
                         end = max(eligible)
@@ -96,7 +107,7 @@ class MarkdownChunker:
                         eligible = [
                             offset
                             for offset in candidates
-                            if token_count(text[start:offset]) >= self.min_tokens
+                            if self.count_tokens(text[start:offset]) >= self.min_tokens
                         ]
                         if eligible:
                             end = max(eligible)
@@ -114,11 +125,11 @@ class MarkdownChunker:
                 # rather than repeatedly emitting the same prefix before the block.
                 start = max(start + 1, result[-1][1])
                 continue
-            oversized = token_count(text[start:end]) > self.max_tokens
+            oversized = self.count_tokens(text[start:end]) > self.max_tokens
             result.append((start, end, oversized))
             if not text[end:].strip():
                 break
-            next_start = _overlap_start(text, start, end, self.overlap_tokens)
+            next_start = _overlap_start(text, start, end, self.overlap_tokens, self.count_tokens)
             overlapped_atomic = next(
                 (block for block in atomic if block.start <= next_start < block.end), None
             )
@@ -147,8 +158,8 @@ class MarkdownChunker:
                         char_start=raw_start,
                         char_end=raw_end,
                         metadata={
-                            "token_count": token_count(normalized),
-                            "tokenizer": "cl100k_base",
+                            "token_count": self.count_tokens(normalized),
+                            "tokenizer": self.tokenizer_name,
                             "oversized_atomic": oversized,
                             "normalized_char_start": start,
                             "normalized_char_end": end,
