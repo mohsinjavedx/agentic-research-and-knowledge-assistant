@@ -10,6 +10,7 @@ from app.core.config import Settings, load_settings
 from app.core.logging import configure_logging
 from app.core.middleware import RequestContextMiddleware
 from app.db.session import Database
+from app.providers.identity import EmbeddingCompatibilityError
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -25,6 +26,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             try:
                 await database.check()
                 logger.info("startup.database_ready")
+            except EmbeddingCompatibilityError:
+                logger.error("startup.embedding_configuration_mismatch")
+                raise
             except Exception:
                 logger.warning(
                     "startup.database_unavailable", extra={"error_code": "DATABASE_NOT_READY"}

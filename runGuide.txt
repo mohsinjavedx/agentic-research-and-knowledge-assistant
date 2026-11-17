@@ -25,3 +25,12 @@ npm run dev
 App: http://localhost:3000
 API documentation: http://127.0.0.1:8000/docs
 Readiness check: http://127.0.0.1:8000/api/v1/health
+
+
+cd "C:\MOHSIN\LLM projects\New folder"
+
+# Make the backend's app package available to your root-level script.
+$env:PYTHONPATH = (Resolve-Path ".\apps\api").Path
+
+# Use backend dependencies plus Sentence Transformers.
+uv run --project .\apps\api --frozen --with sentence-transformers python .\embed_query.py
