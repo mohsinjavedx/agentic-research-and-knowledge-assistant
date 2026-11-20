@@ -8,11 +8,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.documents import router as documents_router
 from app.api.v1.health import router as health_router
+from app.api.v1.search import router as search_router
 from app.api.v1.sessions import router as sessions_router
 from app.core.config import Settings, load_settings
 from app.core.logging import configure_logging
 from app.core.middleware import RequestContextMiddleware
 from app.db.session import Database
+from app.providers.embeddings import create_embedding_provider
 from app.providers.identity import EmbeddingCompatibilityError
 from app.workers.expired_documents import run_expired_document_cleanup
 
@@ -25,7 +27,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(application: FastAPI) -> AsyncIterator[None]:
         database = Database(settings)
+        embedding_provider = create_embedding_provider(settings)
         application.state.database = database
+        application.state.embedding_provider = embedding_provider
         cleanup_task: asyncio.Task[None] | None = None
         try:
             try:
@@ -51,8 +55,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                     except asyncio.CancelledError:
                         pass
             finally:
-                await database.close()
-                logger.info("shutdown.completed")
+                try:
+                    embedding_provider.close()
+                finally:
+                    await database.close()
+                    logger.info("shutdown.completed")
 
     application = FastAPI(
         title="Research & Knowledge Assistant", version="0.1.0", lifespan=lifespan
@@ -61,6 +68,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(health_router)
     application.include_router(sessions_router)
     application.include_router(documents_router)
+    application.include_router(search_router)
     application.add_middleware(RequestContextMiddleware)
     application.add_middleware(
         CORSMiddleware,

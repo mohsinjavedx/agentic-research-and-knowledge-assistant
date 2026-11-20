@@ -17,13 +17,10 @@ from app.providers.embeddings import (
     create_embedding_provider,
 )
 from app.providers.identity import EmbeddingCompatibilityError
-from app.services.indexing.preparation import embedding_chunker
+from app.services.indexing.processor import embed_pdf
 from app.services.indexing.service import EmbeddedDocument, persist_document
-from app.services.ingestion.detection import PDFTextDensityDetector
 from app.services.ingestion.errors import OCRNotSupportedError, PDFExtractionError
-from app.services.ingestion.extraction import PDFMarkdownExtractor
-from app.services.ingestion.pipeline import PDFIngestionService
-from app.services.ingestion.validation import PDFValidationError, PDFValidator
+from app.services.ingestion.validation import PDFValidationError
 
 
 def _arguments() -> argparse.Namespace:
@@ -65,36 +62,10 @@ def _write_export(path: Path, payload: dict[str, Any]) -> None:
 def _prepare(
     settings: Settings, provider: EmbeddingProvider, file: Path, *, document_id: UUID | None
 ) -> tuple[EmbeddedDocument, dict[str, Any]]:
-    validator = PDFValidator(
-        max_upload_mb=settings.max_upload_mb, max_pdf_pages=settings.max_pdf_pages
-    )
-    extractor = PDFMarkdownExtractor(
-        text_detector=PDFTextDensityDetector(
-            min_text_chars_per_page=settings.min_text_chars_per_page,
-            max_low_text_page_percent=settings.max_low_text_page_percent,
-        )
-    )
-    ingestion = PDFIngestionService(
-        validator=validator,
-        extractor=extractor,
-        chunker=embedding_chunker(settings, provider),
-    )
-    with file.open("rb") as source:
-        prepared = ingestion.prepare(source, filename=file.name, document_id=document_id)
-
-    vectors = provider.embed_documents([chunk.normalized_text for chunk in prepared.chunks])
-    document = EmbeddedDocument(
-        document_id=UUID(prepared.document_id),
-        checksum=prepared.document.source.checksum,
-        page_count=prepared.document.source.page_count,
-        chunks=prepared.chunks,
-        vectors=tuple(tuple(vector) for vector in vectors),
-        identity=provider.identity,
-        provider=provider.kind,
-    )
+    document = embed_pdf(settings, provider, file, document_id=document_id)
     export = {
         "status": "embedded",
-        "document_id": prepared.document_id,
+        "document_id": str(document.document_id),
         "checksum": document.checksum,
         "page_count": document.page_count,
         "embedding_model": document.identity.model,

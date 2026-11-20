@@ -2,7 +2,7 @@
 
 A research workspace for evidence-grounded answers across PDFs. Implementation follows the supplied v2.0 guide, one acceptance gate at a time.
 
-Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. All six Phase 1 implementation steps now provide internal validation, text-density detection, Markdown extraction, boundary normalization, traceable chunking, and database-backed restart recovery. The representative-corpus Phase 1 acceptance benchmark is pending. Phase 2 provides an internal PDF embedding/indexing CLI, session idempotency, deletion, and expiry cleanup; the public upload/retrieval UI, generation, agent workflows, and cloud deployment remain later work.
+Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. All six Phase 1 implementation steps provide validation, extraction, normalization, traceable chunking, and database-backed recovery. Phase 2 adds an internal PDF embedding/indexing CLI, session idempotency, deletion, and expiry cleanup. Phase 3 adds session-scoped dense retrieval and a quantitative benchmark. The current retrieval baseline does not yet meet all quality targets; see the [evaluation report](docs/evaluation-report.md). Public upload UI, grounded answer generation, agent workflows, and cloud deployment remain later work.
 
 ## Requirements
 
@@ -104,6 +104,20 @@ Both runs should report the same `document_id`; the second run re-embeds the fil
 
 See the [Phase 2 step 3 guide](<docs/phases guide/phase-2/phase-2-step-3-vector-fts-indexes.md>) for database verification and session-scoped deletion commands.
 
+## Run the Phase 3 retrieval baseline
+
+The three sample PDFs and 40-question gold set are licensed CC BY 4.0 and attributed in `data/samples/README.md`. From the repository root, index the samples and run the evaluation:
+
+```powershell
+cd apps/api
+uv run alembic upgrade head
+uv run python -m app.services.indexing.seed_samples
+cd ..\..
+uv run --project apps/api python scripts/run_retrieval_eval.py
+```
+
+The runner writes measured Recall@5, Precision@5, MRR, p95 query latency, and the out-of-corpus similarity cutoff to `data/eval/retrieval_metrics.json`. The API's `POST /api/v1/search` returns page citations and marks evidence insufficient when the best cosine similarity is at or below `RETRIEVAL_SIMILARITY_THRESHOLD`; it does not generate an answer. The current baseline meets the out-of-corpus and latency targets, but not the three retrieval-quality targets; see the [evaluation report](docs/evaluation-report.md).
+
 From `apps/api`:
 
 ```powershell
@@ -164,6 +178,6 @@ Placeholder directories preserve the guide's structure without pretending later-
 
 Stop terminal servers with Ctrl+C. `docker compose stop` stops the project database without deleting data; `docker compose up -d --wait db` starts it again. The database uses `restart: unless-stopped` so Docker can restart it after an unexpected exit or a Docker restart; an explicitly stopped container stays stopped until started again. If readiness reports `db: "unavailable"`, check `docker compose ps -a` and start the database before retrying. Do not remove the named volume unless you intend to erase this project's database. For the API image, build with `docker build -t research-api apps/api`, then run migrations and the API with your environment supplied externally. Never bake `.env` into an image.
 
-See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 embedding/indexing foundations, the local PDF indexing CLI, and lifecycle Steps 4–5 are implemented. The public upload/retrieval workflow and full end-to-end Phase 2 acceptance run remain outstanding. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>) for scope and verification status.
+See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 indexing/lifecycle work and Phase 3 scoped retrieval are implemented, but Phase 3's measured quality targets are not all met. Public upload UI, grounded generation, and later-phase workflows remain outstanding. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>) and [Phase 3 guides](<docs/phases guide/phase-3/README.md>) for scope and verification status.
 
 For the Phase 0 changes, detailed file structure, startup flow, and component responsibilities, read the [Phase 0 project foundation guide](<docs/phases guide/phase-0/phase-0-project-foundation.md>).

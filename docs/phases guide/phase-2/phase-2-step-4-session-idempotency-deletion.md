@@ -56,7 +56,7 @@ A successful request returns `204 No Content`. PostgreSQL cascades the delete fr
 
 ## Current boundary
 
-The local PDF indexing CLI can persist a PDF with a `session_id`, but the repository still has no public PDF upload route. The session and delete endpoints can be exercised, and CLI persistence can verify same-session idempotency, while a complete browser upload-and-deduplicate workflow awaits the upload endpoint. There is also no retrieval route yet, so the PDF's "Session A cannot query Session B" acceptance check remains unverified until retrieval is implemented; future retrieval must filter to global samples or the current session.
+The local PDF indexing CLI can persist a PDF with a `session_id`, but the repository still has no public PDF upload route. The session and delete endpoints can be exercised, and CLI persistence can verify same-session idempotency, while a complete browser upload-and-deduplicate workflow awaits the upload endpoint. Session-scoped retrieval was added in Phase 3; its integration test confirms a session cannot retrieve another session's document and can retrieve global samples plus its own documents.
 
 ## Verification
 

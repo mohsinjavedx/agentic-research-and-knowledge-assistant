@@ -1,0 +1,356 @@
+{
+  "version": 1,
+  "description": "30 answerable research-paper retrieval questions and 10 out-of-corpus questions. Page numbers are one-based PDF pages; sample document IDs are stable UUIDs from data/samples/manifest.json.",
+  "questions": [
+    {
+      "id": "education-single-01",
+      "question": "Which five benchmarks are used to evaluate the educational question-answering system?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 8}
+      ]
+    },
+    {
+      "id": "education-single-02",
+      "question": "How many multiple-choice questions does the E-EVAL benchmark contain?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 8}
+      ]
+    },
+    {
+      "id": "education-single-03",
+      "question": "What role does the code interpreter play in the proposed educational QA system?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 3}
+      ]
+    },
+    {
+      "id": "education-table-01",
+      "question": "In Table 4, what OpenBookQA accuracy does GPT-4o achieve with RAG and the code interpreter?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 14}
+      ]
+    },
+    {
+      "id": "education-table-02",
+      "question": "In Table 4, what OpenBookQA accuracy does Gemini-pro-1.5 achieve with RAG and the code interpreter?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 14}
+      ]
+    },
+    {
+      "id": "education-table-03",
+      "question": "In Table 5, what E-EVAL accuracy does GPT-4o reach with RAG and the code interpreter?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 16}
+      ]
+    },
+    {
+      "id": "education-synthesis-01",
+      "question": "Compare GPT-4o's reported RAG-plus-code-interpreter accuracy on OpenBookQA and Textbook Question Answering.",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 14},
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 16}
+      ]
+    },
+    {
+      "id": "education-synthesis-02",
+      "question": "How does the paper combine retrieved knowledge with code execution, and what safety boundary does it describe for execution?",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 3},
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 11}
+      ]
+    },
+    {
+      "id": "education-synthesis-03",
+      "question": "What retrieval limitation does the educational QA study report, and what improvement does it propose?",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 17},
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 19}
+      ]
+    },
+    {
+      "id": "education-synthesis-04",
+      "question": "How do the educational QA paper's results support combining external knowledge retrieval with multi-step reasoning?",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 3},
+        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 19}
+      ]
+    },
+    {
+      "id": "nutrition-single-01",
+      "question": "Which language model did the personalized nutrition system use, and why was it selected?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 6}
+      ]
+    },
+    {
+      "id": "nutrition-single-02",
+      "question": "Which API supplies the personalized nutrition system's real-time ingredient nutrient data?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+      ]
+    },
+    {
+      "id": "nutrition-single-03",
+      "question": "How many smoothie recipes were generated in the nutrition system's validation experiment?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+      ]
+    },
+    {
+      "id": "nutrition-table-01",
+      "question": "According to Table 1, what percentage of generated recipes passed nutritional validation?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+      ]
+    },
+    {
+      "id": "nutrition-table-02",
+      "question": "According to Table 1, what percentage of recipes passed sustainability validation?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+      ]
+    },
+    {
+      "id": "nutrition-table-03",
+      "question": "In Table 2, what is the minimum fiber amount per serving and how is the example recipe classified?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 10}
+      ]
+    },
+    {
+      "id": "nutrition-table-04",
+      "question": "In Table 2, what sodium limit per serving is used for validation?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 10}
+      ]
+    },
+    {
+      "id": "nutrition-synthesis-01",
+      "question": "Compare the reported causes of nutritional-validation failures with the reasons for sustainability-validation failures.",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9},
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 12}
+      ]
+    },
+    {
+      "id": "nutrition-synthesis-02",
+      "question": "How does contextual retrieval personalize smoothie recipes, and which constraints are used to validate them?",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 6},
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 8}
+      ]
+    },
+    {
+      "id": "nutrition-synthesis-03",
+      "question": "What improvements does the paper suggest for the fiber and natural-sugar limitations in its nutrition results?",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 10},
+        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 12}
+      ]
+    },
+    {
+      "id": "medical-single-01",
+      "question": "What name does the medical question-answering study give to its proposed system?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 2}
+      ]
+    },
+    {
+      "id": "medical-single-02",
+      "question": "Which three languages are represented in the MEDQA dataset described in the paper?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 3}
+      ]
+    },
+    {
+      "id": "medical-single-03",
+      "question": "Which of the medical system's retrieval approaches performed best according to the authors, and why?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 6}
+      ]
+    },
+    {
+      "id": "medical-single-04",
+      "question": "What are the four vector-store variants used by the medical answering model?",
+      "category": "single_fact",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 5}
+      ]
+    },
+    {
+      "id": "medical-table-01",
+      "question": "In Table 4, what MCMLE and USMLE accuracies are reported for MPT-7B-Instruct?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 12}
+      ]
+    },
+    {
+      "id": "medical-table-02",
+      "question": "In Table 5, what does the variable Z represent in the medical answering model?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 15}
+      ]
+    },
+    {
+      "id": "medical-table-03",
+      "question": "According to the paper's evidence-coverage results, what share of USMLE questions have supporting evidence in the top ten results?",
+      "category": "table_lookup",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 13}
+      ]
+    },
+    {
+      "id": "medical-synthesis-01",
+      "question": "How do the MCMLE and USMLE evidence-coverage results relate to the model's accuracy on those two datasets?",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 11},
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 13}
+      ]
+    },
+    {
+      "id": "medical-synthesis-02",
+      "question": "Trace how a query becomes retrieved evidence in the medical model, including its similarity search method.",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 4},
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 6}
+      ]
+    },
+    {
+      "id": "medical-synthesis-03",
+      "question": "What differences between MCMLE and USMLE evidence availability help explain the different performance results?",
+      "category": "cross_section_synthesis",
+      "answerable": true,
+      "ground_truth": [
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 11},
+        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 13}
+      ]
+    },
+    {
+      "id": "out-of-corpus-01",
+      "question": "What orbital period did the Kepler mission measure for Kepler-90i?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-02",
+      "question": "Which city hosted the 2016 Summer Olympic Games?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-03",
+      "question": "At what temperature does gallium melt in degrees Celsius?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-04",
+      "question": "How many known rings does the planet Uranus have?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-05",
+      "question": "Which scientists received the Nobel Prize for the discovery of gravitational waves?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-06",
+      "question": "What was Brazil's gross domestic product in 2020?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-07",
+      "question": "How many permanent teeth does a typical adult human have?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-08",
+      "question": "Which river forms part of the border between the United States and Mexico?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-09",
+      "question": "What is the average June rainfall in Tokyo?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-10",
+      "question": "What were the primary and secondary endpoints in the 2024 randomized trial of HMWHA after laser resurfacing?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    }
+  ]
+}

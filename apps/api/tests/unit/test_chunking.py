@@ -82,6 +82,24 @@ def test_oversized_atomic_blocks_are_whole_and_prose_is_not_lost(kind: str) -> N
     assert_coverage(text, chunks)
 
 
+def test_embedding_mode_splits_oversized_tables_at_row_boundaries() -> None:
+    rows = [f"| Row {index} | measured evidence {index} |" for index in range(160)]
+    table = "| Metric | Value |\n| --- | --- |\n" + "\n".join(rows)
+    document = MarkdownNormalizer().normalize(extracted_document(table))
+    chunks = MarkdownChunker(
+        min_tokens=80,
+        max_tokens=120,
+        overlap_tokens=20,
+        split_oversized_atomic=True,
+    ).split(document, document_id=uuid4())
+
+    assert len(chunks) > 1
+    assert all(token_count(chunk.normalized_text) <= 120 for chunk in chunks)
+    assert all(chunk.metadata["oversized_atomic"] is False for chunk in chunks)
+    assert all(any(row in chunk.normalized_text for chunk in chunks) for row in rows)
+    assert_coverage(table, chunks)
+
+
 def test_regular_table_fits_as_a_single_block_with_no_partial_overlap() -> None:
     table = "| Model | Score |\n| --- | --- |\n" + "| Baseline | 0.80 |\n" * 10
     text = "Before the table. " * 30 + "\n\n" + table + "\nAfter the table. " * 30

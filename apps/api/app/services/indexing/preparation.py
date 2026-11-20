@@ -15,4 +15,5 @@ def embedding_chunker(settings: Settings, provider: EmbeddingProvider) -> Markdo
         overlap_tokens=overlap,
         count_tokens=provider.tokenizer.count,
         tokenizer_name=provider.tokenizer.name,
+        split_oversized_atomic=True,
     )

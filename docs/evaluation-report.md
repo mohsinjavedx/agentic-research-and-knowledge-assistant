@@ -104,4 +104,32 @@ Verification date: 18 November 2026. Scope: local PDF embedding/indexing, sessio
 | Migration | `0004_session_lifecycle` applied; `alembic check` reports no pending model operations. |
 | Ruff, formatting, and types | `ruff check .` and `ruff format --check .` pass; mypy passes for 47 application/migration source files. |
 
-No public PDF upload or retrieval endpoint exists yet. Therefore browser upload/deduplication and the PDF's query-isolation acceptance check cannot yet be exercised end-to-end, and the full Phase 2 acceptance gate remains outstanding. See the [step 3 guide](<phases guide/phase-2/phase-2-step-3-vector-fts-indexes.md>), [step 4 guide](<phases guide/phase-2/phase-2-step-4-session-idempotency-deletion.md>), and [step 5 guide](<phases guide/phase-2/phase-2-step-5-expired-session-cleanup.md>).
+No public PDF upload endpoint exists yet, so browser upload/deduplication is not exercised end to end. Session-scoped retrieval was added in Phase 3 and its integration test verifies query isolation. See the [step 3 guide](<phases guide/phase-2/phase-2-step-3-vector-fts-indexes.md>), [step 4 guide](<phases guide/phase-2/phase-2-step-4-session-idempotency-deletion.md>), and [step 5 guide](<phases guide/phase-2/phase-2-step-5-expired-session-cleanup.md>).
+
+## Phase 3: Session-scoped retrieval and evaluation
+
+Verification date: 20 November 2026. Scope: fixed 40-question set, three attributed sample PDFs, session-scoped cosine retrieval, API route, metric calculation, and out-of-corpus cutoff calibration.
+
+| Check | Result |
+| --- | --- |
+| Sample corpus | All three CC BY 4.0 PDFs indexed; manifest checksums and page counts validated. |
+| Golden set | 40 questions validated: 30 answerable page-labeled items and 10 out-of-corpus items. |
+| Retrieval/API | `POST /api/v1/search` implemented; PostgreSQL integration coverage verifies sample/current-session scope, foreign-document rejection, and missing-cookie rejection. |
+| Retrieval quality | Recall@5 **0.767** (target ≥0.80); Precision@5 **0.300** (target ≥0.60); MRR **0.602** (target ≥0.70). **Not met.** |
+| Out-of-corpus detection | **90%** (9/10; target ≥90%). Similarity cutoff: **0.5671493153**; no answerable queries fell below it in this set. |
+| Warm query latency | p95 **73.52 ms** (target ≤800 ms), including query embedding and database retrieval; model/process cold start excluded. |
+
+The evaluation command is `uv run --project apps/api python scripts/run_retrieval_eval.py` from the repository root. Full reproducible output is in [retrieval_metrics.json](../data/eval/retrieval_metrics.json). The implementation and calibration workflow are in the [Phase 3 guide](<phases guide/phase-3/README.md>).
+
+Phase 3's implementation is present, but its overall quantitative acceptance gate **does not pass** because Recall@5, Precision@5, and MRR are below target. Do not treat the calibration and latency passes as a full-phase acceptance. Improve retrieval ranking or review the page-level labels, then rerun the fixed benchmark before claiming the quality gate is met.
+
+### Retrieval model experiments
+
+The following exploratory tests used the same 30 answerable questions, page labels, and metric definitions. Alternative embeddings were computed over the 153 indexed chunk texts offline; they were not persisted or tested through the API. None met the retrieval-quality targets:
+
+- `Xenova/bge-base-en-v1.5` int8: Recall@5 **0.750**, Precision@5 **0.287**, MRR **0.581**.
+- `Xenova/bge-large-en-v1.5` int8: Recall@5 **0.783**, Precision@5 **0.293**, MRR **0.607**.
+- `Xenova/e5-large-v2` int8: Recall@5 **0.800**, Precision@5 **0.287**, MRR **0.606**.
+- `Xenova/bge-reranker-base` int8 reranking the dense top 20: Recall@5 **0.783**, Precision@5 **0.300**, MRR **0.694**; measured warm p95 was **12.95 s**, above the 800 ms limit.
+
+`Qdrant/Qwen3-Embedding-0.6B-onnx` int8 was also smoke-tested locally: a 24-token query took about **2.8–3.4 s** on CPU, so it was not run through the full evaluation. No experimental model was adopted; the database-backed BGE-small results above remain the official benchmark.

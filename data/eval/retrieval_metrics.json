@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "generated_at": "2026-11-20T10:17:59.769954+00:00",
+  "dataset": {
+    "question_count": 40,
+    "answerable_count": 30,
+    "out_of_corpus_count": 10,
+    "document_ids": [
+      "35d86749-bf13-55ac-8008-231937b43bab",
+      "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "be12ca47-9e95-56c9-abdc-104a9f7680f5"
+    ]
+  },
+  "metrics": {
+    "recall_at_5": 0.7666666666666667,
+    "precision_at_5": 0.3,
+    "mrr": 0.6022222222222222,
+    "p95_query_latency_ms": 73.51853999978174
+  },
+  "calibration": {
+    "similarity_threshold": 0.5671493153065035,
+    "out_of_corpus_flagged": 9,
+    "out_of_corpus_total": 10,
+    "answerable_flagged": 0,
+    "answerable_total": 30,
+    "rule": "flag when the best cosine similarity is less than or equal to the cutoff"
+  },
+  "acceptance": {
+    "checks": {
+      "recall_at_5": {
+        "value": 0.7666666666666667,
+        "target": 0.8,
+        "passed": false
+      },
+      "precision_at_5": {
+        "value": 0.3,
+        "target": 0.6,
+        "passed": false
+      },
+      "mrr": {
+        "value": 0.6022222222222222,
+        "target": 0.7,
+        "passed": false
+      },
+      "out_of_corpus_detection": {
+        "value": 0.9,
+        "target": 0.9,
+        "passed": true
+      },
+      "p95_query_latency_ms": {
+        "value": 73.51853999978174,
+        "target": 800.0,
+        "passed": true
+      }
+    },
+    "passed": false
+  },
+  "latency_method": "Warm local embedding model; query embedding plus database retrieval; excludes process/model cold start."
+}
