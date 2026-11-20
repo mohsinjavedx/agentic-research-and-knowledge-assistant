@@ -33,6 +33,12 @@ Health responses include `Cache-Control: no-store`. API responses carry `X-Reque
 
 `DELETE /api/v1/documents/{id}` deletes a session-owned document and cascades to its embedding batch and chunks. The endpoint requires the session cookie. Missing/invalid session cookies return 401; missing, sample, and other-session documents return the same 404 response.
 
-Session document persistence is idempotent on `(session_id, checksum)`: a repeat returns the existing document ID without creating a second batch or chunk set. A partial unique database index protects this invariant if concurrent requests race. The current repository does not yet expose a public PDF upload or retrieval route; the internal persistence service accepts a session UUID. Any future retrieval query must restrict results to global samples or the current session.
+Session document persistence is idempotent on `(session_id, checksum)`: a repeat returns the existing document ID without creating a second batch or chunk set. A partial unique database index protects this invariant if concurrent requests race. The internal persistence service accepts a session UUID; there is not yet a public PDF upload route.
 
 Expired session documents are deleted by a periodic worker using the strict condition `expires_at < NOW()`. Sample documents are not expired by this worker. OpenAPI is available at `/openapi.json` and `/docs`.
+
+## Dense retrieval
+
+`POST /api/v1/search` requires the anonymous `session_id` cookie and a JSON body containing `query`, optional `document_ids`, and optional `top_k` (1–20, default 5). It searches only ready, unexpired documents owned by the current session plus global sample documents. If a caller explicitly requests any missing or other-session document ID, the endpoint returns the same 404 response.
+
+Each result contains a chunk ID, document ID, one-based page number, text, and cosine similarity. The response includes the configured `similarity_threshold` and `insufficient_evidence`, set when no chunks are found or the best similarity is at or below the threshold. This endpoint returns retrieved evidence only; it does not generate or verify an answer.

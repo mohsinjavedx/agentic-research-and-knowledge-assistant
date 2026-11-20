@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     session_ttl_hours: int = Field(default=24, ge=1, le=24)
     max_upload_mb: int = Field(default=20, ge=1, le=20)
     max_pdf_pages: int = Field(default=100, ge=1, le=100)
+    retrieval_similarity_threshold: float = Field(default=0.5671493153065035, ge=-1, le=1)
     min_text_chars_per_page: int = Field(default=50, ge=1, le=10000)
     max_low_text_page_percent: int = Field(default=80, ge=0, le=99)
     chunk_min_tokens: int = Field(default=600, ge=1, le=8000)

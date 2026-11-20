@@ -10,6 +10,6 @@
 
 All five Phase 2 steps are documented separately, matching the Phase 1 guide layout. Steps 4–5 add checksum idempotency, anonymous session cookies, owner-scoped deletion, and TTL cleanup.
 
-The local PDF indexing CLI, persistence API, and database lifecycle work for Steps 3–5 are implemented and covered by tests. There is not yet a public upload or retrieval route to exercise browser upload and cross-session query isolation, so the complete end-to-end Phase 2 acceptance gate is not demonstrated.
+The local PDF indexing CLI, persistence API, and database lifecycle work for Steps 3–5 are implemented and covered by tests. The session-scoped retrieval route was added in Phase 3 and its PostgreSQL integration test verifies that foreign-session documents are excluded. There is still no public upload route, so browser upload/deduplication is not demonstrated end to end.
 
 See the [evaluation report](../../evaluation-report.md) and [all phase guides](../README.md).

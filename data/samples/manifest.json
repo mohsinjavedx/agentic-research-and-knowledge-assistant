@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "documents": [
+    {
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "doi": "10.1371/journal.pone.0337361",
+      "title": "A novel framework for educational Q&A: Leveraging RAG and Code Interpreters for knowledge retrieval and logical computation",
+      "authors": ["Jin Lu", "Ji Li"],
+      "year": 2025,
+      "license": "CC BY 4.0",
+      "page_count": 23,
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0337361&type=printable",
+      "file": "educational-qa-rag.pdf",
+      "sha256": "f1043f8fbd55e835d26782978c774403c7121e972751bb42656cf77609d8ffda"
+    },
+    {
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "doi": "10.1371/journal.pdig.0000758",
+      "title": "AI-driven personalized nutrition: RAG-based digital health solution for obesity and type 2 diabetes",
+      "authors": ["Anand K. Gavai", "Jos van Hillegersberg"],
+      "year": 2025,
+      "license": "CC BY 4.0",
+      "page_count": 16,
+      "source_url": "https://journals.plos.org/digitalhealth/article/file?id=10.1371/journal.pdig.0000758&type=printable",
+      "file": "personalized-nutrition-rag.pdf",
+      "sha256": "26c38a80358ccab2711403334e93296ecf658b1879c40716003b8a13ebcaac61"
+    },
+    {
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "doi": "10.1371/journal.pone.0329606",
+      "title": "Advancing medical question answering with a knowledge embedding transformer",
+      "authors": [
+        "Xiang Zhu",
+        "Mustaqeem Khan",
+        "Abdelmalik Taleb-Ahmed",
+        "Alice Othmani"
+      ],
+      "year": 2025,
+      "license": "CC BY 4.0",
+      "page_count": 20,
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0329606&type=printable",
+      "file": "medical-qa-knowledge-embedding.pdf",
+      "sha256": "eed335bca835029d6e3551d68fd3dd39fa51313b398b01ffb884fe815532f38b"
+    }
+  ]
+}

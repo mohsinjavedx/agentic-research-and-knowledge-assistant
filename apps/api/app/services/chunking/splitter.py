@@ -46,6 +46,7 @@ class MarkdownChunker:
         overlap_tokens: int = 100,
         count_tokens: Callable[[str], int] = token_count,
         tokenizer_name: str = "cl100k_base",
+        split_oversized_atomic: bool = False,
     ) -> None:
         if not 0 <= overlap_tokens < min_tokens <= max_tokens:
             raise ValueError("Chunk budgets require 0 <= overlap < minimum <= maximum")
@@ -54,11 +55,22 @@ class MarkdownChunker:
         self.overlap_tokens = overlap_tokens
         self.count_tokens = count_tokens
         self.tokenizer_name = tokenizer_name
+        self.split_oversized_atomic = split_oversized_atomic
 
     def _page_spans(self, page: NormalizedPage) -> list[tuple[int, int, bool]]:
         text = page.normalized_text
         blocks = markdown_blocks(text)
-        atomic = [block for block in blocks if block.kind in {"table", "code"}]
+        all_atomic = [block for block in blocks if block.kind in {"table", "code"}]
+        oversized_atomic = (
+            [
+                block
+                for block in all_atomic
+                if self.count_tokens(text[block.start : block.end]) > self.max_tokens
+            ]
+            if self.split_oversized_atomic
+            else []
+        )
+        atomic = [block for block in all_atomic if block not in oversized_atomic]
         result: list[tuple[int, int, bool]] = []
         start = 0
         while start < len(text):
@@ -75,8 +87,33 @@ class MarkdownChunker:
                 else:
                     hard_end = crossing.end
                     oversized = self.count_tokens(text[start:hard_end]) > self.max_tokens
+            else:
+                large_crossing = next(
+                    (block for block in oversized_atomic if block.start < hard_end < block.end),
+                    None,
+                )
+                if large_crossing and large_crossing.start > start:
+                    hard_end = large_crossing.start
             end = hard_end
-            if hard_end < len(text) and not oversized:
+            large_block = next(
+                (block for block in oversized_atomic if block.start <= start < block.end), None
+            )
+            if large_block:
+                line_ends = [
+                    large_block.start + match.end()
+                    for match in re.finditer(r"\n", text[large_block.start : large_block.end])
+                    if start < large_block.start + match.end() <= hard_end
+                ]
+                eligible = [
+                    offset
+                    for offset in line_ends
+                    if self.count_tokens(text[start:offset]) >= self.min_tokens
+                ]
+                if eligible:
+                    end = max(eligible)
+                elif line_ends:
+                    end = max(line_ends)
+            elif hard_end < len(text) and not oversized:
                 # Prefer a section boundary, then paragraphs, sentences, words,
                 # finally Unicode character boundaries for an indivisible long word.
                 headings = [
@@ -135,6 +172,22 @@ class MarkdownChunker:
             )
             if overlapped_atomic:
                 next_start = overlapped_atomic.end
+            else:
+                overlapped_large = next(
+                    (block for block in oversized_atomic if block.start < next_start < block.end),
+                    None,
+                )
+                if overlapped_large:
+                    overlap_line_ends = (
+                        overlapped_large.start + match.end()
+                        for match in re.finditer(
+                            r"\n", text[overlapped_large.start : overlapped_large.end]
+                        )
+                    )
+                    next_start = next(
+                        (offset for offset in overlap_line_ends if next_start <= offset <= end),
+                        next_start,
+                    )
             start = max(start + 1, next_start)
         return result
 
