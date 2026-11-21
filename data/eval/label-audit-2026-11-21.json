@@ -1,0 +1,1234 @@
+{
+  "audit_version": 1,
+  "audit_date": "2026-11-21",
+  "scope": "Independent source-PDF page and answer-support audit of all 30 answerable golden-set questions. No retrieved rankings, LLM/API/DB calls, or changes to golden data.",
+  "input_golden_sha256": "42f32d6905ef49fab322528cfa31417cde826a0866b757f7ad75b3b2c2edcd97",
+  "page_numbering": "One-based PDF page indices; visually checked rendered source footers on selected pages.",
+  "recommendation_policy": "Correct only wrong/missing direct evidence. Preserve adequate original labels, including redundant synthesis pages. Minimal support and alternative evidence sets are recorded separately and must not be appended to labels as jointly required pages.",
+  "source_documents": [
+    {
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "doi": "10.1371/journal.pone.0337361",
+      "title": "A novel framework for educational Q&A: Leveraging RAG and Code Interpreters for knowledge retrieval and logical computation",
+      "authors": [
+        "Jin Lu",
+        "Ji Li"
+      ],
+      "year": 2025,
+      "license": "CC BY 4.0",
+      "page_count": 23,
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0337361&type=printable",
+      "file": "educational-qa-rag.pdf",
+      "sha256": "f1043f8fbd55e835d26782978c774403c7121e972751bb42656cf77609d8ffda"
+    },
+    {
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "doi": "10.1371/journal.pdig.0000758",
+      "title": "AI-driven personalized nutrition: RAG-based digital health solution for obesity and type 2 diabetes",
+      "authors": [
+        "Anand K. Gavai",
+        "Jos van Hillegersberg"
+      ],
+      "year": 2025,
+      "license": "CC BY 4.0",
+      "page_count": 16,
+      "source_url": "https://journals.plos.org/digitalhealth/article/file?id=10.1371/journal.pdig.0000758&type=printable",
+      "file": "personalized-nutrition-rag.pdf",
+      "sha256": "26c38a80358ccab2711403334e93296ecf658b1879c40716003b8a13ebcaac61"
+    },
+    {
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "doi": "10.1371/journal.pone.0329606",
+      "title": "Advancing medical question answering with a knowledge embedding transformer",
+      "authors": [
+        "Xiang Zhu",
+        "Mustaqeem Khan",
+        "Abdelmalik Taleb-Ahmed",
+        "Alice Othmani"
+      ],
+      "year": 2025,
+      "license": "CC BY 4.0",
+      "page_count": 20,
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0329606&type=printable",
+      "file": "medical-qa-knowledge-embedding.pdf",
+      "sha256": "eed335bca835029d6e3551d68fd3dd39fa51313b398b01ffb884fe815532f38b"
+    }
+  ],
+  "summary": {
+    "answerable_questions_audited": 30,
+    "page_corrections": 1,
+    "adequate_original_page_sets": 29,
+    "ambiguous_source_questions": 1,
+    "answerable_questions_with_no_source_support": 0,
+    "preserved_out_of_corpus_questions": 10
+  },
+  "required_page_corrections": [
+    {
+      "id": "education-single-01",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "from_pages": [
+        8
+      ],
+      "to_pages": [
+        7
+      ],
+      "reason": "Direct complete five-dataset list is in section 2.4 on PDF page 7; page 8 does not name AI2_ARC."
+    }
+  ],
+  "ambiguous_questions": [
+    "medical-table-01"
+  ],
+  "unanswerable_questions_among_original_answerable": [],
+  "rendered_and_visually_reviewed_pages": {
+    "educational-qa-rag.pdf": [
+      7,
+      11,
+      14,
+      16,
+      19
+    ],
+    "personalized-nutrition-rag.pdf": [
+      9,
+      10,
+      12
+    ],
+    "medical-qa-knowledge-embedding.pdf": [
+      12,
+      13,
+      15
+    ]
+  },
+  "questions": [
+    {
+      "id": "education-single-01",
+      "question": "Which five benchmarks are used to evaluate the educational question-answering system?",
+      "category": "single_fact",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        8
+      ],
+      "recommended_pages": [
+        7
+      ],
+      "minimal_support_pages": [
+        7
+      ],
+      "evidence": [
+        {
+          "page_number": 7,
+          "excerpt": "2.4 Evaluation datasets: These datasets include AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA."
+        }
+      ],
+      "source_answer": "AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA.",
+      "reason": "The direct five-name list appears in section 2.4 on PDF page 7. Page 8 begins mid-ARC discussion and describes the remaining datasets, so it does not independently supply all five names.",
+      "alternatives": [
+        {
+          "pages": [
+            10
+          ],
+          "reason": "Section 3.3 names the same five datasets explicitly."
+        }
+      ],
+      "original_adequate": false,
+      "audit_confidence": "high",
+      "status": "wrong_page",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-single-02",
+      "question": "How many multiple-choice questions does the E-EVAL benchmark contain?",
+      "category": "single_fact",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        8
+      ],
+      "recommended_pages": [
+        8
+      ],
+      "minimal_support_pages": [
+        8
+      ],
+      "evidence": [
+        {
+          "page_number": 8,
+          "excerpt": "2.4.3 E-EVAL. E-EVAL contains 4,351 multiple-choice questions covering a wide range of subjects including Chinese, English, Politics, History, Ethics, Physics, Chemistry, Mathematics, and Geography."
+        }
+      ],
+      "source_answer": "4,351 multiple-choice questions.",
+      "reason": "Section 2.4.3 directly states the requested count.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-single-03",
+      "question": "What role does the code interpreter play in the proposed educational QA system?",
+      "category": "single_fact",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        3
+      ],
+      "recommended_pages": [
+        3
+      ],
+      "minimal_support_pages": [
+        3
+      ],
+      "evidence": [
+        {
+          "page_number": 3,
+          "excerpt": "The LLM Code Interpreter is capable of explaining and executing generated code snippets, providing the educational question-answering system with the ability to perform calculations and logical reasoning."
+        }
+      ],
+      "source_answer": "It generates/explains and executes code to perform calculations, multi-step mathematical operations, and logical reasoning or verification.",
+      "reason": "The original page directly explains the component role.",
+      "alternatives": [
+        {
+          "pages": [
+            11
+          ],
+          "reason": "Section 3.5 describes generated Python, sandbox execution, automatic debugging, and synthesis into the final answer."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-table-01",
+      "question": "In Table 4, what OpenBookQA accuracy does GPT-4o achieve with RAG and the code interpreter?",
+      "category": "table_lookup",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        14
+      ],
+      "recommended_pages": [
+        14
+      ],
+      "minimal_support_pages": [
+        14
+      ],
+      "evidence": [
+        {
+          "page_number": 14,
+          "excerpt": "Table 4. OpenBookQA experimental results. Columns: 0-shot; 1-shot; 3-shot; CoT; RAG; Code Interpreter; RAG + Code Interpreter. GPT-4o: 75.2; 76.1; 76.3; 84.0; 88.8; 80.0; 93.2."
+        }
+      ],
+      "source_answer": "93.2% accuracy.",
+      "reason": "Rendered Table 4 confirms the GPT-4o row and final combined-system column.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-table-02",
+      "question": "In Table 4, what OpenBookQA accuracy does Gemini-pro-1.5 achieve with RAG and the code interpreter?",
+      "category": "table_lookup",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        14
+      ],
+      "recommended_pages": [
+        14
+      ],
+      "minimal_support_pages": [
+        14
+      ],
+      "evidence": [
+        {
+          "page_number": 14,
+          "excerpt": "Table 4. OpenBookQA experimental results. Columns: 0-shot; 1-shot; 3-shot; CoT; RAG; Code Interpreter; RAG + Code Interpreter. Gemini-pro-1.5: 72.4; 72.5; 73.2; 80.7; 87.1; 78.3; 91.6."
+        }
+      ],
+      "source_answer": "91.6% accuracy.",
+      "reason": "Rendered Table 4 confirms the Gemini-pro-1.5 row and final combined-system column.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-table-03",
+      "question": "In Table 5, what E-EVAL accuracy does GPT-4o reach with RAG and the code interpreter?",
+      "category": "table_lookup",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        16
+      ],
+      "recommended_pages": [
+        16
+      ],
+      "minimal_support_pages": [
+        16
+      ],
+      "evidence": [
+        {
+          "page_number": 16,
+          "excerpt": "Table 5. E-EVAL experimental results. Columns: 0-shot; 1-shot; 3-shot; CoT; RAG; Code Interpreter; RAG + Code Interpreter. GPT-4o: 60.0; 62.2; 63.3; 72.4; 76.5; 71.2; 80.1."
+        }
+      ],
+      "source_answer": "80.1% accuracy.",
+      "reason": "Rendered Table 5 confirms the GPT-4o row and final combined-system column.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-synthesis-01",
+      "question": "Compare GPT-4o's reported RAG-plus-code-interpreter accuracy on OpenBookQA and Textbook Question Answering.",
+      "category": "cross_section_synthesis",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        14,
+        16
+      ],
+      "recommended_pages": [
+        14,
+        16
+      ],
+      "minimal_support_pages": [
+        14,
+        16
+      ],
+      "evidence": [
+        {
+          "page_number": 14,
+          "excerpt": "Table 4. OpenBookQA experimental results. GPT-4o: RAG + Code Interpreter = 93.2."
+        },
+        {
+          "page_number": 16,
+          "excerpt": "Table 6. TQA experimental results. GPT-4o: RAG + Code Interpreter = 70.0. The accompanying analysis also states GPT-4o achieves 70.0% when combined with RAG and Code Interpreter."
+        }
+      ],
+      "source_answer": "GPT-4o reports 93.2% on OpenBookQA and 70.0% on TQA, a 23.2 percentage-point higher accuracy on OpenBookQA.",
+      "reason": "Both pages are required for the two named benchmark values; Table 4 is on page 14 and Table 6 is on page 16.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-synthesis-02",
+      "question": "How does the paper combine retrieved knowledge with code execution, and what safety boundary does it describe for execution?",
+      "category": "cross_section_synthesis",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        3,
+        11
+      ],
+      "recommended_pages": [
+        3,
+        11
+      ],
+      "minimal_support_pages": [
+        11
+      ],
+      "evidence": [
+        {
+          "page_number": 3,
+          "excerpt": "RAG first retrieves relevant external textual resources and then generates answers based on the retrieved information. The LLM Code Interpreter is capable of explaining and executing generated code snippets, providing the educational question-answering system with the ability to perform calculations and logical reasoning."
+        },
+        {
+          "page_number": 11,
+          "excerpt": "The execution environment was designed with a sandbox mechanism to isolate and limit the code's access to system resources (e.g., runtime, memory, network). The prompt specifies: \"If additional knowledge is required, first perform retrieval and then use the retrieved information to answer.\" Calculations are validated using executable code; results are synthesized into the final answer."
+        }
+      ],
+      "source_answer": "Retrieved external knowledge grounds the answer; executable Python supports calculations and logical verification, with results incorporated into the answer. Code runs in a sandbox that isolates and limits runtime, memory, and network access.",
+      "reason": "The original references cover the combination and explicit execution boundary. Page 11 alone provides both via sections 3.5 and 3.6; preserve page 3 as an adequate existing reference rather than weakening the current metric.",
+      "alternatives": [
+        {
+          "pages": [
+            10,
+            11
+          ],
+          "reason": "Page 10 explains retrieve-then-compute in the full setup; page 11 specifies resource-limited sandbox execution."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "education-synthesis-03",
+      "question": "What retrieval limitation does the educational QA study report, and what improvement does it propose?",
+      "category": "cross_section_synthesis",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        17,
+        19
+      ],
+      "recommended_pages": [
+        17,
+        19
+      ],
+      "minimal_support_pages": [
+        19
+      ],
+      "evidence": [
+        {
+          "page_number": 17,
+          "excerpt": "For example, when dealing with questions on recent scientific developments, the frequency and quality of knowledge base updates can impact the accuracy of retrieval results."
+        },
+        {
+          "page_number": 19,
+          "excerpt": "Improvements: access to real-time data APIs (e.g., Google Alerts) and add a time decay factor to the vector index. Occasional failures were noted, particularly when external sources lacked coverage of recent developments or niche topics. This limitation underscores the need for continuously updated knowledge sources and more robust mechanisms to handle knowledge gaps in real time."
+        }
+      ],
+      "source_answer": "Retrieval can fail on recent developments or niche topics when sources are stale or incomplete. The paper proposes continuously updated sources, real-time APIs, and a time-decay factor in the vector index.",
+      "reason": "The original pair is adequate: page 17 discusses retrieval-update failures and page 19 gives limitations and improvements. Page 17 continues section 4.6.1 from page 16. Page 19 alone supplies both the limitation and proposed improvements.",
+      "alternatives": [
+        {
+          "pages": [
+            18,
+            19
+          ],
+          "reason": "Page 18 gives a concrete stale-blog/delayed-update/temporal-filter failure case; page 19 gives the real-time API and time-decay improvements."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": [
+        "The page 18 GPT-5 example is explicitly labeled fictitious in the paper; do not treat its model-context claim as factual."
+      ]
+    },
+    {
+      "id": "education-synthesis-04",
+      "question": "How do the educational QA paper's results support combining external knowledge retrieval with multi-step reasoning?",
+      "category": "cross_section_synthesis",
+      "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+      "original_pages": [
+        3,
+        19
+      ],
+      "recommended_pages": [
+        3,
+        19
+      ],
+      "minimal_support_pages": [
+        19
+      ],
+      "evidence": [
+        {
+          "page_number": 3,
+          "excerpt": "By combining the advantages of RAG and the LLM Code Interpreter, the educational question-answering system proposed in this study enhances user experience and answer quality on multiple levels. RAG effectively addresses the hallucination problem; the Code Interpreter strengthens capabilities in calculations and reasoning."
+        },
+        {
+          "page_number": 19,
+          "excerpt": "Our results across several diverse datasets demonstrate that this hybrid approach addresses many of the limitations observed in traditional QA systems, particularly in complex reasoning tasks, dynamic knowledge retrieval, and multi-step problem solving. The system consistently produced accurate and reliable answers, even when tasks involved multiple logical steps or required external knowledge."
+        }
+      ],
+      "source_answer": "The authors report improved performance across diverse educational datasets: RAG supplies relevant external knowledge, while executable code supports multi-step calculations and logical verification. Their conclusion attributes more accurate, traceable answers to combining these capabilities.",
+      "reason": "The original pages support the mechanism and reported result interpretation. This broad question does not require a particular numeric comparison. Page 19 alone contains the findings and interpretation; preserve both adequate existing references.",
+      "alternatives": [
+        {
+          "pages": [
+            16
+          ],
+          "reason": "Numerical TQA evidence and result analysis: GPT-4o combined 70.0%, RAG 63.2%, code 56.8%, 0-shot 40.1%; text also summarizes the benefits of combining knowledge retrieval and multi-step computation."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-single-01",
+      "question": "Which language model did the personalized nutrition system use, and why was it selected?",
+      "category": "single_fact",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        6
+      ],
+      "recommended_pages": [
+        6
+      ],
+      "minimal_support_pages": [
+        6
+      ],
+      "evidence": [
+        {
+          "page_number": 6,
+          "excerpt": "The machine learning model, LLaMA3, generates the recipes, including ingredient lists, nutritional breakdowns, and preparation instructions. LLaMA3 was selected because it runs locally, ensuring data privacy and compliance with ethical standards by avoiding cloud-based server dependencies."
+        }
+      ],
+      "source_answer": "LLaMA3, selected for local execution, data privacy and ethical/regulatory compliance, integration into clinical workflows, and a balance of accuracy, efficiency, and explainability. GPT-4 was excluded for computational costs and privacy concerns.",
+      "reason": "The original page states both the model name and selection reasons.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-single-02",
+      "question": "Which API supplies the personalized nutrition system's real-time ingredient nutrient data?",
+      "category": "single_fact",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        9
+      ],
+      "recommended_pages": [
+        9
+      ],
+      "minimal_support_pages": [
+        9
+      ],
+      "evidence": [
+        {
+          "page_number": 9,
+          "excerpt": "The system uses a dynamic retrieval of nutrient data from the USDA FoodData Central API to ensure that the nutrient content of each ingredient is accurate and up-to-date."
+        }
+      ],
+      "source_answer": "The USDA FoodData Central API.",
+      "reason": "The original page explicitly names the API.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-single-03",
+      "question": "How many smoothie recipes were generated in the nutrition system's validation experiment?",
+      "category": "single_fact",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        9
+      ],
+      "recommended_pages": [
+        9
+      ],
+      "minimal_support_pages": [
+        9
+      ],
+      "evidence": [
+        {
+          "page_number": 9,
+          "excerpt": "In creating 1,000 smoothie recipes, the model achieved an 80.1% success rate in nutrition validation and a 92% success rate in sustainability validation (Table 1)."
+        }
+      ],
+      "source_answer": "1,000 smoothie recipes.",
+      "reason": "The validation experiment count is directly stated in the results.",
+      "alternatives": [
+        {
+          "pages": [
+            8
+          ],
+          "reason": "The batch-generation section states that the results CSV contains 1,000 generated recipes."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-table-01",
+      "question": "According to Table 1, what percentage of generated recipes passed nutritional validation?",
+      "category": "table_lookup",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        9
+      ],
+      "recommended_pages": [
+        9
+      ],
+      "minimal_support_pages": [
+        9
+      ],
+      "evidence": [
+        {
+          "page_number": 9,
+          "excerpt": "Table 1. Nutritional and sustainability validation results for generated smoothie recipes. Nutritional Validation: Success Rate (%) = 80.1."
+        }
+      ],
+      "source_answer": "80.1%.",
+      "reason": "Rendered Table 1 confirms the nutritional-validation success rate.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-table-02",
+      "question": "According to Table 1, what percentage of recipes passed sustainability validation?",
+      "category": "table_lookup",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        9
+      ],
+      "recommended_pages": [
+        9
+      ],
+      "minimal_support_pages": [
+        9
+      ],
+      "evidence": [
+        {
+          "page_number": 9,
+          "excerpt": "Table 1. Nutritional and sustainability validation results for generated smoothie recipes. Sustainability Validation: Success Rate (%) = 92."
+        }
+      ],
+      "source_answer": "92%.",
+      "reason": "Rendered Table 1 confirms the sustainability-validation success rate.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-table-03",
+      "question": "In Table 2, what is the minimum fiber amount per serving and how is the example recipe classified?",
+      "category": "table_lookup",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        10
+      ],
+      "recommended_pages": [
+        10
+      ],
+      "minimal_support_pages": [
+        10
+      ],
+      "evidence": [
+        {
+          "page_number": 10,
+          "excerpt": "Table 2. Comparison of validated smoothie recipes against dietary thresholds. Fiber (g): Per Serving = 8; Validation Threshold = ? 8; Status = Just Above Minimum."
+        }
+      ],
+      "source_answer": "Minimum fiber threshold: at least 8 g per serving. The example row is labeled \"Just Above Minimum\".",
+      "reason": "Rendered Table 2 confirms the threshold, example value, and exact classification.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": [
+        "The table labels an example of exactly 8 g as \"Just Above Minimum\" despite showing a threshold of ?8 g. Preserve this source wording rather than correcting its arithmetic."
+      ]
+    },
+    {
+      "id": "nutrition-table-04",
+      "question": "In Table 2, what sodium limit per serving is used for validation?",
+      "category": "table_lookup",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        10
+      ],
+      "recommended_pages": [
+        10
+      ],
+      "minimal_support_pages": [
+        10
+      ],
+      "evidence": [
+        {
+          "page_number": 10,
+          "excerpt": "Table 2. Comparison of validated smoothie recipes against dietary thresholds. Sodium (mg): Per Serving = 2400; Validation Threshold = ? 2400; Status = Valid."
+        }
+      ],
+      "source_answer": "At most 2400 mg per serving.",
+      "reason": "Rendered Table 2 confirms the sodium limit; use the paper value without substituting external dietary guidance.",
+      "alternatives": [
+        {
+          "pages": [
+            8
+          ],
+          "reason": "The nutritional-validation threshold list also specifies sodium ?2400 mg per serving."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-synthesis-01",
+      "question": "Compare the reported causes of nutritional-validation failures with the reasons for sustainability-validation failures.",
+      "category": "cross_section_synthesis",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        9,
+        12
+      ],
+      "recommended_pages": [
+        9,
+        12
+      ],
+      "minimal_support_pages": [
+        9
+      ],
+      "evidence": [
+        {
+          "page_number": 9,
+          "excerpt": "Nutritional Validation Success Rate: Achieved 80.1%. Failures were primarily due to high natural sugar content (e.g., bananas) and insufficient fiber levels. Sustainability Validation Success Rate: Achieved 92%. Failures mainly resulted from using out-of-season or imported ingredients, impacting the recipes' life cycle assessment (LCA)."
+        },
+        {
+          "page_number": 12,
+          "excerpt": "Fiber content: While most recipes met the minimum threshold of 8 grams of fiber, many only slightly exceeded this value. Dealing with naturally occurring sugars: the system struggled to manage naturally occurring sugars in fruits like bananas and mangoes. Sustainable substitutions: The system effectively flagged recipes containing out-of-season ingredients but lacked the ability to automatically suggest sustainable alternatives."
+        }
+      ],
+      "source_answer": "Nutrition failures reflect high natural fruit sugars or carbohydrate content and insufficient fiber; sustainability failures reflect out-of-season, imported, or non-local ingredients and the lack of automatic sustainable substitutions.",
+      "reason": "Both original pages are relevant. Page 9 directly compares both failure causes, so page 12 is supporting context rather than essential evidence. Preserve both adequate original references.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "nutrition-synthesis-02",
+      "question": "How does contextual retrieval personalize smoothie recipes, and which constraints are used to validate them?",
+      "category": "cross_section_synthesis",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        6,
+        8
+      ],
+      "recommended_pages": [
+        6,
+        8
+      ],
+      "minimal_support_pages": [
+        6,
+        8
+      ],
+      "evidence": [
+        {
+          "page_number": 6,
+          "excerpt": "Based on user input such as age, BMI and dietary preferences, relevant information is retrieved from this database. This contextual data helps personalize smoothie recipes to meet the specific health needs of individuals struggling with obesity and type 2 diabetes. These documents include nutritional guidelines, smoothie recipes and sustainability principles."
+        },
+        {
+          "page_number": 8,
+          "excerpt": "Recipes are assessed against thresholds: Calories ?350 kcal; Carbohydrates ?50 g; Fiber ?8 g; Sugar ?25 g (no added sugars); Fat ?15 g; Sodium ?2400 mg per serving. Sustainability validation: Ingredients are evaluated for seasonality and local sourcing. A 20% randomized error rate was applied during the validation process."
+        }
+      ],
+      "source_answer": "The system retrieves embedded guidelines, recipes, and sustainability principles using age, BMI, and dietary preferences, then incorporates user restrictions and seasonal ingredients. Validation checks calories ?350 kcal, carbs ?50 g, fiber ?8 g, sugar ?25 g without added sugars, fat ?15 g, sodium ?2400 mg per serving, plus seasonality/local sourcing.",
+      "reason": "Both original pages are necessary for the personalized retrieval mechanism and complete validation criteria.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": [
+        "Pages 7-8 distinguish the virtual nutritionist iterative refinement, claimed to reach 100% compliance, from independent LLM validation. The independent validation uses a 20% randomized error mechanism. These details should not be collapsed into an unconditional compliance claim."
+      ]
+    },
+    {
+      "id": "nutrition-synthesis-03",
+      "question": "What improvements does the paper suggest for the fiber and natural-sugar limitations in its nutrition results?",
+      "category": "cross_section_synthesis",
+      "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "original_pages": [
+        10,
+        12
+      ],
+      "recommended_pages": [
+        10,
+        12
+      ],
+      "minimal_support_pages": [
+        12
+      ],
+      "evidence": [
+        {
+          "page_number": 10,
+          "excerpt": "This could be remedied by including more high-fiber ingredients, such as chia seeds, flax seeds or leafy greens, in future versions of the recipe database. Enhancing ingredient selection, incorporating advanced glycemic load analysis, and exploring alternative LLM setups could help achieve closer to 90% adherence."
+        },
+        {
+          "page_number": 12,
+          "excerpt": "Future iterations should prioritize high-fiber ingredients, such as seeds and leafy greens. Although added sugars were well controlled, the system struggled to manage naturally occurring sugars in fruits like bananas and mangoes. Incorporating advanced techniques, such as glycemic load analysis, could improve recipe suitability for individuals with diabetes."
+        }
+      ],
+      "source_answer": "Prioritize high-fiber ingredients such as chia/flax seeds and leafy greens; refine the ingredient database and selection; use stricter sugar/glycemic assessment, including advanced glycemic load analysis, to handle natural sugars in bananas and mangoes.",
+      "reason": "Both original references directly discuss these improvements. Page 12 alone provides the paired fiber/natural-sugar limitation-and-improvement discussion; preserve both adequate existing references.",
+      "alternatives": [
+        {
+          "pages": [
+            10
+          ],
+          "reason": "Page 10 independently covers adding fiber-rich ingredients, stricter ingredient selection, and advanced glycemic load analysis."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "medical-single-01",
+      "question": "What name does the medical question-answering study give to its proposed system?",
+      "category": "single_fact",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        2
+      ],
+      "recommended_pages": [
+        2
+      ],
+      "minimal_support_pages": [
+        2
+      ],
+      "evidence": [
+        {
+          "page_number": 2,
+          "excerpt": "To address these challenges, we developed a novel question-answering system, the Medical Answering Model (MAM), specifically tailored for the healthcare domain."
+        }
+      ],
+      "source_answer": "Medical Answering Model (MAM).",
+      "reason": "The original page directly names the proposed system.",
+      "alternatives": [
+        {
+          "pages": [
+            3
+          ],
+          "reason": "The Proposed approach section also explicitly names Medical Answering Model (MAM)."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "medical-single-02",
+      "question": "Which three languages are represented in the MEDQA dataset described in the paper?",
+      "category": "single_fact",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        3
+      ],
+      "recommended_pages": [
+        3
+      ],
+      "minimal_support_pages": [
+        3
+      ],
+      "evidence": [
+        {
+          "page_number": 3,
+          "excerpt": "MEDQA, collected from professional medical board exams. Covers three languages: English, simplified Chinese, and traditional Chinese, and contains 12.723, 34.251, and 14.123 questions for each language, respectively."
+        }
+      ],
+      "source_answer": "English, simplified Chinese, and traditional Chinese.",
+      "reason": "The original page explicitly lists the three languages.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "medical-single-03",
+      "question": "Which of the medical system's retrieval approaches performed best according to the authors, and why?",
+      "category": "single_fact",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        6
+      ],
+      "recommended_pages": [
+        6
+      ],
+      "minimal_support_pages": [
+        6
+      ],
+      "evidence": [
+        {
+          "page_number": 6,
+          "excerpt": "Abstract-based search. The third method initiates the search within the Vector_abstract. After identifying the relevant abstracts, the system examines the specific documents that contain these abstracts. According to our testing, this method performs best, likely because the abstracts provide a concise overview that facilitates a more targeted and efficient search during the detailed document stage."
+        }
+      ],
+      "source_answer": "Abstract-based search performed best: abstracts provide a concise overview that enables a more targeted, efficient subsequent document search.",
+      "reason": "The original page explicitly identifies the best approach and the authors' explanation.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "medical-single-04",
+      "question": "What are the four vector-store variants used by the medical answering model?",
+      "category": "single_fact",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        5
+      ],
+      "recommended_pages": [
+        5
+      ],
+      "minimal_support_pages": [
+        5
+      ],
+      "evidence": [
+        {
+          "page_number": 5,
+          "excerpt": "Vector_whole: entirety of all knowledge documents. Vector_name: only names of knowledge documents. Vector_abstract: abstracts of knowledge documents. Vector_document: numerous vector stores, each corresponding to an individual knowledge document."
+        }
+      ],
+      "source_answer": "Vector_whole, Vector_name, Vector_abstract, and Vector_document.",
+      "reason": "The original page lists and defines all four variants.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "medical-table-01",
+      "question": "In Table 4, what MCMLE and USMLE accuracies are reported for MPT-7B-Instruct?",
+      "category": "table_lookup",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        12
+      ],
+      "recommended_pages": [
+        12
+      ],
+      "minimal_support_pages": [
+        12
+      ],
+      "evidence": [
+        {
+          "page_number": 12,
+          "excerpt": "Table 4. Accuracy percentage of different models. First MPT-7B-Instruct row: MCMLE = 19.53; USMLE = 22.15. A later MPT-7B-Instruct row in the same table: MCMLE = -; USMLE = 19.40."
+        }
+      ],
+      "source_answer": "The source table is ambiguous: one MPT-7B-Instruct row reports 19.53% MCMLE and 22.15% USMLE; another reports no MCMLE value (-) and 19.40% USMLE.",
+      "reason": "The original page is correct and remains unchanged. Rendering confirms duplicated row names in the original table, rather than an extraction error. An answer should disclose both rows; a unique pair cannot be justified without disambiguating the question.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "ambiguous_source",
+      "ambiguity": {
+        "type": "duplicate_model_rows",
+        "unique_answer_available": false,
+        "rows": [
+          {
+            "model": "MPT-7B-Instruct",
+            "MCMLE": "19.53",
+            "USMLE": "22.15"
+          },
+          {
+            "model": "MPT-7B-Instruct",
+            "MCMLE": "-",
+            "USMLE": "19.40"
+          }
+        ],
+        "recommended_handling": "Keep question and page label unchanged; require the answer to mention the duplicate rows or explicitly flag ambiguity. Do not silently choose one row."
+      },
+      "source_caveats": [
+        "Several other models are also repeated in Table 4. This audit preserves printed model names and values."
+      ]
+    },
+    {
+      "id": "medical-table-02",
+      "question": "In Table 5, what does the variable Z represent in the medical answering model?",
+      "category": "table_lookup",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        15
+      ],
+      "recommended_pages": [
+        15
+      ],
+      "minimal_support_pages": [
+        15
+      ],
+      "evidence": [
+        {
+          "page_number": 15,
+          "excerpt": "Table 5. Variables in the paper. Z: Knowledge list after retrieval searching."
+        }
+      ],
+      "source_answer": "Z is the knowledge list after retrieval searching.",
+      "reason": "Rendered Table 5 confirms the exact variable definition.",
+      "alternatives": [],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "medical-table-03",
+      "question": "According to the paper's evidence-coverage results, what share of USMLE questions have supporting evidence in the top ten results?",
+      "category": "table_lookup",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        13
+      ],
+      "recommended_pages": [
+        13
+      ],
+      "minimal_support_pages": [
+        13
+      ],
+      "evidence": [
+        {
+          "page_number": 13,
+          "excerpt": "Additionally, 96.9% of MCMLE questions have supporting evidence in the top-10 results, significantly higher than the 56.2% observed in the USMLE dataset."
+        }
+      ],
+      "source_answer": "56.2% of USMLE questions.",
+      "reason": "The original page directly states the requested evidence-coverage result.",
+      "alternatives": [
+        {
+          "pages": [
+            10
+          ],
+          "reason": "Table 1 gives 56.2 in the USMLE column for percentage of questions with evidence in top10 result."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": []
+    },
+    {
+      "id": "medical-synthesis-01",
+      "question": "How do the MCMLE and USMLE evidence-coverage results relate to the model's accuracy on those two datasets?",
+      "category": "cross_section_synthesis",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        11,
+        13
+      ],
+      "recommended_pages": [
+        11,
+        13
+      ],
+      "minimal_support_pages": [
+        13
+      ],
+      "evidence": [
+        {
+          "page_number": 11,
+          "excerpt": "Our MAM system demonstrated an accuracy of 82.92% in the MCMLE testing dataset and 64.02% in the USMLE testing dataset. Table 1 shows that MCMLE includes significantly more questions supported by available background knowledge in the database than USMLE, which affects accuracy."
+        },
+        {
+          "page_number": 13,
+          "excerpt": "MCMLE exhibits superior evidence coverage compared to the USMLE, with 75% of questions supported by full evidence versus 24% in the USMLE. Additionally, 96.9% of MCMLE questions have supporting evidence in the top-10 results, significantly higher than the 56.2% observed in the USMLE dataset. Our model achieved 82.92% accuracy on the MCMLE; on the USMLE, our system scored 64.02%."
+        }
+      ],
+      "source_answer": "MCMLE has more available evidence (75% full evidence; 96.9% top-ten coverage) and higher MAM accuracy (82.92%). USMLE has 24% full evidence and 56.2% top-ten coverage, with 64.02% accuracy. The authors attribute the performance gap partly to this evidence distribution and retrieval dependence.",
+      "reason": "The original pair is adequate. Page 13 alone contains both coverage statistics, both accuracies, and the authors' link between them. Preserve both existing references.",
+      "alternatives": [
+        {
+          "pages": [
+            10,
+            11
+          ],
+          "reason": "Page 10 Table 1 provides coverage statistics and page 11 provides the two MAM accuracies."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": [
+        "This is the paper's explanatory attribution, not evidence that coverage is the sole causal factor."
+      ]
+    },
+    {
+      "id": "medical-synthesis-02",
+      "question": "Trace how a query becomes retrieved evidence in the medical model, including its similarity search method.",
+      "category": "cross_section_synthesis",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        4,
+        6
+      ],
+      "recommended_pages": [
+        4,
+        6
+      ],
+      "minimal_support_pages": [
+        4,
+        6
+      ],
+      "evidence": [
+        {
+          "page_number": 4,
+          "excerpt": "Fig 1. X represents the initial query received by the system. Upon receiving the query, the system performs vector embedding denoted as V. The system applies similarity calculation to process the query with the knowledge K, yielding the search results represented as Z."
+        },
+        {
+          "page_number": 6,
+          "excerpt": "The searching method in MAM uses cosine similarity. The system generates a ranked list of relevant information based on the calculated similarity scores. Higher scores indicate a closer match, and the results are presented in descending order of significance. The system creates a list of results Z based on the similarity scores S and selects the top-k results from Z as the final output."
+        }
+      ],
+      "source_answer": "An input query X is embedded as V, compared with knowledge vectors Ki in database K using cosine similarity, then ranked by descending mapping/similarity score; the top-k results form the retrieved knowledge list Z.",
+      "reason": "Both original pages directly support the query-to-embedding-to-retrieved-evidence trace and named similarity/ranking method.",
+      "alternatives": [
+        {
+          "pages": [
+            5,
+            6
+          ],
+          "reason": "Page 5 describes tokenization, the Stella embedding layer, four vector stores, and retrieval strategies; page 6 provides cosine similarity and top-k ranking."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": [
+        "Equation 1 is written as argmin distance, while the text and Equation 5 specify cosine similarity and descending-score ranking. Preserve the authors' described cosine method and flag a formula inconsistency if discussing the equations in detail."
+      ]
+    },
+    {
+      "id": "medical-synthesis-03",
+      "question": "What differences between MCMLE and USMLE evidence availability help explain the different performance results?",
+      "category": "cross_section_synthesis",
+      "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+      "original_pages": [
+        11,
+        13
+      ],
+      "recommended_pages": [
+        11,
+        13
+      ],
+      "minimal_support_pages": [
+        13
+      ],
+      "evidence": [
+        {
+          "page_number": 11,
+          "excerpt": "Table 1 shows that MCMLE includes significantly more questions supported by available background knowledge in the database than USMLE, which affects accuracy. Our MAM system demonstrated an accuracy of 82.92% in the MCMLE testing dataset and 64.02% in the USMLE testing dataset."
+        },
+        {
+          "page_number": 13,
+          "excerpt": "The MCMLE dataset contains a significantly higher proportion of questions with full or partial evidence and questions for which evidence can be found within the top 10 results, compared to the USMLE. MCMLE: 75% full evidence and 96.9% top-10 supporting evidence. USMLE: 24% full evidence and 56.2% top-10 supporting evidence. Performance is contingent on relevant evidence within the document corpus."
+        }
+      ],
+      "source_answer": "MCMLE offers substantially more supporting background knowledge: 75% full evidence and 96.9% evidence in the top ten, versus USMLE's 24% and 56.2%. Because MAM depends on retrieved evidence, the authors use these differences to explain its higher MCMLE accuracy (82.92%) than USMLE accuracy (64.02%).",
+      "reason": "The original evidence set is adequate and remains unchanged. Page 13 alone includes evidence availability, model performance, and the retrieval-dependence explanation.",
+      "alternatives": [
+        {
+          "pages": [
+            10,
+            11
+          ],
+          "reason": "Table 1 (page 10) additionally gives partial evidence 21% vs 8% and no evidence 4% vs 68%; page 11 gives the accuracy comparison."
+        }
+      ],
+      "original_adequate": true,
+      "audit_confidence": "high",
+      "status": "adequate",
+      "ambiguity": null,
+      "source_caveats": [
+        "The printed source values are retained even where Table 1 coverage percentages may appear conceptually inconsistent. Do not derive adjusted percentages from external expectations."
+      ]
+    }
+  ],
+  "preserved_out_of_corpus_questions": [
+    {
+      "id": "out-of-corpus-01",
+      "question": "What orbital period did the Kepler mission measure for Kepler-90i?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-02",
+      "question": "Which city hosted the 2016 Summer Olympic Games?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-03",
+      "question": "At what temperature does gallium melt in degrees Celsius?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-04",
+      "question": "How many known rings does the planet Uranus have?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-05",
+      "question": "Which scientists received the Nobel Prize for the discovery of gravitational waves?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-06",
+      "question": "What was Brazil's gross domestic product in 2020?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-07",
+      "question": "How many permanent teeth does a typical adult human have?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-08",
+      "question": "Which river forms part of the border between the United States and Mexico?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-09",
+      "question": "What is the average June rainfall in Tokyo?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    },
+    {
+      "id": "out-of-corpus-10",
+      "question": "What were the primary and secondary endpoints in the 2024 randomized trial of HMWHA after laser resurfacing?",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "ground_truth": []
+    }
+  ]
+}

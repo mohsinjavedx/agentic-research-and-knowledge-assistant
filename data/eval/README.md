@@ -13,4 +13,6 @@ cd ..\..
 uv run --project apps/api python scripts/run_retrieval_eval.py
 ```
 
-The script reports measured retrieval metrics and the similarity cutoff calibrated on the out-of-corpus questions. It writes the report to `data/eval/retrieval_metrics.json`; do not hand-edit measured results.
+The script reports measured retrieval metrics and the similarity cutoff calibrated on the out-of-corpus questions. It writes a new timestamped report by default, or accepts `--output <new-path>`; existing reports are never overwritten. Use `--mode dense` or `--mode hybrid` and `--dataset <path>` for explicit comparisons. Reports record a dataset hash and per-query rankings.
+
+The active dataset has schema version 1, revision 2. `golden_set.v1.json` preserves the original bytes; `label-audit-2026-11-21.json` records the independent PDF audit and the sole required correction (education-single-01: page 8 to page 7). The original `retrieval_metrics.json` remains unchanged. Corrected comparison reports are `retrieval-corrected-dense-2026-11-21.json` and `retrieval-corrected-hybrid-2026-11-21.json`.

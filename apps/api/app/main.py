@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.v1.answers import router as answers_router
 from app.api.v1.documents import router as documents_router
 from app.api.v1.health import router as health_router
 from app.api.v1.search import router as search_router
@@ -16,6 +17,7 @@ from app.core.middleware import RequestContextMiddleware
 from app.db.session import Database
 from app.providers.embeddings import create_embedding_provider
 from app.providers.identity import EmbeddingCompatibilityError
+from app.providers.llm import create_llm_provider
 from app.workers.expired_documents import run_expired_document_cleanup
 
 
@@ -28,8 +30,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def lifespan(application: FastAPI) -> AsyncIterator[None]:
         database = Database(settings)
         embedding_provider = create_embedding_provider(settings)
+        llm_provider = create_llm_provider(settings)
         application.state.database = database
         application.state.embedding_provider = embedding_provider
+        application.state.llm_provider = llm_provider
         cleanup_task: asyncio.Task[None] | None = None
         try:
             try:
@@ -58,8 +62,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 try:
                     embedding_provider.close()
                 finally:
-                    await database.close()
-                    logger.info("shutdown.completed")
+                    try:
+                        llm_provider.close()
+                    finally:
+                        await database.close()
+                        logger.info("shutdown.completed")
 
     application = FastAPI(
         title="Research & Knowledge Assistant", version="0.1.0", lifespan=lifespan
@@ -69,6 +76,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(sessions_router)
     application.include_router(documents_router)
     application.include_router(search_router)
+    application.include_router(answers_router)
     application.add_middleware(RequestContextMiddleware)
     application.add_middleware(
         CORSMiddleware,

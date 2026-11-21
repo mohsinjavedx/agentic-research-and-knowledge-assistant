@@ -2,6 +2,7 @@
 
 import argparse
 import asyncio
+import hashlib
 import json
 import sys
 from datetime import UTC, datetime
@@ -20,12 +21,12 @@ from app.core.config import load_settings  # noqa: E402
 from app.db.models import Document  # noqa: E402
 from app.db.session import Database  # noqa: E402
 from app.providers.embeddings import create_embedding_provider  # noqa: E402
-from app.services.retrieval.dense import search_chunks  # noqa: E402
 from app.services.retrieval.metrics import (  # noqa: E402
     calibrate_similarity_threshold,
     compute_retrieval_metrics,
     out_of_corpus_detection_rate,
 )
+from app.services.retrieval.search import RetrievalMode, search_evidence  # noqa: E402
 
 GOLDEN_SET_PATH = REPOSITORY_ROOT / "data" / "eval" / "golden_set.json"
 SAMPLE_MANIFEST_PATH = REPOSITORY_ROOT / "data" / "samples" / "manifest.json"
@@ -33,8 +34,10 @@ REPORT_PATH = REPOSITORY_ROOT / "data" / "eval" / "retrieval_metrics.json"
 TOP_K = 5
 
 
-def _read_inputs() -> tuple[list[dict[str, Any]], list[UUID]]:
-    golden_set = json.loads(GOLDEN_SET_PATH.read_text(encoding="utf-8"))
+def _read_inputs(
+    golden_set_path: Path = GOLDEN_SET_PATH,
+) -> tuple[list[dict[str, Any]], list[UUID]]:
+    golden_set = json.loads(golden_set_path.read_text(encoding="utf-8"))
     manifest = json.loads(SAMPLE_MANIFEST_PATH.read_text(encoding="utf-8"))
     questions = golden_set.get("questions")
     documents = manifest.get("documents")
@@ -85,8 +88,20 @@ def _read_inputs() -> tuple[list[dict[str, Any]], list[UUID]]:
     return questions, sample_ids
 
 
-async def _run() -> dict[str, Any]:
-    questions, sample_ids = _read_inputs()
+def _dataset_metadata(path: Path) -> dict[str, Any]:
+    content = path.read_bytes()
+    return {
+        "path": str(path.resolve()),
+        "sha256": hashlib.sha256(content).hexdigest(),
+        "revision": json.loads(content).get("revision", 1),
+    }
+
+
+async def _run(
+    golden_set_path: Path = GOLDEN_SET_PATH, mode: RetrievalMode = "dense"
+) -> dict[str, Any]:
+    questions, sample_ids = _read_inputs(golden_set_path)
+    dataset_metadata = await asyncio.to_thread(_dataset_metadata, golden_set_path)
     settings = load_settings()
     provider = create_embedding_provider(settings)
     database = Database(settings)
@@ -115,17 +130,39 @@ async def _run() -> dict[str, Any]:
         out_of_corpus_scores: list[float] = []
         answerable_scores: list[float] = []
         latencies_ms: list[float] = []
+        query_results: list[dict[str, Any]] = []
         for item in questions:
             started = perf_counter()
-            results = await search_chunks(
+            results = await search_evidence(
                 database,
                 provider,
                 item["question"],
                 sample_ids,
                 top_k=TOP_K,
+                mode=mode,
             )
             latencies_ms.append((perf_counter() - started) * 1000)
-            maximum_similarity = results[0].cosine_similarity if results else -1.0
+            maximum_similarity = max((item.cosine_similarity for item in results), default=-1.0)
+            query_results.append(
+                {
+                    "id": item["id"],
+                    "question": item["question"],
+                    "answerable": item["answerable"],
+                    "ground_truth": item["ground_truth"],
+                    "latency_ms": latencies_ms[-1],
+                    "max_cosine_similarity": maximum_similarity,
+                    "results": [
+                        {
+                            "chunk_id": str(result.chunk_id),
+                            "document_id": str(result.document_id),
+                            "page_number": result.page_number,
+                            "cosine_similarity": result.cosine_similarity,
+                            "fusion_score": result.fusion_score,
+                        }
+                        for result in results
+                    ],
+                }
+            )
             if item["answerable"]:
                 answerable_scores.append(maximum_similarity)
                 ranked_pages = [(str(result.document_id), result.page_number) for result in results]
@@ -159,6 +196,7 @@ async def _run() -> dict[str, Any]:
             "version": 1,
             "generated_at": datetime.now(UTC).isoformat(),
             "dataset": {
+                **dataset_metadata,
                 "question_count": len(questions),
                 "answerable_count": len(answerable_scores),
                 "out_of_corpus_count": len(out_of_corpus_scores),
@@ -186,19 +224,33 @@ async def _run() -> dict[str, Any]:
                 "Warm local embedding model; query embedding plus database retrieval; "
                 "excludes process/model cold start."
             ),
+            "retrieval_mode": mode,
+            "queries": query_results,
         }
     finally:
         provider.close()
         await database.close()
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
-    report = asyncio.run(_run())
-    REPORT_PATH.write_text(json.dumps(report, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
+    parser.add_argument("--dataset", type=Path, default=GOLDEN_SET_PATH)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--mode", choices=["dense", "hybrid"], default="dense")
+    args = parser.parse_args(argv)
+    output = args.output or REPORT_PATH.with_name(
+        f"retrieval-{args.mode}-{datetime.now(UTC).strftime('%Y%m%dT%H%M%S%fZ')}.json"
+    )
+    if output.exists():
+        parser.error(f"Refusing to overwrite existing report: {output}")
+    if not args.dataset.is_file():
+        parser.error("The dataset path must identify an existing JSON file.")
+    report = asyncio.run(_run(args.dataset, args.mode))
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open("x", encoding="utf-8") as stream:
+        stream.write(json.dumps(report, ensure_ascii=True, indent=2) + "\n")
     print(json.dumps(report["acceptance"], ensure_ascii=True, indent=2))
-    print(f"Full report: {REPORT_PATH}")
+    print(f"Full report: {output}")
     return 0 if report["acceptance"]["passed"] else 1
 
 

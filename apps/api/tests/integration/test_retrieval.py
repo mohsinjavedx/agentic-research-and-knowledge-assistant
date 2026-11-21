@@ -13,6 +13,8 @@ from app.db.session import Database
 from app.main import create_app
 from app.providers.identity import EmbeddingIdentity
 from app.services.indexing.service import persist_document
+from app.services.retrieval.dense import retrieve_chunks
+from app.services.retrieval.hybrid import retrieve_hybrid
 from tests.integration.test_indexing import batch
 
 pytestmark = [
@@ -37,7 +39,8 @@ class FixedQueryEmbeddingProvider:
         pass
 
 
-def test_search_includes_only_samples_and_current_session_documents() -> None:
+@pytest.mark.parametrize("mode", ["dense", "hybrid"])
+def test_search_includes_only_samples_and_current_session_documents(mode: str) -> None:
     session_id, foreign_session_id = uuid4(), uuid4()
     sample = batch()
     owned = batch()
@@ -70,7 +73,8 @@ def test_search_includes_only_samples_and_current_session_documents() -> None:
 
     asyncio.run(persist_fixtures())
     try:
-        with TestClient(create_app()) as client:
+        settings = load_settings().model_copy(update={"retrieval_mode": mode})
+        with TestClient(create_app(settings)) as client:
             client.app.state.embedding_provider = FixedQueryEmbeddingProvider()
             client.cookies.set(SESSION_COOKIE_NAME, str(session_id), path="/api/v1")
             response = client.post("/api/v1/search", json={"query": "evidence", "top_k": 5})
@@ -102,3 +106,32 @@ def test_search_includes_only_samples_and_current_session_documents() -> None:
             assert client.post("/api/v1/search", json={"query": "evidence"}).status_code == 401
     finally:
         asyncio.run(cleanup())
+
+
+def test_keyword_evidence_can_promote_a_distant_vector_without_leaking_foreign_docs() -> None:
+    async def run() -> None:
+        database = Database(load_settings())
+        owned, foreign = batch(), batch()
+        try:
+            await persist_document(database, owned, filename="owned-hybrid.pdf", session_id=uuid4())
+            await persist_document(
+                database, foreign, filename="foreign-hybrid.pdf", session_id=uuid4()
+            )
+            vector = [1.0] + [0.0] * 383
+            dense = await retrieve_chunks(database, vector, [owned.document_id])
+            hybrid = await retrieve_hybrid(database, vector, "stellar spectra", [owned.document_id])
+            assert dense[0].chunk_id == UUID(owned.chunks[0].id)
+            assert hybrid[0].chunk_id == UUID(owned.chunks[1].id)
+            assert hybrid[0].cosine_similarity == pytest.approx(0.0)
+            assert hybrid[0].fusion_score is not None
+            assert {item.document_id for item in hybrid} == {owned.document_id}
+        finally:
+            async with database.sessions() as session, session.begin():
+                await session.execute(
+                    delete(Document).where(
+                        Document.id.in_([owned.document_id, foreign.document_id])
+                    )
+                )
+            await database.close()
+
+    asyncio.run(run())

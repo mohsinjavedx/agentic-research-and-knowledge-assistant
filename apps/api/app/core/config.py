@@ -28,13 +28,16 @@ class Settings(BaseSettings):
     llm_provider: Literal["local", "hosted"]
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "llama3.2:3b"
+    ollama_num_ctx: int = Field(default=2048, ge=512, le=32768)
     hosted_llm_api_key: SecretStr = SecretStr("")
     hosted_llm_model: str = ""
+    hosted_llm_base_url: str = "https://api.groq.com/openai/v1"
     enable_reranker: bool = False
     session_ttl_hours: int = Field(default=24, ge=1, le=24)
     max_upload_mb: int = Field(default=20, ge=1, le=20)
     max_pdf_pages: int = Field(default=100, ge=1, le=100)
     retrieval_similarity_threshold: float = Field(default=0.5671493153065035, ge=-1, le=1)
+    retrieval_mode: Literal["dense", "hybrid"] = "dense"
     min_text_chars_per_page: int = Field(default=50, ge=1, le=10000)
     max_low_text_page_percent: int = Field(default=80, ge=0, le=99)
     chunk_min_tokens: int = Field(default=600, ge=1, le=8000)
@@ -44,7 +47,8 @@ class Settings(BaseSettings):
     rate_limit_research_per_10min: int = Field(default=2, ge=1)
     max_agent_iterations: int = Field(default=4, ge=1, le=4)
     max_tool_calls: int = Field(default=6, ge=1, le=6)
-    llm_timeout_seconds: int = Field(default=45, gt=0, le=120)
+    llm_timeout_seconds: int = Field(default=90, gt=0, le=180)
+    llm_max_output_tokens: int = Field(default=512, ge=128, le=4096)
     db_timeout_seconds: float = Field(default=3, gt=0, le=30)
 
     @field_validator("database_url")
@@ -107,6 +111,24 @@ class Settings(BaseSettings):
             not self.hosted_llm_api_key.get_secret_value() or not self.hosted_llm_model.strip()
         ):
             raise ValueError("HOSTED_LLM_API_KEY and HOSTED_LLM_MODEL are required for hosted LLMs")
+        if self.llm_provider == "local" and self.llm_max_output_tokens >= self.ollama_num_ctx:
+            raise ValueError("LLM_MAX_OUTPUT_TOKENS must be less than OLLAMA_NUM_CTX")
+        for field_name, base_url in (
+            ("ollama_base_url", self.ollama_base_url),
+            ("hosted_llm_base_url", self.hosted_llm_base_url),
+        ):
+            endpoint = urlsplit(base_url)
+            if (
+                endpoint.scheme not in {"https", "http"}
+                or not endpoint.hostname
+                or endpoint.username
+                or endpoint.password
+                or endpoint.query
+                or endpoint.fragment
+            ):
+                raise ValueError(f"{field_name} must be an HTTP(S) URL without credentials")
+        if self.app_env == "production" and urlsplit(self.hosted_llm_base_url).scheme != "https":
+            raise ValueError("production hosted LLM endpoint requires HTTPS")
         if self.app_env == "production" and (
             self.embedding_provider != "api" or self.llm_provider != "hosted"
         ):

@@ -1,0 +1,141 @@
+{
+  "request": {
+    "query": "Which five benchmarks are used to evaluate the educational question-answering system?",
+    "document_ids": [
+      "35d86749-bf13-55ac-8008-231937b43bab"
+    ],
+    "top_k": 5
+  },
+  "status_code": 200,
+  "elapsed_seconds": 3.15,
+  "response": {
+    "answer": "The five benchmarks are AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA.",
+    "citations": [
+      {
+        "claim": "The five benchmarks are AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA.",
+        "chunk_id": "4777fae4-cc65-5989-b217-0b40e0e91031",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 7,
+        "quote": "These datasets include\nAI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA.",
+        "quote_start": 2239,
+        "quote_end": 2340
+      }
+    ],
+    "insufficient_evidence": false,
+    "degraded_mode": false,
+    "evidence": [
+      {
+        "chunk_id": "4777fae4-cc65-5989-b217-0b40e0e91031",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 7,
+        "chunk_index": 14,
+        "text": "**<u>Fig 3. Code interpreter with LLM.</u>**\n\n\n<u>[https://doi.org/10.1371/journal.pone.0337361.g003](https://doi.org/10.1371/journal.pone.0337361.g003)</u>\n\n\nthereby reducing the risk of generating inaccurate answers and improving the reliability of the reasoning process. This\nmethod not only enhances the system\u2019s ability to handle complex tasks but also provides stronger computational and\nlogical verification capabilities for educational question answering systems.\n\nTraditional knowledge base question answering systems perform well in specific domains, but their limitations in\ndynamic knowledge updates, natural language understanding, and complex reasoning restrict their application in broad\neducational contexts. The introduction of large language models has significantly improved question answering systems\u2019\nabilities to generate and understand natural language, but challenges remain in reasoning and computational tasks,\nparticularly with the issue of \u201challucinations\u201d The RAG method, by combining information retrieval with generative models, has alleviated some of these hallucination issues, but its performance in complex mathematical computation and\nlogical reasoning tasks is still insufficient. The introduction of Code Interpreters further enhances the system\u2019s computational and reasoning capabilities, enabling more accurate and reliable answers by generating and executing code.\nBased on this, the educational question answering system proposed in this research, which combines RAG and LLM\nCode Interpreters, aims to leverage the strengths of both technologies to address the shortcomings of existing systems\nand improve the overall performance of educational question answering systems in knowledge acquisition and reasoning tasks, providing a more comprehensive and intelligent solution for question answering systems in the educational\ndomain.\n\n\n**2.4 Evaluation datasets**\n\n\nIn order to comprehensively and objectively evaluate the performance of the proposed educational question-answering\nsystem based on RAG and LLM Code Interpreter in areas such as knowledge updating, reasoning, and computation, this\nstudy selects five representative public datasets that cover different difficulty levels and domains. These datasets include\nAI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA. Each of these datasets has\ndistinct characteristics in terms of question types, subject areas, and difficulty levels, which can help thoroughly validate\nthe system\u2019s adaptability and performance across diverse scenarios.",
+        "cosine_similarity": 0.769254,
+        "fusion_score": null
+      },
+      {
+        "chunk_id": "2d134f23-26c8-59ec-8dc1-3ff414b7f0eb",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 5,
+        "chunk_index": 10,
+        "text": "**2 Related works**\n\n**2.1 Knowledge Base Question Answering Systems (KBQA)**\n\n\nPast educational question answering systems primarily relied on Knowledge Base Question Answering Systems [20\u201323]\n(KBQA), which respond to user queries using per-constructed, structured knowledge bases (such as Freebase [24], Wikidata [25], etc.). These systems are typically built upon Information Retrieval [17] (IR) techniques or Knowledge Graphs\n\n<u>[26] (KG). The system first parses the user\u2019s natural language question, identifies the entities, relationships, and attributes</u>\nwithin it, and then queries the constructed knowledge graph based on this information. In this manner, the system can\nextract relevant information from the predefined knowledge base and generate answers by incorporating the context of\nthe query. In specific domains (such as medicine, law, corporate knowledge, etc.), KBQA systems are generally able to\nprovide relatively accurate answers, particularly when dealing with structured and standardized questions, showcasing\nhigh accuracy in responses [27].\n\nHowever, traditional KBQA systems exhibit significant limitations. First, the construction and maintenance of the knowledge base often rely on substantial manual labor and rule-making. Especially in dynamic fields, the update cycle of the\nknowledge base typically cannot keep pace with real-world changes [28]. For example, when new academic research or\nindustry developments emerge, the relevant knowledge bases may fail to reflect these changes in time, causing the system to be unable to provide the most up-to-date information [21]. Second, methods based on structured knowledge bases\nstill face considerable challenges in dealing with the diversity and complexity of natural language [22]. Natural language\ncontains a large number of ambiguous, uncertain, or polysemous words, and in open-domain questions, traditional knowledge bases often struggle to handle this diversity effectively. When confronted with complex contexts or phenomena such\nas polysemy and metaphor, traditional KBQA systems tend to show insufficient accuracy and relevance in their answers.\nMoreover, traditional KBQA systems lack flexibility and adaptability, especially when addressing cross-disciplinary,\ncross-domain, or novel questions. [23] In such cases, the system\u2019s performance is often unsatisfactory, unable to provide\ncomprehensive and timely answers. In conclusion, these issues limit the effective application of traditional knowledge\nbase question answering systems in broad educational contexts, particularly when handling complex, variable natural\nlanguage queries.",
+        "cosine_similarity": 0.756269,
+        "fusion_score": null
+      },
+      {
+        "chunk_id": "e774f058-e96f-555c-be07-8d08297a8a59",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 8,
+        "chunk_index": 18,
+        "text": "text contexts (6,532\nquestions, accounting for 30.8%). Additionally, the ScienceQA dataset provides detailed explanations for answers and\nrelated instructional videos, which help the system understand the reasoning process behind the questions. Evaluation\non the ScienceQA dataset can assess the model\u2019s reasoning ability when handling Multi-modal information, especially the\ncombination of images and text, and the role of RAG in integrating external knowledge, as shown in <u>Table 1.</u>\n\nThese five datasets vary in question difficulty, subject areas, assessment focuses, and data formats, each offering\nunique strengths. They provide multiple perspectives to evaluate the comprehensive capabilities of the proposed educational question-answering system. By conducting unified experiments and comparative analyses across these datasets,\nwe can quantitatively measure the system\u2019s performance in mathematical reasoning, scientific knowledge understanding,\nmulti-step logical deduction, and real-world educational applications. Additionally, this will help better explore the synergistic effects of RAG and Code Interpreter in handling complex educational question-answering scenarios.\n\n\n**3. Methodology**\n\n\nTo evaluate the effectiveness and applicability of combining Retrieval-Augmented Generation (RAG) with Large Language\nModel (LLM) Code Interpreters in the context of educational question-answering systems, systematic experiments and\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 8 / 23",
+        "cosine_similarity": 0.753126,
+        "fusion_score": null
+      },
+      {
+        "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 19,
+        "chunk_index": 43,
+        "text": "Improvement measures:\n\nImprovements: access to real-time data APIs (e.g., Google Alerts) and add a time decay factor to the vector index.\n\n\n**5. Discussion and conclusion**\n\n\nIn this paper, we introduced a novel educational question-answering (QA) system that integrates Retrieval-Augmented\nGeneration (RAG) and LLM Code Interpreters to enhance the accuracy, reasoning, and adaptability of responses. Our\nresults across several diverse datasets demonstrate that this hybrid approach addresses many of the limitations observed\nin traditional QA systems, particularly in complex reasoning tasks, dynamic knowledge retrieval, and multi-step problem\nsolving.\n\n\n**5.1 Key findings**\n\n\nThe experimental evaluation provided compelling evidence for the effectiveness of integrating RAG and LLM Code Interpreters in educational contexts. The system\u2019s ability to retrieve relevant, up-to-date knowledge was significantly enhanced\nby the RAG framework, making it particularly valuable in educational environments where knowledge is constantly evolving. By supplementing the language model\u2019s inherent knowledge with real-time retrieval from external sources, the system\nensures more accurate and contextually appropriate answers, especially for scientific and technical questions that require\nup-to-date information. Additionally, the Code Interpreter played a crucial role in enabling the system to handle more complex reasoning tasks, such as multi-step calculations, logical reasoning, and algorithmic execution. By generating executable code to support reasoning, the system not only provided more precise answers but also allowed users to trace and\nvalidate the reasoning steps, enhancing transparency and trust. Furthermore, the system showed improved performance\nacross a wide range of educational tasks, from scientific reasoning to cross-disciplinary knowledge integration. It excelled\nin tasks that demanded not just factual recall but also logic, computation, and the synthesis of information from multiple\ndomains. Its robustness was evident in the system\u2019s adaptability to diverse educational scenarios, as demonstrated by\nexperiments on datasets like AI2_ARC, OpenBookQA, and E-EVAL. The system consistently produced accurate and reliable answers, even when tasks involved multiple logical steps or required external knowledge.\n\n\n**5.2 Challenges and limitations**",
+        "cosine_similarity": 0.750182,
+        "fusion_score": null
+      },
+      {
+        "chunk_id": "8bd33edd-65c7-5a2f-b5fd-a71b66408b61",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 2,
+        "chunk_index": 3,
+        "text": "**Data availability statement:** All relevant\ndata are within the paper and its <u>Supporting</u>\n<u>information</u> files.\n\n\n**Funding:** 2025 Guangdong Philosophy and\nSocial Science Planning Project \u201cResearch\non the Synergistic Evolutionary Mechanisms\nof the Governance System of Colleges and\nUniversities and the Development of Students\u2019\nSocio-emotional Competence: Based on\nMultimodal Learning Analysis, GD25CJY29.\n\n\n**Competing interests:** The authors have\ndeclared that no competing interests exist.\n\n\n\neducational Q&A systems, and can significantly improve the learning experience in\nvarious educational contexts.\n\n\n**1. Introduction**\n\n\nThe educational question-answering system is playing an increasingly important\nrole in modern education [1]. With the increasing demand for personalized learning, students not only expect tailored guidance according to their individual learning\nprogress and comprehension levels, but also require timely feedback and assistance\nduring the learning process, especially when there is insufficient teacher support.\nTraditional teaching models, which rely on face-to-face instruction, often fail to meet\nthe immediate needs of large student populations, particularly during peak periods\nor in resource-limited educational environments. Therefore, automated educational\n\u00adquestion-answering systems have become crucial tools to fill this gap, aiming to\nenhance students\u2019 learning efficiency and outcomes by providing accurate and personalized responses [2]. However, traditional machine learning-based educational\nquestion-answering systems still face significant challenges in terms of knowledge\nupdates and reasoning capabilities [3]. First, traditional machine learning models\ntypically rely on static datasets for training, which have limitations in terms of timeliness and comprehensiveness of knowledge, making them inadequate for rapidly\nevolving domains. For example, advancements in science and technology, emerging\nsocial events, and the continuous updating of academic knowledge all demand that\neducational question-answering systems dynamically acquire and integrate the latest\ninformation. Second, traditional models have limited reasoning abilities and struggle\nto handle complex logic or mathematical reasoning tasks. This limitation is especially\nevident when facing problems that require multi-step calculations, rigorous logical\ndeductions, or deep comprehension. Furthermore, traditional systems perform poorly\nwhen handling open-ended questions, often failing to provide flexible and effective\nsolutions, which compromises the accuracy and relevance of the answers.",
+        "cosine_similarity": 0.748915,
+        "fusion_score": null
+      }
+    ],
+    "used_evidence": [
+      {
+        "chunk_id": "4777fae4-cc65-5989-b217-0b40e0e91031",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 7,
+        "chunk_index": 14,
+        "text": "**2.4 Evaluation datasets**\n\n\nIn order to comprehensively and objectively evaluate the performance of the proposed educational question-answering\nsystem based on RAG and LLM Code Interpreter in areas such as knowledge updating, reasoning, and computation, this\nstudy selects five representative public datasets that cover different difficulty levels and domains. These datasets include\nAI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA. Each of these datasets has\ndistinct characteristics in terms of question types, subject areas, and difficulty levels, which can help thoroughly validate\nthe system\u2019s adaptability and performance across diverse scenarios.",
+        "cosine_similarity": 0.769254,
+        "fusion_score": null,
+        "context_index": 0,
+        "retrieval_index": 0,
+        "start": 1876,
+        "end": 2561
+      },
+      {
+        "chunk_id": "2d134f23-26c8-59ec-8dc1-3ff414b7f0eb",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 5,
+        "chunk_index": 10,
+        "text": "**2.1 Knowledge Base Question Answering Systems (KBQA)**\n\n\nPast educational question answering systems primarily relied on Knowledge Base Question Answering Systems [20\u201323]\n(KBQA), which respond to user queries using per-constructed, structured knowledge bases (such as Freebase [24], Wikidata [25], etc.). These systems are typically built upon Information Retrieval [17] (IR) techniques or Knowledge Graphs",
+        "cosine_similarity": 0.756269,
+        "fusion_score": null,
+        "context_index": 1,
+        "retrieval_index": 1,
+        "start": 21,
+        "end": 429
+      },
+      {
+        "chunk_id": "e774f058-e96f-555c-be07-8d08297a8a59",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 8,
+        "chunk_index": 18,
+        "text": "These five datasets vary in question difficulty, subject areas, assessment focuses, and data formats, each offering\nunique strengths. They provide multiple perspectives to evaluate the comprehensive capabilities of the proposed educational question-answering system. By conducting unified experiments and comparative analyses across these datasets,\nwe can quantitatively measure the system\u2019s performance in mathematical reasoning, scientific knowledge understanding,\nmulti-step logical deduction, and real-world educational applications. Additionally, this will help better explore the synergistic effects of RAG and Code Interpreter in handling complex educational question-answering scenarios.",
+        "cosine_similarity": 0.753126,
+        "fusion_score": null,
+        "context_index": 2,
+        "retrieval_index": 2,
+        "start": 492,
+        "end": 1187
+      },
+      {
+        "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 19,
+        "chunk_index": 43,
+        "text": "**5. Discussion and conclusion**\n\n\nIn this paper, we introduced a novel educational question-answering (QA) system that integrates Retrieval-Augmented\nGeneration (RAG) and LLM Code Interpreters to enhance the accuracy, reasoning, and adaptability of responses. Our\nresults across several diverse datasets demonstrate that this hybrid approach addresses many of the limitations observed\nin traditional QA systems, particularly in complex reasoning tasks, dynamic knowledge retrieval, and multi-step problem\nsolving.",
+        "cosine_similarity": 0.750182,
+        "fusion_score": null,
+        "context_index": 3,
+        "retrieval_index": 3,
+        "start": 140,
+        "end": 654
+      },
+      {
+        "chunk_id": "8bd33edd-65c7-5a2f-b5fd-a71b66408b61",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 2,
+        "chunk_index": 3,
+        "text": "**1. Introduction**\n\n\nThe educational question-answering system is playing an increasingly important\nrole in modern education [1]. With the increasing demand for personalized learning, students not only expect tailored guidance according to their individual learning\nprogress and comprehension levels, but also require timely feedback and assistance\nduring the learning process, especially when there is insufficient teacher support.\nTraditional teaching models, which rely on face-to-face instruction, often fail to meet\nthe immediate needs of large student populations, particularly during peak periods\nor in resource-limited educational environments. Therefore, automated educational\n\u00adquestion-answering systems have become crucial tools to fill this gap, aiming to\nenhance students\u2019 learning efficiency and outcomes by providing accurate and personalized responses [2]. However, traditional machine learning-based educational\nquestion-answering systems still face significant challenges in terms of knowledge\nupdates and reasoning capabilities [3]. First, traditional machine learning models\ntypically rely on static datasets for training, which have limitations in terms of timeliness and comprehensiveness of knowledge, making them inadequate for rapidly\nevolving domains. For example, advancements in science and technology, emerging\nsocial events, and the continuous updating of academic knowledge all demand that\neducational question-answering systems dynamically acquire and integrate the latest\ninformation. Second, traditional models have limited reasoning abilities and struggle\nto handle complex logic or mathematical reasoning tasks. This limitation is especially\nevident when facing problems that require multi-step calculations, rigorous logical\ndeductions, or deep comprehension. Furthermore, traditional systems perform poorly\nwhen handling open-ended questions, often failing to provide flexible and effective\nsolutions, which compromises the accuracy and relevance of the answers.",
+        "cosine_similarity": 0.748915,
+        "fusion_score": null,
+        "context_index": 4,
+        "retrieval_index": 4,
+        "start": 624,
+        "end": 2625
+      }
+    ]
+  }
+}

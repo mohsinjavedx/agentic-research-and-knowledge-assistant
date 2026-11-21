@@ -8,7 +8,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 8}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 7
+        }
       ]
     },
     {
@@ -17,7 +20,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 8}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8
+        }
       ]
     },
     {
@@ -26,7 +32,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 3}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3
+        }
       ]
     },
     {
@@ -35,7 +44,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 14}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14
+        }
       ]
     },
     {
@@ -44,7 +56,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 14}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14
+        }
       ]
     },
     {
@@ -53,7 +68,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 16}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16
+        }
       ]
     },
     {
@@ -62,8 +80,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 14},
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 16}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16
+        }
       ]
     },
     {
@@ -72,8 +96,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 3},
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 11}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 11
+        }
       ]
     },
     {
@@ -82,8 +112,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 17},
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 19}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 17
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19
+        }
       ]
     },
     {
@@ -92,8 +128,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 3},
-        {"document_id": "35d86749-bf13-55ac-8008-231937b43bab", "page_number": 19}
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19
+        }
       ]
     },
     {
@@ -102,7 +144,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 6}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6
+        }
       ]
     },
     {
@@ -111,7 +156,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
       ]
     },
     {
@@ -120,7 +168,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
       ]
     },
     {
@@ -129,7 +180,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
       ]
     },
     {
@@ -138,7 +192,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
       ]
     },
     {
@@ -147,7 +204,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 10}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10
+        }
       ]
     },
     {
@@ -156,7 +216,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 10}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10
+        }
       ]
     },
     {
@@ -165,8 +228,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 9},
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 12}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        },
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12
+        }
       ]
     },
     {
@@ -175,8 +244,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 6},
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 8}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6
+        },
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8
+        }
       ]
     },
     {
@@ -185,8 +260,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 10},
-        {"document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33", "page_number": 12}
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10
+        },
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12
+        }
       ]
     },
     {
@@ -195,7 +276,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 2}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 2
+        }
       ]
     },
     {
@@ -204,7 +288,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 3}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3
+        }
       ]
     },
     {
@@ -213,7 +300,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 6}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 6
+        }
       ]
     },
     {
@@ -222,7 +312,10 @@
       "category": "single_fact",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 5}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 5
+        }
       ]
     },
     {
@@ -231,7 +324,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 12}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 12
+        }
       ]
     },
     {
@@ -240,7 +336,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 15}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 15
+        }
       ]
     },
     {
@@ -249,7 +348,10 @@
       "category": "table_lookup",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 13}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13
+        }
       ]
     },
     {
@@ -258,8 +360,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 11},
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 13}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11
+        },
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13
+        }
       ]
     },
     {
@@ -268,8 +376,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 4},
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 6}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 4
+        },
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 6
+        }
       ]
     },
     {
@@ -278,8 +392,14 @@
       "category": "cross_section_synthesis",
       "answerable": true,
       "ground_truth": [
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 11},
-        {"document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5", "page_number": 13}
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11
+        },
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13
+        }
       ]
     },
     {
@@ -352,5 +472,7 @@
       "answerable": false,
       "ground_truth": []
     }
-  ]
+  ],
+  "revision": 2,
+  "label_audit": "label-audit-2026-11-21.json"
 }
