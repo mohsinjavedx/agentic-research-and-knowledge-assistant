@@ -23,6 +23,13 @@ class JsonFormatter(logging.Formatter):
             "latency_ms",
             "error_code",
             "recovered_documents",
+            "scope_ms",
+            "embedding_ms",
+            "vector_search_ms",
+            "generation_ms",
+            "total_ms",
+            "evidence_count",
+            "llm_called",
         ):
             if hasattr(record, key):
                 payload[key] = getattr(record, key)

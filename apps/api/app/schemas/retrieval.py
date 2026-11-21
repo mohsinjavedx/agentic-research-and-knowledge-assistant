@@ -1,3 +1,4 @@
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -33,9 +34,11 @@ class SearchResult(BaseModel):
     chunk_index: int
     text: str
     cosine_similarity: float
+    fusion_score: float | None = None
 
 
 class SearchResponse(BaseModel):
     results: list[SearchResult]
     similarity_threshold: float
     insufficient_evidence: bool
+    retrieval_mode: Literal["dense", "hybrid"] = "dense"

@@ -1,0 +1,493 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "provider": "groq",
+  "results": [
+    {
+      "id": "education-single-02",
+      "request": {
+        "query": "How many multiple-choice questions does the E-EVAL benchmark contain?",
+        "top_k": 5,
+        "document_ids": [
+          "35d86749-bf13-55ac-8008-231937b43bab"
+        ]
+      },
+      "status_code": 200,
+      "elapsed_seconds": 1.39,
+      "quote_provenance_checks": [
+        true
+      ],
+      "response": {
+        "answer": "The E-EVAL benchmark contains 4,351 multiple-choice questions.",
+        "citations": [
+          {
+            "claim": "The E-EVAL benchmark contains 4,351 multiple-choice questions.",
+            "chunk_id": "628a96e4-e877-5547-821a-2dd9981483f3",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 8,
+            "quote": "E-EVAL contains 4,351 multiple-choice questions covering a wide range of subjects including\nChinese, English, Politics, History, Ethics, Physics, Chemistry, Mathematics, and Geography, with diverse question\ntypes such as multiple-choice, fill-in-the-blank, short-answer, and multi-step reasoning questions.",
+            "quote_start": 1193,
+            "quote_end": 1499
+          }
+        ],
+        "insufficient_evidence": false,
+        "degraded_mode": false,
+        "evidence": [
+          {
+            "chunk_id": "d67d0e4e-9505-50a3-b2e2-32a7a79279e5",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 14,
+            "chunk_index": 34,
+            "text": "/journal.pone.0337361.t004)</u>\n\n\n**4.3 E-EVAL experimental results**\n\n\nE-EVAL is a Chinese K-12 educational dataset with various types of questions, particularly focusing on spelling errors,\nsentence understanding, and cross-disciplinary knowledge integration. As shown in <u>Fig 6</u> and <u>Table 5, EVAL Accuracy</u>\nComparison Chart on different LLM.\n\n**Analysis:** On the E-EVAL dataset, all models exhibit more balanced performance compared to the other datasets.\nGpt-4o demonstrates strong reasoning and cross-disciplinary capabilities once again. With RAG and Code Interpreter,\nthe accuracy shows significant improvement, particularly in handling spelling errors and sentence comprehension. RAG\u2019s\nknowledge base retrieval and Code Interpreter\u2019s multi-step reasoning help the model better understand complex educational scenarios.\n\n\n**4.4 Textbook Question Answering (TQA) experimental results**\n\n\nTQA is a dataset based on high school science textbooks, containing text, images, and videos, designed to assess a\nmodel\u2019s ability to process multi-modal information.\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 14 / 23",
+            "cosine_similarity": 0.729938,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "c09418f6-ea0f-5926-af29-5fc4a79c53ee",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 8,
+            "chunk_index": 17,
+            "text": "reasoning questions. Compared to the other\ndatasets, E-EVAL places a greater emphasis on assessing the model\u2019s performance in real educational contexts, such as\nthe ability to handle misspellings, long-sentence comprehension, reasoning chain completeness, and dynamic invocation\nof knowledge across different subjects. Evaluation on this dataset can verify the system\u2019s adaptability and robustness in\nmulti-subject and multi-question-type scenarios and provide insights into the user experience in real educational settings.\n\n**2.4.4 Textbook Question Answering (TQA).** The TQA dataset comes from high school science textbooks and\nincludes 1,076 course contents from life sciences, Earth sciences, and physical sciences [40]. Each course content\nconsists of text paragraphs, tables, and natural images, with each lesson containing a vocabulary section that defines\nscientific concepts introduced in the lesson, along with a summary paragraph that briefly outlines the key concepts. The\nTQA dataset includes a total of 78,338 sentences and 3,455 images, and each lesson is also linked to online teaching\nvideos to help students better understand concepts through visual representations. Evaluation on the TQA dataset can\nvalidate the effectiveness of the RAG framework in retrieving external textbook knowledge and integrating it with pretrained models, as well as the performance of the Code Interpreter in complex Multi-modal educational contexts.\n\n**2.4.5 ScienceQA.** The ScienceQA [41] dataset consists of 21,208 multiple-choice questions from elementary and high\nschool science courses, with the majority of the questions combining text and image content. The questions in this dataset\nare divided into three categories: questions with image context (10,332 questions, accounting for 48.7%), questions with\ntext context (10,220 questions, accounting for 48.2%), and questions containing both image and text contexts (6,532\nquestions, accounting for 30.8%). Additionally, the ScienceQA dataset provides detailed explanations for answers and\nrelated instructional videos, which help the system understand the reasoning process behind the questions. Evaluation\non the ScienceQA dataset can assess the model\u2019s reasoning ability when handling Multi-modal information, especially the\ncombination of images and text, and the role of RAG in integrating external knowledge, as shown in <u>Table 1.</u>",
+            "cosine_similarity": 0.728813,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "628a96e4-e877-5547-821a-2dd9981483f3",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 8,
+            "chunk_index": 16,
+            "text": "multi-disciplinary knowledge integration and complex natural language understanding, as well as the synergistic effect of\nthe RAG mechanism in retrieving external scientific knowledge and the Code Interpreter in logical verification and auxiliary\ncomputation processes.\n\n**2.4.2 OpenBookQA.** OpenBookQA [38], also proposed by the Allen Institute for AI, aims to test a model\u2019s\nunderstanding and reasoning abilities in science. Unlike typical multiple-choice question datasets, the questions\nin OpenBookQA often require the invocation of multiple scientific facts and reasoning steps to arrive at the correct\nanswer. The dataset includes an \u201copen-book\u201d science knowledge manual that the model is expected to use along with\nother external knowledge when answering questions. Therefore, evaluation on OpenBookQA can further validate the\neffectiveness of the RAG framework in retrieving external knowledge and combining it with pre-trained models, as well as\nthe role of the Code Interpreter in multi-step reasoning and complex logical judgments.\n\n**2.4.3 E-EVAL.** E-EVAL [39] is the first comprehensive evaluation benchmark dataset specifically designed for the K-12\neducation domain in China. E-EVAL contains 4,351 multiple-choice questions covering a wide range of subjects including\nChinese, English, Politics, History, Ethics, Physics, Chemistry, Mathematics, and Geography, with diverse question\ntypes such as multiple-choice, fill-in-the-blank, short-answer, and multi-step reasoning questions. Compared to the other\ndatasets, E-EVAL places a greater emphasis on assessing the model\u2019s performance in real educational contexts, such as\nthe ability to handle misspellings, long-sentence comprehension, reasoning chain completeness, and dynamic invocation\nof knowledge across different subjects. Evaluation on this dataset can verify the system\u2019s adaptability and robustness in\nmulti-subject and multi-question-type scenarios and provide insights into the user experience in real educational settings.",
+            "cosine_similarity": 0.724367,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "2a6a8dc2-2821-55eb-9277-40624263fc2c",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 9,
+            "chunk_index": 19,
+            "text": "**Table 1. Datasets To EVAL.**\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n|Dataset|Institution|Data Size|Source|Open|Modality|Difficulty|\n|---|---|---|---|---|---|---|\n|AI2_ARC|Allen Institute<br>for AI|~7,787 questions|US K-12 science exams<br>(Physics/Chem/Bio)|Yes|Text<br>(Multiple-choice)|Medium-High|\n|OpenBookQA|Allen Institute<br>for AI|~6,000 questions|\u201cOpen-book\u201d science man-<br>ual\u2009+\u2009external data|Yes|Text<br>(Multiple-choice)|Medium (multi-step)|\n|E-EVAL|E-EVAL team<br>(China)|4,351 questions|Chinese K-12, multi-subject|Mostly|Text|Varied|\n|TQA|Allen Institute<br>for AI|78,338 sentences\u2009+\u20093,455<br>images|US high school science<br>textbooks|Yes|Text\u2009+\u2009Images|Medium-High<br>(textbook)|\n|ScienceQA|Collaborative<br>institutions|21,208 multiple-choice|Primary/secondary science,<br>often text\u2009+\u2009images|Yes|Text\u2009+\u2009Images|Medium-High<br>(cross-disciplinary)|\n\n\n\n<u>[https://doi.org/10.1371/journal.pone.0337361.t001](https://doi.org/10.1371/journal.pone.0337361.t001)</u>\n\n\nevaluations were conducted on five publicly available datasets AI2_ARC, OpenBookQA, E-EVAL, Textbook Question\nAnswering (TQA), and ScienceQA. This section provides a detailed description of the models used, the experimental procedure, the evaluation framework, and the implementation details. This article does not contain any studies with human\nparticipants or animals performed by any of the authors.\n\n\n**3.1 Description of the LLM Models under evaluation**",
+            "cosine_similarity": 0.699963,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "1163aa1e-7ea7-5a40-9e16-99c65114be68",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 12,
+            "chunk_index": 27,
+            "text": "where errors were categorized and analyzed based on retrieval issues, LLM misinterpretations, or code execution errors,\nand the reasoning process for multi-step inferences was visualized to assess whether RAG and Code Interpreter combinations significantly improved interoperability and answer quality.\n\n\n**3.8 Evaluation metrics**\n\n\nGiven that the primary datasets (AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA\nconsist of multiple-choice questions, accuracy was chosen as the primary evaluation metric. The same evaluation\napproach was applied to the multiple-choice portion of the E-EVAL dataset.\n\n\n**3.9 Implementation and environmental setup**\n\n\nThe experiments were conducted on high-performance servers or cloud services equipped with GPU clusters. A secure\nsandbox environment was set up for executing code, with resources strictly limited. The retrieval database (Milvus/Faiss)\nwas hosted on a separate server or in a Docker container on the same server. Both Gemma2-9B and Llama-3.5-8B models could be deployed on a single A100 40G GPU. The software environment included Python 3.9+ and various scientific\nlibraries (e.g., NumPy, SymPy, pandas), vector retrieval tools (Sentence-BERT, FAISS, Milvus), and APIs or offline inference frameworks for the LLMs. As shown in <u>Table 2, for models like GPT-4o and Claude-3.5, Gemini-pro-1.5 cloud-based</u>\ncommercial APIs were used, while Gemma2-8B, and Llama-3.5-8B were deployed locally on GPUs. The Code Interpreter\nwas integrated with each LLM via conversational protocols, allowing real-time code generation and execution.\n\nThrough these methodologies, this study systematically evaluated the integration of RAG and Code Interpreter in educational question-answering systems, aiming to provide both theoretical and practical insights for future system optimizations.\n\n\n**3.10 Details of relationship management**\n\n\nIn order to ensure the reliability and reprehensibility of code execution, a multi-level error handling mechanism is implemented in the system with the following flow.\n\nFirst, a scientific sandbox environment architecture was constructed to encapsulate the Python 3.10 runtime environment using Docker containers for containerized isolation.",
+            "cosine_similarity": 0.691997,
+            "fusion_score": null
+          }
+        ],
+        "used_evidence": [
+          {
+            "chunk_id": "d67d0e4e-9505-50a3-b2e2-32a7a79279e5",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 14,
+            "chunk_index": 34,
+            "text": "**4.3 E-EVAL experimental results**\n\n\nE-EVAL is a Chinese K-12 educational dataset with various types of questions, particularly focusing on spelling errors,\nsentence understanding, and cross-disciplinary knowledge integration. As shown in <u>Fig 6</u> and <u>Table 5, EVAL Accuracy</u>\nComparison Chart on different LLM.",
+            "cosine_similarity": 0.729938,
+            "fusion_score": null,
+            "context_index": 0,
+            "retrieval_index": 0,
+            "start": 34,
+            "end": 355
+          },
+          {
+            "chunk_id": "c09418f6-ea0f-5926-af29-5fc4a79c53ee",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 8,
+            "chunk_index": 17,
+            "text": "**2.4.5 ScienceQA.** The ScienceQA [41] dataset consists of 21,208 multiple-choice questions from elementary and high\nschool science courses, with the majority of the questions combining text and image content. The questions in this dataset\nare divided into three categories: questions with image context (10,332 questions, accounting for 48.7%), questions with\ntext context (10,220 questions, accounting for 48.2%), and questions containing both image and text contexts (6,532\nquestions, accounting for 30.8%). Additionally, the ScienceQA dataset provides detailed explanations for answers and\nrelated instructional videos, which help the system understand the reasoning process behind the questions. Evaluation\non the ScienceQA dataset can assess the model\u2019s reasoning ability when handling Multi-modal information, especially the\ncombination of images and text, and the role of RAG in integrating external knowledge, as shown in <u>Table 1.</u>",
+            "cosine_similarity": 0.728813,
+            "fusion_score": null,
+            "context_index": 1,
+            "retrieval_index": 1,
+            "start": 1451,
+            "end": 2398
+          },
+          {
+            "chunk_id": "628a96e4-e877-5547-821a-2dd9981483f3",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 8,
+            "chunk_index": 16,
+            "text": "**2.4.3 E-EVAL.** E-EVAL [39] is the first comprehensive evaluation benchmark dataset specifically designed for the K-12\neducation domain in China. E-EVAL contains 4,351 multiple-choice questions covering a wide range of subjects including\nChinese, English, Politics, History, Ethics, Physics, Chemistry, Mathematics, and Geography, with diverse question\ntypes such as multiple-choice, fill-in-the-blank, short-answer, and multi-step reasoning questions. Compared to the other\ndatasets, E-EVAL places a greater emphasis on assessing the model\u2019s performance in real educational contexts, such as\nthe ability to handle misspellings, long-sentence comprehension, reasoning chain completeness, and dynamic invocation\nof knowledge across different subjects. Evaluation on this dataset can verify the system\u2019s adaptability and robustness in\nmulti-subject and multi-question-type scenarios and provide insights into the user experience in real educational settings.",
+            "cosine_similarity": 0.724367,
+            "fusion_score": null,
+            "context_index": 2,
+            "retrieval_index": 2,
+            "start": 1045,
+            "end": 2003
+          },
+          {
+            "chunk_id": "2a6a8dc2-2821-55eb-9277-40624263fc2c",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 9,
+            "chunk_index": 19,
+            "text": "**Table 1. Datasets To EVAL.**\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n|Dataset|Institution|Data Size|Source|Open|Modality|Difficulty|\n|---|---|---|---|---|---|---|\n|AI2_ARC|Allen Institute<br>for AI|~7,787 questions|US K-12 science exams<br>(Physics/Chem/Bio)|Yes|Text<br>(Multiple-choice)|Medium-High|\n|OpenBookQA|Allen Institute<br>for AI|~6,000 questions|\u201cOpen-book\u201d science man-<br>ual\u2009+\u2009external data|Yes|Text<br>(Multiple-choice)|Medium (multi-step)|\n|E-EVAL|E-EVAL team<br>(China)|4,351 questions|Chinese K-12, multi-subject|Mostly|Text|Varied|\n|TQA|Allen Institute<br>for AI|78,338 sentences\u2009+\u20093,455<br>images|US high school science<br>textbooks|Yes|Text\u2009+\u2009Images|Medium-High<br>(textbook)|\n|ScienceQA|Collaborative<br>institutions|21,208 multiple-choice|Primary/secondary science,<br>often text\u2009+\u2009images|Yes|Text\u2009+\u2009Images|Medium-High<br>(cross-disciplinary)|",
+            "cosine_similarity": 0.699963,
+            "fusion_score": null,
+            "context_index": 3,
+            "retrieval_index": 3,
+            "start": 0,
+            "end": 848
+          },
+          {
+            "chunk_id": "1163aa1e-7ea7-5a40-9e16-99c65114be68",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 12,
+            "chunk_index": 27,
+            "text": "**3.8 Evaluation metrics**\n\n\nGiven that the primary datasets (AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA\nconsist of multiple-choice questions, accuracy was chosen as the primary evaluation metric. The same evaluation\napproach was applied to the multiple-choice portion of the E-EVAL dataset.",
+            "cosine_similarity": 0.691997,
+            "fusion_score": null,
+            "context_index": 4,
+            "retrieval_index": 4,
+            "start": 305,
+            "end": 631
+          }
+        ]
+      }
+    },
+    {
+      "id": "education-table-01",
+      "request": {
+        "query": "In Table 4, what OpenBookQA accuracy does GPT-4o achieve with RAG and the code interpreter?",
+        "top_k": 5,
+        "document_ids": [
+          "35d86749-bf13-55ac-8008-231937b43bab"
+        ]
+      },
+      "status_code": 200,
+      "elapsed_seconds": 1.54,
+      "quote_provenance_checks": [
+        true
+      ],
+      "response": {
+        "answer": "GPT-4o achieves 93.2% accuracy on OpenBookQA with RAG and the code interpreter.",
+        "citations": [
+          {
+            "claim": "GPT-4o achieves 93.2% accuracy on OpenBookQA with RAG and the code interpreter.",
+            "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 13,
+            "quote": "the GPT-4o and Gemini-pro-1.5 models achieve accuracy of 93.2% and\n91.6%, respectively, when RAG and Code Interpreter are used.",
+            "quote_start": 880,
+            "quote_end": 1007
+          }
+        ],
+        "insufficient_evidence": false,
+        "degraded_mode": false,
+        "evidence": [
+          {
+            "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 13,
+            "chunk_index": 31,
+            "text": ", and CoT). This indicates that providing more context significantly\nenhances the model\u2019s reasoning ability. The introduction of RAG and Code Interpreter further boosts the accuracy, especially in scientific reasoning tasks. RAG and Code Interpreter help the models handle cross-domain knowledge retrieval\nand complex reasoning tasks. The GPT-4o model performs the best across all settings, with its accuracy reaching 92.1%\nwhen combined with RAG and Code Interpreter.\n\n\n**4.2 OpenBookQA experimental results**\n\n\nOpenBookQA is a dataset focusing on scientific reasoning and the use of external knowledge sources. This dataset\nrequires models to demonstrate strong multi-step reasoning capabilities.\n\n**Analysis:** From <u>Table 4</u> and <u>Fig 5, it can be observed that the introduction of RAG and Code Interpreter leads to an</u>\noverall improvement in accuracy. Particularly, the GPT-4o and Gemini-pro-1.5 models achieve accuracy of 93.2% and\n91.6%, respectively, when RAG and Code Interpreter are used. These results highlight that in complex multi-step reasoning tasks, RAG\u2019s knowledge retrieval and Code Interpreter\u2019s code execution significantly improve the accuracy of the\nanswers.\n\n\n**Table 3. AI2_ARC experimental results.**\n\n|Model|0-shot|1-shot|3-shot|CoT|RAG|Code Interpreter|RAG + Code Interpreter|\n|---|---|---|---|---|---|---|---|\n|GPT-4o|79.5|82.1|85.6|87.2|89.2|90.3|92.1|\n|Gemini-pro-1.5|75.8|78.5|81.1|83.4|85.3|87.1|89.4|\n|Claude-3.5-sonnet|73.1|76.0|79.4|81.7|84.2|85.5|88.1|\n|Gemma2-9B|61.0|61.5|60.4|69.8|72.5|74.1|76.9|\n|Llama-3.5-8B|58.3|57.1|56.5|67.1|69.6|71.2|73.7|",
+            "cosine_similarity": 0.888001,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 37,
+            "text": "when\ncombined with RAG and Code Interpreter. These results suggest that, for multi-modal tasks involving text, images, and\nvideos, RAG effectively helps the model retrieve relevant information from external knowledge bases, while Code Interpreter assists in multi-step reasoning and computation, thereby enhancing the model\u2019s ability to process complex educational tasks.\n\n\n**4.5 ScienceQA experimental results**\n\n\nScienceQA is a dataset for scientific question answering that tests multi-modal reasoning with both text and image inputs.\n\n**Analysis:** From <u>Table 7</u> and <u>Fig 8, in the ScienceQA dataset, GPT-4o excels once again, with accuracy rising to 89.4%</u>\nwhen RAG and Code Interpreter are combined. This result demonstrates the model\u2019s superior performance in multi-modal\nreasoning tasks, particularly when RAG enhances knowledge retrieval and Code Interpreter supports computation in\nmulti-step reasoning tasks involving both text and images.\n\nThrough comprehensive analysis of five distinct datasets (AI2_ARC, OpenBookQA, E-EVAL, TQA, and ScienceQA),\nwe find that the educational question-answering system, when integrated with RAG and Code Interpreter, exhibits significant advantages across various tasks. Overall, the system substantially improves accuracy in tasks involving scientific\nreasoning, open-book question answering, multi-step computation, and cross-disciplinary knowledge integration. Specifically, RAG effectively enhances the model\u2019s ability to handle dynamic knowledge updates and cross-domain reasoning,\nwhile Code Interpreter further improves its performance in mathematical reasoning, complex computation, and logical verification. GPT-4o show the best performance in most experiments, particularly when RAG and Code Interpreter are used\ntogether, showcasing their exceptional reasoning abilities and precise knowledge retrieval capabilities.\n\n\n**4.6 Error analysis and bottlenecks**\n\n\nA deeper analysis of the experimental results reveals several major sources of model errors, which can be categorized as\nfollows:\n\n**4.6.1 Knowledge retrieval failures.** Although the RAG mechanism significantly enhances the model\u2019s ability to\nupdate its knowledge, there are instances where the model fails to retrieve relevant and accurate information, leading to\n\n\n**Table 6. TQA experimental results.**",
+            "cosine_similarity": 0.784039,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 36,
+            "text": "**Table 5. E-EVAL experimental results.**\n\n|Model|0-shot|1-shot|3-shot|CoT|RAG|Code Interpreter|RAG + Code Interpreter|\n|---|---|---|---|---|---|---|---|\n|GPT-4o|60.0|62.2|63.3|72.4|76.5|71.2|80.1|\n|Gemini-pro-1.5|58.5|61.1|62.0|70.3|74.2|69.2|78.3|\n|Claude-3.5-Sonnet|57.2|58.8|60.0|68.4|72.3|67.5|76.8|\n|Gemma2-9B|38.2|37.0|36.7|49.2|55.0|48.3|60.1|\n|Llama-3.5-8B|34.8|33.2|33.0|45.9|52.0|44.5|55.4|\n\n\n\n<u>[https://doi.org/10.1371/journal.pone.0337361.t005](https://doi.org/10.1371/journal.pone.0337361.t005)</u>\n\n\n**Analysis:** From <u>Table 6</u> and <u>Fig 7, in the TQA dataset, all models show significant improvement in accuracy. Notably,</u>\nGPT-4o and Gemini-pro-1.5 perform exceptionally well, achieving accuracy rates of 70.0% and 69.0%, respectively, when\ncombined with RAG and Code Interpreter. These results suggest that, for multi-modal tasks involving text, images, and\nvideos, RAG effectively helps the model retrieve relevant information from external knowledge bases, while Code Interpreter assists in multi-step reasoning and computation, thereby enhancing the model\u2019s ability to process complex educational tasks.\n\n\n**4.5 ScienceQA experimental results**\n\n\nScienceQA is a dataset for scientific question answering that tests multi-modal reasoning with both text and image inputs.",
+            "cosine_similarity": 0.773085,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "1942a4b9-f0b4-51e1-8080-7196045bca2b",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 38,
+            "text": "abilities and precise knowledge retrieval capabilities.\n\n\n**4.6 Error analysis and bottlenecks**\n\n\nA deeper analysis of the experimental results reveals several major sources of model errors, which can be categorized as\nfollows:\n\n**4.6.1 Knowledge retrieval failures.** Although the RAG mechanism significantly enhances the model\u2019s ability to\nupdate its knowledge, there are instances where the model fails to retrieve relevant and accurate information, leading to\n\n\n**Table 6. TQA experimental results.**\n\n|Model|0-shot|1-shot|3-shot|CoT|RAG|Code Interpreter|RAG + Code Interpreter|\n|---|---|---|---|---|---|---|---|\n|GPT-4o|40.1|45.3|50.2|57.6|63.2|56.8|70.0|\n|Gemini-pro-1.5|39.2|43.7|48.5|56.4|61.9|55.6|69.0|\n|Claude-3.5-Sonnet|38.0|42.3|47.2|54.5|60.5|53.6|67.2|\n|Gemma2-9B|25.5|24.1|25.0|38.8|45.3|37.7|55.1|\n|Llama-3.5-8B|22.7|21.6|22.2|35.4|43.2|34.1|52.8|\n\n\n\n<u>[https://doi.org/10.1371/journal.pone.0337361.t006](https://doi.org/10.1371/journal.pone.0337361.t006)</u>\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 16 / 23",
+            "cosine_similarity": 0.76136,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "628a96e4-e877-5547-821a-2dd9981483f3",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 8,
+            "chunk_index": 16,
+            "text": "multi-disciplinary knowledge integration and complex natural language understanding, as well as the synergistic effect of\nthe RAG mechanism in retrieving external scientific knowledge and the Code Interpreter in logical verification and auxiliary\ncomputation processes.\n\n**2.4.2 OpenBookQA.** OpenBookQA [38], also proposed by the Allen Institute for AI, aims to test a model\u2019s\nunderstanding and reasoning abilities in science. Unlike typical multiple-choice question datasets, the questions\nin OpenBookQA often require the invocation of multiple scientific facts and reasoning steps to arrive at the correct\nanswer. The dataset includes an \u201copen-book\u201d science knowledge manual that the model is expected to use along with\nother external knowledge when answering questions. Therefore, evaluation on OpenBookQA can further validate the\neffectiveness of the RAG framework in retrieving external knowledge and combining it with pre-trained models, as well as\nthe role of the Code Interpreter in multi-step reasoning and complex logical judgments.\n\n**2.4.3 E-EVAL.** E-EVAL [39] is the first comprehensive evaluation benchmark dataset specifically designed for the K-12\neducation domain in China. E-EVAL contains 4,351 multiple-choice questions covering a wide range of subjects including\nChinese, English, Politics, History, Ethics, Physics, Chemistry, Mathematics, and Geography, with diverse question\ntypes such as multiple-choice, fill-in-the-blank, short-answer, and multi-step reasoning questions. Compared to the other\ndatasets, E-EVAL places a greater emphasis on assessing the model\u2019s performance in real educational contexts, such as\nthe ability to handle misspellings, long-sentence comprehension, reasoning chain completeness, and dynamic invocation\nof knowledge across different subjects. Evaluation on this dataset can verify the system\u2019s adaptability and robustness in\nmulti-subject and multi-question-type scenarios and provide insights into the user experience in real educational settings.",
+            "cosine_similarity": 0.759626,
+            "fusion_score": null
+          }
+        ],
+        "used_evidence": [
+          {
+            "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 13,
+            "chunk_index": 31,
+            "text": "**Analysis:** From <u>Table 4</u> and <u>Fig 5, it can be observed that the introduction of RAG and Code Interpreter leads to an</u>\noverall improvement in accuracy. Particularly, the GPT-4o and Gemini-pro-1.5 models achieve accuracy of 93.2% and\n91.6%, respectively, when RAG and Code Interpreter are used. These results highlight that in complex multi-step reasoning tasks, RAG\u2019s knowledge retrieval and Code Interpreter\u2019s code execution significantly improve the accuracy of the\nanswers.",
+            "cosine_similarity": 0.888001,
+            "fusion_score": null,
+            "context_index": 0,
+            "retrieval_index": 0,
+            "start": 700,
+            "end": 1190
+          },
+          {
+            "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 37,
+            "text": "**Analysis:** From <u>Table 7</u> and <u>Fig 8, in the ScienceQA dataset, GPT-4o excels once again, with accuracy rising to 89.4%</u>\nwhen RAG and Code Interpreter are combined. This result demonstrates the model\u2019s superior performance in multi-modal\nreasoning tasks, particularly when RAG enhances knowledge retrieval and Code Interpreter supports computation in\nmulti-step reasoning tasks involving both text and images.",
+            "cosine_similarity": 0.784039,
+            "fusion_score": null,
+            "context_index": 1,
+            "retrieval_index": 1,
+            "start": 539,
+            "end": 961
+          },
+          {
+            "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 36,
+            "text": "**Analysis:** From <u>Table 6</u> and <u>Fig 7, in the TQA dataset, all models show significant improvement in accuracy. Notably,</u>\nGPT-4o and Gemini-pro-1.5 perform exceptionally well, achieving accuracy rates of 70.0% and 69.0%, respectively, when\ncombined with RAG and Code Interpreter. These results suggest that, for multi-modal tasks involving text, images, and\nvideos, RAG effectively helps the model retrieve relevant information from external knowledge bases, while Code Interpreter assists in multi-step reasoning and computation, thereby enhancing the model\u2019s ability to process complex educational tasks.",
+            "cosine_similarity": 0.773085,
+            "fusion_score": null,
+            "context_index": 2,
+            "retrieval_index": 2,
+            "start": 517,
+            "end": 1135
+          },
+          {
+            "chunk_id": "1942a4b9-f0b4-51e1-8080-7196045bca2b",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 38,
+            "text": "**Table 6. TQA experimental results.**\n\n|Model|0-shot|1-shot|3-shot|CoT|RAG|Code Interpreter|RAG + Code Interpreter|\n|---|---|---|---|---|---|---|---|\n|GPT-4o|40.1|45.3|50.2|57.6|63.2|56.8|70.0|\n|Gemini-pro-1.5|39.2|43.7|48.5|56.4|61.9|55.6|69.0|\n|Claude-3.5-Sonnet|38.0|42.3|47.2|54.5|60.5|53.6|67.2|\n|Gemma2-9B|25.5|24.1|25.0|38.8|45.3|37.7|55.1|\n|Llama-3.5-8B|22.7|21.6|22.2|35.4|43.2|34.1|52.8|",
+            "cosine_similarity": 0.76136,
+            "fusion_score": null,
+            "context_index": 3,
+            "retrieval_index": 3,
+            "start": 467,
+            "end": 865
+          },
+          {
+            "chunk_id": "628a96e4-e877-5547-821a-2dd9981483f3",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 8,
+            "chunk_index": 16,
+            "text": "**2.4.2 OpenBookQA.** OpenBookQA [38], also proposed by the Allen Institute for AI, aims to test a model\u2019s\nunderstanding and reasoning abilities in science. Unlike typical multiple-choice question datasets, the questions\nin OpenBookQA often require the invocation of multiple scientific facts and reasoning steps to arrive at the correct\nanswer. The dataset includes an \u201copen-book\u201d science knowledge manual that the model is expected to use along with\nother external knowledge when answering questions. Therefore, evaluation on OpenBookQA can further validate the\neffectiveness of the RAG framework in retrieving external knowledge and combining it with pre-trained models, as well as\nthe role of the Code Interpreter in multi-step reasoning and complex logical judgments.",
+            "cosine_similarity": 0.759626,
+            "fusion_score": null,
+            "context_index": 4,
+            "retrieval_index": 4,
+            "start": 271,
+            "end": 1043
+          }
+        ]
+      }
+    },
+    {
+      "id": "education-synthesis-01",
+      "request": {
+        "query": "Compare GPT-4o's reported RAG-plus-code-interpreter accuracy on OpenBookQA and Textbook Question Answering.",
+        "top_k": 5,
+        "document_ids": [
+          "35d86749-bf13-55ac-8008-231937b43bab"
+        ]
+      },
+      "status_code": 200,
+      "elapsed_seconds": 1.13,
+      "quote_provenance_checks": [],
+      "response": {
+        "answer": "I could not find enough relevant evidence to answer this question.",
+        "citations": [],
+        "insufficient_evidence": true,
+        "degraded_mode": false,
+        "evidence": [
+          {
+            "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 13,
+            "chunk_index": 31,
+            "text": ", and CoT). This indicates that providing more context significantly\nenhances the model\u2019s reasoning ability. The introduction of RAG and Code Interpreter further boosts the accuracy, especially in scientific reasoning tasks. RAG and Code Interpreter help the models handle cross-domain knowledge retrieval\nand complex reasoning tasks. The GPT-4o model performs the best across all settings, with its accuracy reaching 92.1%\nwhen combined with RAG and Code Interpreter.\n\n\n**4.2 OpenBookQA experimental results**\n\n\nOpenBookQA is a dataset focusing on scientific reasoning and the use of external knowledge sources. This dataset\nrequires models to demonstrate strong multi-step reasoning capabilities.\n\n**Analysis:** From <u>Table 4</u> and <u>Fig 5, it can be observed that the introduction of RAG and Code Interpreter leads to an</u>\noverall improvement in accuracy. Particularly, the GPT-4o and Gemini-pro-1.5 models achieve accuracy of 93.2% and\n91.6%, respectively, when RAG and Code Interpreter are used. These results highlight that in complex multi-step reasoning tasks, RAG\u2019s knowledge retrieval and Code Interpreter\u2019s code execution significantly improve the accuracy of the\nanswers.\n\n\n**Table 3. AI2_ARC experimental results.**\n\n|Model|0-shot|1-shot|3-shot|CoT|RAG|Code Interpreter|RAG + Code Interpreter|\n|---|---|---|---|---|---|---|---|\n|GPT-4o|79.5|82.1|85.6|87.2|89.2|90.3|92.1|\n|Gemini-pro-1.5|75.8|78.5|81.1|83.4|85.3|87.1|89.4|\n|Claude-3.5-sonnet|73.1|76.0|79.4|81.7|84.2|85.5|88.1|\n|Gemma2-9B|61.0|61.5|60.4|69.8|72.5|74.1|76.9|\n|Llama-3.5-8B|58.3|57.1|56.5|67.1|69.6|71.2|73.7|",
+            "cosine_similarity": 0.882007,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 37,
+            "text": "when\ncombined with RAG and Code Interpreter. These results suggest that, for multi-modal tasks involving text, images, and\nvideos, RAG effectively helps the model retrieve relevant information from external knowledge bases, while Code Interpreter assists in multi-step reasoning and computation, thereby enhancing the model\u2019s ability to process complex educational tasks.\n\n\n**4.5 ScienceQA experimental results**\n\n\nScienceQA is a dataset for scientific question answering that tests multi-modal reasoning with both text and image inputs.\n\n**Analysis:** From <u>Table 7</u> and <u>Fig 8, in the ScienceQA dataset, GPT-4o excels once again, with accuracy rising to 89.4%</u>\nwhen RAG and Code Interpreter are combined. This result demonstrates the model\u2019s superior performance in multi-modal\nreasoning tasks, particularly when RAG enhances knowledge retrieval and Code Interpreter supports computation in\nmulti-step reasoning tasks involving both text and images.\n\nThrough comprehensive analysis of five distinct datasets (AI2_ARC, OpenBookQA, E-EVAL, TQA, and ScienceQA),\nwe find that the educational question-answering system, when integrated with RAG and Code Interpreter, exhibits significant advantages across various tasks. Overall, the system substantially improves accuracy in tasks involving scientific\nreasoning, open-book question answering, multi-step computation, and cross-disciplinary knowledge integration. Specifically, RAG effectively enhances the model\u2019s ability to handle dynamic knowledge updates and cross-domain reasoning,\nwhile Code Interpreter further improves its performance in mathematical reasoning, complex computation, and logical verification. GPT-4o show the best performance in most experiments, particularly when RAG and Code Interpreter are used\ntogether, showcasing their exceptional reasoning abilities and precise knowledge retrieval capabilities.\n\n\n**4.6 Error analysis and bottlenecks**\n\n\nA deeper analysis of the experimental results reveals several major sources of model errors, which can be categorized as\nfollows:\n\n**4.6.1 Knowledge retrieval failures.** Although the RAG mechanism significantly enhances the model\u2019s ability to\nupdate its knowledge, there are instances where the model fails to retrieve relevant and accurate information, leading to\n\n\n**Table 6. TQA experimental results.**",
+            "cosine_similarity": 0.826209,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 36,
+            "text": "**Table 5. E-EVAL experimental results.**\n\n|Model|0-shot|1-shot|3-shot|CoT|RAG|Code Interpreter|RAG + Code Interpreter|\n|---|---|---|---|---|---|---|---|\n|GPT-4o|60.0|62.2|63.3|72.4|76.5|71.2|80.1|\n|Gemini-pro-1.5|58.5|61.1|62.0|70.3|74.2|69.2|78.3|\n|Claude-3.5-Sonnet|57.2|58.8|60.0|68.4|72.3|67.5|76.8|\n|Gemma2-9B|38.2|37.0|36.7|49.2|55.0|48.3|60.1|\n|Llama-3.5-8B|34.8|33.2|33.0|45.9|52.0|44.5|55.4|\n\n\n\n<u>[https://doi.org/10.1371/journal.pone.0337361.t005](https://doi.org/10.1371/journal.pone.0337361.t005)</u>\n\n\n**Analysis:** From <u>Table 6</u> and <u>Fig 7, in the TQA dataset, all models show significant improvement in accuracy. Notably,</u>\nGPT-4o and Gemini-pro-1.5 perform exceptionally well, achieving accuracy rates of 70.0% and 69.0%, respectively, when\ncombined with RAG and Code Interpreter. These results suggest that, for multi-modal tasks involving text, images, and\nvideos, RAG effectively helps the model retrieve relevant information from external knowledge bases, while Code Interpreter assists in multi-step reasoning and computation, thereby enhancing the model\u2019s ability to process complex educational tasks.\n\n\n**4.5 ScienceQA experimental results**\n\n\nScienceQA is a dataset for scientific question answering that tests multi-modal reasoning with both text and image inputs.",
+            "cosine_similarity": 0.81709,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 10,
+            "chunk_index": 22,
+            "text": "reasoning, or programmatic inference, the model generates executable code (e.g., Python) during the answering process,\nwhich is then run in a sandboxed environment to produce accurate computational results or verify logical processes. This\nconfiguration evaluates the role of code execution in enhancing the model\u2019s mathematical reasoning and logical inference\naccuracy. The fourth and final setup (LLM + RAG + Code Interpreter), which represents the complete system proposed in\nthis study, combines both retrieval and code execution. In this setup, the model first retrieves relevant knowledge, then\nuses the Code Interpreter to perform complex calculations or logical inferences, generating answers based on the latest\nretrieved information. This combined approach is explored to determine whether it leads to superior and more reliable\nresults in educational question-answering tasks.\n\n\n**3.3 Datasets and task settings**\n\n\nThe datasets used in this study, AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA\nwere introduced in r **elated works s** ection. Each dataset covers different subject domains, difficulty levels, and types\nof questions. The study evaluates the models from several perspectives, including basic comprehension and language\ngeneration, multi-step logical reasoning and calculation, cross-domain knowledge and contextual relations, as well as\ninteroperability and venerability. For tasks involving concept explanation and simple question-answering, the models\u2019 ability to accurately respond to questions was assessed. For tasks requiring multi-step mathematical operations and scientific\nreasoning, the ability of the models to correctly derive intermediate steps and results was evaluated. The study also examines how effectively the RAG mechanism supports cross-domain, up-to-date knowledge retrieval to enhance accuracy for\nsuch questions. Additionally, the ability of the Code Interpreter to generate and execute code to transparently demonstrate\nthe reasoning process and reduce errors in computational tasks was evaluated. Since all five primary datasets (AI2_ARC,\nOpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA) consist of multiple-choice questions, accuracy was chosen as the primary evaluation metric. Only the multiple-choice portions of these datasets were selected for\nevaluation to maintain consistency across metrics.\n\n\n**3.4 Implementation details of the RAG retrieval module**",
+            "cosine_similarity": 0.811464,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "d67d0e4e-9505-50a3-b2e2-32a7a79279e5",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 14,
+            "chunk_index": 34,
+            "text": "/journal.pone.0337361.t004)</u>\n\n\n**4.3 E-EVAL experimental results**\n\n\nE-EVAL is a Chinese K-12 educational dataset with various types of questions, particularly focusing on spelling errors,\nsentence understanding, and cross-disciplinary knowledge integration. As shown in <u>Fig 6</u> and <u>Table 5, EVAL Accuracy</u>\nComparison Chart on different LLM.\n\n**Analysis:** On the E-EVAL dataset, all models exhibit more balanced performance compared to the other datasets.\nGpt-4o demonstrates strong reasoning and cross-disciplinary capabilities once again. With RAG and Code Interpreter,\nthe accuracy shows significant improvement, particularly in handling spelling errors and sentence comprehension. RAG\u2019s\nknowledge base retrieval and Code Interpreter\u2019s multi-step reasoning help the model better understand complex educational scenarios.\n\n\n**4.4 Textbook Question Answering (TQA) experimental results**\n\n\nTQA is a dataset based on high school science textbooks, containing text, images, and videos, designed to assess a\nmodel\u2019s ability to process multi-modal information.\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 14 / 23",
+            "cosine_similarity": 0.801213,
+            "fusion_score": null
+          }
+        ],
+        "used_evidence": [
+          {
+            "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 13,
+            "chunk_index": 31,
+            "text": ", and CoT). This indicates that providing more context significantly\nenhances the model\u2019s reasoning ability. The introduction of RAG and Code Interpreter further boosts the accuracy, especially in scientific reasoning tasks. RAG and Code Interpreter help the models handle cross-domain knowledge retrieval\nand complex reasoning tasks. The GPT-4o model performs the best across all settings, with its accuracy reaching 92.1%\nwhen combined with RAG and Code Interpreter.",
+            "cosine_similarity": 0.882007,
+            "fusion_score": null,
+            "context_index": 0,
+            "retrieval_index": 0,
+            "start": 0,
+            "end": 468
+          },
+          {
+            "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 37,
+            "text": "Through comprehensive analysis of five distinct datasets (AI2_ARC, OpenBookQA, E-EVAL, TQA, and ScienceQA),\nwe find that the educational question-answering system, when integrated with RAG and Code Interpreter, exhibits significant advantages across various tasks. Overall, the system substantially improves accuracy in tasks involving scientific\nreasoning, open-book question answering, multi-step computation, and cross-disciplinary knowledge integration. Specifically, RAG effectively enhances the model\u2019s ability to handle dynamic knowledge updates and cross-domain reasoning,\nwhile Code Interpreter further improves its performance in mathematical reasoning, complex computation, and logical verification. GPT-4o show the best performance in most experiments, particularly when RAG and Code Interpreter are used\ntogether, showcasing their exceptional reasoning abilities and precise knowledge retrieval capabilities.",
+            "cosine_similarity": 0.826209,
+            "fusion_score": null,
+            "context_index": 1,
+            "retrieval_index": 1,
+            "start": 963,
+            "end": 1884
+          },
+          {
+            "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 16,
+            "chunk_index": 36,
+            "text": "**Analysis:** From <u>Table 6</u> and <u>Fig 7, in the TQA dataset, all models show significant improvement in accuracy. Notably,</u>\nGPT-4o and Gemini-pro-1.5 perform exceptionally well, achieving accuracy rates of 70.0% and 69.0%, respectively, when\ncombined with RAG and Code Interpreter. These results suggest that, for multi-modal tasks involving text, images, and\nvideos, RAG effectively helps the model retrieve relevant information from external knowledge bases, while Code Interpreter assists in multi-step reasoning and computation, thereby enhancing the model\u2019s ability to process complex educational tasks.",
+            "cosine_similarity": 0.81709,
+            "fusion_score": null,
+            "context_index": 2,
+            "retrieval_index": 2,
+            "start": 517,
+            "end": 1135
+          },
+          {
+            "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 10,
+            "chunk_index": 22,
+            "text": "**3.3 Datasets and task settings**\n\n\nThe datasets used in this study, AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA\nwere introduced in r **elated works s** ection. Each dataset covers different subject domains, difficulty levels, and types\nof questions. The study evaluates the models from several perspectives, including basic comprehension and language\ngeneration, multi-step logical reasoning and calculation, cross-domain knowledge and contextual relations, as well as\ninteroperability and venerability. For tasks involving concept explanation and simple question-answering, the models\u2019 ability to accurately respond to questions was assessed. For tasks requiring multi-step mathematical operations and scientific\nreasoning, the ability of the models to correctly derive intermediate steps and results was evaluated. The study also examines how effectively the RAG mechanism supports cross-domain, up-to-date knowledge retrieval to enhance accuracy for\nsuch questions. Additionally, the ability of the Code Interpreter to generate and execute code to transparently demonstrate\nthe reasoning process and reduce errors in computational tasks was evaluated. Since all five primary datasets (AI2_ARC,\nOpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA) consist of multiple-choice questions, accuracy was chosen as the primary evaluation metric. Only the multiple-choice portions of these datasets were selected for\nevaluation to maintain consistency across metrics.",
+            "cosine_similarity": 0.811464,
+            "fusion_score": null,
+            "context_index": 3,
+            "retrieval_index": 3,
+            "start": 890,
+            "end": 2405
+          },
+          {
+            "chunk_id": "d67d0e4e-9505-50a3-b2e2-32a7a79279e5",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 14,
+            "chunk_index": 34,
+            "text": "**Analysis:** On the E-EVAL dataset, all models exhibit more balanced performance compared to the other datasets.\nGpt-4o demonstrates strong reasoning and cross-disciplinary capabilities once again. With RAG and Code Interpreter,\nthe accuracy shows significant improvement, particularly in handling spelling errors and sentence comprehension. RAG\u2019s\nknowledge base retrieval and Code Interpreter\u2019s multi-step reasoning help the model better understand complex educational scenarios.",
+            "cosine_similarity": 0.801213,
+            "fusion_score": null,
+            "context_index": 4,
+            "retrieval_index": 4,
+            "start": 357,
+            "end": 838
+          }
+        ]
+      }
+    },
+    {
+      "id": "out-of-corpus-01",
+      "request": {
+        "query": "What orbital period did the Kepler mission measure for Kepler-90i?",
+        "top_k": 5
+      },
+      "status_code": 200,
+      "elapsed_seconds": 0.12,
+      "quote_provenance_checks": [],
+      "response": {
+        "answer": "I could not find enough relevant evidence to answer this question.",
+        "citations": [],
+        "insufficient_evidence": true,
+        "degraded_mode": false,
+        "evidence": [
+          {
+            "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 13,
+            "chunk_index": 31,
+            "text": ", and CoT). This indicates that providing more context significantly\nenhances the model\u2019s reasoning ability. The introduction of RAG and Code Interpreter further boosts the accuracy, especially in scientific reasoning tasks. RAG and Code Interpreter help the models handle cross-domain knowledge retrieval\nand complex reasoning tasks. The GPT-4o model performs the best across all settings, with its accuracy reaching 92.1%\nwhen combined with RAG and Code Interpreter.\n\n\n**4.2 OpenBookQA experimental results**\n\n\nOpenBookQA is a dataset focusing on scientific reasoning and the use of external knowledge sources. This dataset\nrequires models to demonstrate strong multi-step reasoning capabilities.\n\n**Analysis:** From <u>Table 4</u> and <u>Fig 5, it can be observed that the introduction of RAG and Code Interpreter leads to an</u>\noverall improvement in accuracy. Particularly, the GPT-4o and Gemini-pro-1.5 models achieve accuracy of 93.2% and\n91.6%, respectively, when RAG and Code Interpreter are used. These results highlight that in complex multi-step reasoning tasks, RAG\u2019s knowledge retrieval and Code Interpreter\u2019s code execution significantly improve the accuracy of the\nanswers.\n\n\n**Table 3. AI2_ARC experimental results.**\n\n|Model|0-shot|1-shot|3-shot|CoT|RAG|Code Interpreter|RAG + Code Interpreter|\n|---|---|---|---|---|---|---|---|\n|GPT-4o|79.5|82.1|85.6|87.2|89.2|90.3|92.1|\n|Gemini-pro-1.5|75.8|78.5|81.1|83.4|85.3|87.1|89.4|\n|Claude-3.5-sonnet|73.1|76.0|79.4|81.7|84.2|85.5|88.1|\n|Gemma2-9B|61.0|61.5|60.4|69.8|72.5|74.1|76.9|\n|Llama-3.5-8B|58.3|57.1|56.5|67.1|69.6|71.2|73.7|",
+            "cosine_similarity": 0.496962,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "25c46f07-a839-52bc-9c00-5941ae35095f",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 21,
+            "chunk_index": 48,
+            "text": "plosone/article/asset?unique&id=info:doi/10.1371/journal.pone.0337361.s005)** The scienceQA datesheet is primarily used for performance evaluation.\n(RAR)\n\n\n**Author contributions**\n\n**Conceptualization:** Jin Lu.\n\n**Data curation:** Ji Li.\n\n**Formal analysis:** Jin Lu.\n\n**Investigation:** Ji Li.\n\n**Methodology:** Jin Lu, Ji Li.\n\n**Resources:** Jin Lu.\n\n**Software:** Ji Li.\n\n**Visualization:** Jin Lu.\n\n**Writing \u2013 original draft:** Jin Lu.\n\n**Writing \u2013 review & editing:** Ji Li.\n\n\n**References**\n\n**1.** Wang J, Zhang Y, Liu W. Question answering system based on the combination of large language model and knowledge graph. Appl Intell.\n\n2025;55(15):1000. <u>[https://doi.org/10.1007/s10489-025-06828-0](https://doi.org/10.1007/s10489-025-06828-0)</u>\n\n**2.** Chen Z, Liu B. Enhancing ancient ceramic knowledge services: a question answering system using fine-tuned models and GraphRAG. Information.\n\n2025;16(9):792. <u>[https://doi.org/10.3390/info16090792](https://doi.org/10.3390/info16090792)</u>\n\n**3.** Abdel-Nabi H, Awajan A, Ali MZ. Deep learning-based question answering: a survey. Knowl Inf Syst. 2022;65(4):1399\u2013485. <u>[https://doi.org/10.1007/](https://doi.org/10.1007/s10115-022-01783-5)</u>",
+            "cosine_similarity": 0.495695,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "f96d4257-beec-5d0a-8863-554663c58ba1",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 21,
+            "chunk_index": 47,
+            "text": "in code execution, our proposed system provides a solid foundation for future research. As these technologies continue to\nmature, they hold great promise for enhancing learning outcomes, fostering personalized education, and promoting more\neffective, salable, and equitable education globally.\n\n\n**Supporting information**\n\n**[S1 File. AI2_ARC datesheet.](http://journals.plos.org/plosone/article/asset?unique&id=info:doi/10.1371/journal.pone.0337361.s001)** The AI2_ARC dataset is primarily used for performance evaluation.\n(RAR)\n\n\n**[S2 File. Openbookqa datesheet.](http://journals.plos.org/plosone/article/asset?unique&id=info:doi/10.1371/journal.pone.0337361.s002)** The Openbookqa dataset is primarily used for performance evaluation.\n(RAR)\n\n\n**[S3 File. E-EVAL datesheet.](http://journals.plos.org/plosone/article/asset?unique&id=info:doi/10.1371/journal.pone.0337361.s003)** The E-EVAL dataset is primarily used for performance evaluation.\n(RAR)\n\n\n**[S4 File. TAQ datesheet.](http://journals.plos.org/plosone/article/asset?unique&id=info:doi/10.1371/journal.pone.0337361.s004)** The TAQ datesheet is primarily used for performance evaluation.\n(RAR)\n\n\n**[S5 File. scienceQA datesheet.](http://journals.plos.org/plosone/article/asset?unique&id=info:doi/10.1371/journal.pone.0337361.s005)** The scienceQA datesheet is primarily used for performance evaluation.\n(RAR)\n\n\n**Author contributions**\n\n**Conceptualization:** Jin Lu.\n\n**Data curation:** Ji Li.\n\n**Formal analysis:** Jin Lu.\n\n**Investigation:** Ji Li.",
+            "cosine_similarity": 0.484865,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "63390b4c-a27b-5296-bde0-bd427a855c74",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 22,
+            "chunk_index": 59,
+            "text": "ter can be used to solve introductory college-level vector calculus and electromagnetism problems. arXiv:2309.08881 [Preprint]. 2023. <u>[https://doi.org/10.48550/arXiv.2309.08881](https://doi.org/10.48550/arXiv.2309.08881)</u>\n\n**35.** Hong S, et al. Data interpreter: an llm agent for data science. arXiv:2402.18679 [Preprint]. 2024. <u>[https://doi.org/10.48550/arXiv.2402.18679](https://doi.org/10.48550/arXiv.2402.18679)</u>\n\n**36.** Rahman A, Mahir SH, Tashrif MdTA, Karim MdA, Aishi AA, Kundu D, et al. Comparative analysis based on DeepSeek, ChatGPT, and Google Gemini: features, techniques, performance, future prospects. Syst Soft Comput. 2025;7:200396. <u>[https://doi.org/10.1016/j.sasc.2025.200396](https://doi.org/10.1016/j.sasc.2025.200396)</u>\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 22 / 23",
+            "cosine_similarity": 0.48301,
+            "fusion_score": null
+          },
+          {
+            "chunk_id": "d37b3b6f-79f9-5afd-9df9-bd03afa1d11f",
+            "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+            "page_number": 11,
+            "chunk_index": 25,
+            "text": "query to form a prompt, which was input into the LLM, enhancing the model\u2019s ability to generate high-quality and timely\nresponses.\n\n\n**3.5 Implementation details of the Code Interpreter component**\n\n\nTo enhance the system\u2019s reasoning and computational abilities, the Code Interpreter component was responsible for\ngenerating and executing code to handle complex tasks. The execution environment was designed with a sandbox\nmechanism to isolate and limit the code\u2019s access to system resources (e.g., runtime, memory, network) to prevent any\nsecurity risks from malicious code or unintended actions. Python was chosen as the primary programming language for\ncode generation due to its general-purpose nature and extensive libraries for scientific computing (e.g., NumPy, SymPy,\npandas), which support multi-step mathematical operations and data manipulations. The code generation strategy used\nChain-of-Thought [46] (CoT) prompts to guide the model to \u201cthink step-by-step [47]\u201d and output executable code. In multiturn dialogues, when programming was necessary for precise calculations or logical validation, the system would automatically generate the relevant code blocks and execute them within the sandbox environment. Once the execution results\nwere returned, any errors (such as syntax errors or irrational results) were automatically debugged and corrected by the\nsystem, with the code being regenerated until a correct or reasonable outcome was achieved. The results were then synthesized into the final answer, and the entire execution process, including the code, logs, and output, was presented to the\nuser to ensure traceability and variability of the reasoning process.\n\n\n**3.6 Prompt engineering**\n\n\nTo maximize the synergistic effects of the LLM, RAG, and Code Interpreter components, careful prompt engineering\ntechniques were employed [48\u201350]. The system prompt was designed to set the context clearly: \u201cYou are an educational\nquestion-answering system capable of answering questions across various subjects and performing multi-step reasoning\nand computation.\u201d The prompt further specified: \u201cFor complex reasoning or calculations, please display the intermediate\nreasoning steps and validate using executable code,\u201d and \u201cIf additional knowledge is required, first perform retrieval and\nthen use the retrieved information to answer.\u201d For multi-step reasoning, the Chain-of-Thought (CoT) prompt encouraged\nthe model to decompose complex problems into smaller, manageable tasks, using instructions such as \u201cLet\u2019s break down\nthe problem\u201d or \u201cNow think",
+            "cosine_similarity": 0.481289,
+            "fusion_score": null
+          }
+        ],
+        "used_evidence": []
+      }
+    }
+  ]
+}

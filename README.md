@@ -2,7 +2,7 @@
 
 A research workspace for evidence-grounded answers across PDFs. Implementation follows the supplied v2.0 guide, one acceptance gate at a time.
 
-Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. All six Phase 1 implementation steps provide validation, extraction, normalization, traceable chunking, and database-backed recovery. Phase 2 adds an internal PDF embedding/indexing CLI, session idempotency, deletion, and expiry cleanup. Phase 3 adds session-scoped dense retrieval and a quantitative benchmark. The current retrieval baseline does not yet meet all quality targets; see the [evaluation report](docs/evaluation-report.md). Public upload UI, grounded answer generation, agent workflows, and cloud deployment remain later work.
+Phase 0 builds the project foundation: Next.js/TypeScript, FastAPI, validated configuration, structured request logs, async PostgreSQL pooling, pgvector migrations, and CI. All six Phase 1 implementation steps provide validation, extraction, normalization, traceable chunking, and database-backed recovery. Phase 2 adds an internal PDF embedding/indexing CLI, session idempotency, deletion, and expiry cleanup. Phase 3 adds session-scoped dense retrieval and a quantitative benchmark. Phase 4 adds grounded answer generation, schema validation, citation verification, and evidence fallback. The Phase 3 retrieval-quality targets remain unmet, and Phase 4 acceptance awaits the full live-model evaluation and manual audit; see the [evaluation report](docs/evaluation-report.md).
 
 ## Requirements
 
@@ -20,6 +20,8 @@ docker compose up -d --wait db
 ```
 
 If `.env` already exists, keep it. It is ignored by Git. Set `POSTGRES_PASSWORD` and the matching password in `DATABASE_URL` before starting a fresh database. Compose exposes PostgreSQL on `127.0.0.1:55432` to avoid common local database conflicts. Data lives in a named Docker volume and survives container restarts.
+
+Generation now defaults to Groq's `openai/gpt-oss-120b` in the example configuration. Set `HOSTED_LLM_API_KEY` in the root `.env` before starting the backend. The provider URL is `https://api.groq.com/openai/v1`; embeddings remain local BGE. For optional Ollama inference, set `LLM_PROVIDER=local` instead. See the [Groq configuration guide](<docs/phases guide/phase-4/quality-improvements/groq-hosted-generation.md>) for verification and measured pilot results.
 
 In one terminal:
 
@@ -116,7 +118,33 @@ cd ..\..
 uv run --project apps/api python scripts/run_retrieval_eval.py
 ```
 
-The runner writes measured Recall@5, Precision@5, MRR, p95 query latency, and the out-of-corpus similarity cutoff to `data/eval/retrieval_metrics.json`. The API's `POST /api/v1/search` returns page citations and marks evidence insufficient when the best cosine similarity is at or below `RETRIEVAL_SIMILARITY_THRESHOLD`; it does not generate an answer. The current baseline meets the out-of-corpus and latency targets, but not the three retrieval-quality targets; see the [evaluation report](docs/evaluation-report.md).
+The runner writes measured Recall@5, Precision@5, MRR, p95 query latency, and the out-of-corpus similarity cutoff to a new timestamped report, or a fresh path supplied with `--output`. Existing reports are never overwritten. `--mode dense` and `--mode hybrid` compare strategies using the same dataset; `--dataset` selects an explicit label set. The API's `POST /api/v1/search` marks evidence insufficient when the maximum returned cosine is at or below `RETRIEVAL_SIMILARITY_THRESHOLD`; it does not generate an answer. Dense remains the default because the measured hybrid variant reduced recall/precision despite improving MRR. See the [evaluation report](docs/evaluation-report.md).
+
+## Run grounded answer evaluation
+
+Start the API with PostgreSQL and the sample corpus available. The current generation configuration is `LLM_PROVIDER=hosted`, `HOSTED_LLM_MODEL=openai/gpt-oss-120b`, and `HOSTED_LLM_BASE_URL=https://api.groq.com/openai/v1`, with the key stored locally in `HOSTED_LLM_API_KEY`. Hosted inference sends selected document excerpts to Groq.
+
+For optional local inference, set `LLM_PROVIDER=local`, configure Ollama, and pull the model:
+
+```powershell
+ollama pull llama3.2:3b
+```
+
+Other OpenAI-compatible hosted endpoints remain configurable through the same server-side settings.
+
+From the repository root, create a new Phase 4 evaluation report:
+
+```powershell
+uv run --project apps/api python scripts/run_grounded_qa_eval.py --output data/eval/phase4-review.json
+```
+
+The runner sends all 40 fixed questions through `POST /api/v1/answer`, checks citation-to-context validity and out-of-corpus abstention, and creates a 30-answer human faithfulness review packet. Mark each `manual_claim_audit[].faithful` as `true` or `false` after checking the cited claims against the returned evidence, then score to a separate file:
+
+```powershell
+uv run --project apps/api python scripts/run_grounded_qa_eval.py --score-audit data/eval/phase4-review.json --output data/eval/phase4-review-scored.json
+```
+
+The runner refuses to overwrite output files. Its version 2 report retains all HTTP outcomes, validates response schemas and source quotes, records exact used context, and prevents failed/degraded requests from appearing to pass. See the [Phase 4 step guides](<docs/phases guide/phase-4/README.md>) and [six quality improvement guides](<docs/phases guide/phase-4/quality-improvements/README.md>) for the full gates. Deterministic provider tests do not establish live-model faithfulness. The latest full local run failed answer quality despite recovered runtime availability. Groq now passes the benchmark-list, dataset-count, and table-lookup pilot cases; the comparison pilot still abstains, and the full hosted evaluation remains pending. See the evaluation report.
 
 From `apps/api`:
 
@@ -178,6 +206,6 @@ Placeholder directories preserve the guide's structure without pretending later-
 
 Stop terminal servers with Ctrl+C. `docker compose stop` stops the project database without deleting data; `docker compose up -d --wait db` starts it again. The database uses `restart: unless-stopped` so Docker can restart it after an unexpected exit or a Docker restart; an explicitly stopped container stays stopped until started again. If readiness reports `db: "unavailable"`, check `docker compose ps -a` and start the database before retrying. Do not remove the named volume unless you intend to erase this project's database. For the API image, build with `docker build -t research-api apps/api`, then run migrations and the API with your environment supplied externally. Never bake `.env` into an image.
 
-See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 indexing/lifecycle work and Phase 3 scoped retrieval are implemented, but Phase 3's measured quality targets are not all met. Public upload UI, grounded generation, and later-phase workflows remain outstanding. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>) and [Phase 3 guides](<docs/phases guide/phase-3/README.md>) for scope and verification status.
+See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 indexing/lifecycle work and Phase 3 scoped retrieval are implemented, but Phase 3's measured quality targets are not all met. Phase 4 answer generation is implemented with mock-tested safeguards; live model acceptance remains pending. Public upload UI, agentic workflows, and cloud deployment remain outstanding. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>), [Phase 3 guides](<docs/phases guide/phase-3/README.md>), and [Phase 4 guides](<docs/phases guide/phase-4/README.md>) for scope and verification status.
 
 For the Phase 0 changes, detailed file structure, startup flow, and component responsibilities, read the [Phase 0 project foundation guide](<docs/phases guide/phase-0/phase-0-project-foundation.md>).

@@ -20,6 +20,14 @@ class RetrievedChunk:
     chunk_index: int
     text: str
     cosine_similarity: float
+    fusion_score: float | None = None
+
+
+def validate_query_vector(query_vector: list[float]) -> None:
+    if len(query_vector) != 384 or any(not math.isfinite(value) for value in query_vector):
+        raise ValueError("Query embedding must contain 384 finite values.")
+    if not any(value != 0 for value in query_vector):
+        raise ValueError("Query embedding must not be a zero vector.")
 
 
 async def retrieve_chunks(
@@ -31,10 +39,7 @@ async def retrieve_chunks(
 ) -> list[RetrievedChunk]:
     if not 1 <= top_k <= 20:
         raise ValueError("top_k must be between 1 and 20.")
-    if len(query_vector) != 384 or any(not math.isfinite(value) for value in query_vector):
-        raise ValueError("Query embedding must contain 384 finite values.")
-    if not any(value != 0 for value in query_vector):
-        raise ValueError("Query embedding must not be a zero vector.")
+    validate_query_vector(query_vector)
     if not allowed_doc_ids:
         return []
 

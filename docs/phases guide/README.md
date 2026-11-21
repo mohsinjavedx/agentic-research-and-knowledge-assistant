@@ -8,6 +8,7 @@ Each guide records the delivered changes, source structure, runtime behavior, ru
 | 1 | [Document ingestion and chunking](phase-1/README.md) |
 | 2 | [Embeddings and unified indexing](phase-2/README.md) |
 | 3 | [Retrieval and evaluation](phase-3/README.md) |
+| 4 | [Grounded answer generation](phase-4/README.md) |
 
 Each phase has its own folder and README. Individual step guides live inside that phase folder.
 
@@ -38,6 +39,12 @@ phases guide/
     |-- phase-3-step-2-scoped-dense-retrieval.md
     |-- phase-3-step-3-retrieval-evaluation.md
     `-- phase-3-step-4-abstention-calibration.md
+`-- phase-4/
+    |-- README.md
+    |-- phase-4-step-1-prompt-isolation.md
+    |-- phase-4-step-2-structured-generation.md
+    |-- phase-4-step-3-citation-verification.md
+    `-- phase-4-step-4-fallback-evaluation.md
 ```
 
 The Phase 0 guide records the foundation. All six Phase 1 implementation steps now have guides. The representative-corpus parsing and text-retention acceptance benchmark remains pending.
@@ -45,3 +52,7 @@ The Phase 0 guide records the foundation. All six Phase 1 implementation steps n
 The Phase 2 folder documents all five steps. Steps 1–2 and 4–5 are implemented. Step 3 includes the database migration, persistence service, and local PDF indexing CLI. A public upload/retrieval workflow and the full end-to-end Phase 2 acceptance gate remain outstanding.
 
 Phase 3 adds an attributed CC BY 4.0 sample corpus, a page-grounded 40-question evaluation set, session-scoped dense search, and a reproducible metric/calibration runner. See its guide for measured acceptance status.
+
+Phase 4 adds a session-scoped answer endpoint, prompt isolation, Instructor/Pydantic output validation, deterministic citation checks, and evidence fallback. Its API and unit tests pass, but live-model faithfulness and prompt-injection acceptance remain pending until an LLM provider is configured. See the [Phase 4 guide](phase-4/README.md).
+
+The [Phase 4 quality improvements](phase-4/quality-improvements/README.md) have six separate guides covering source-label corrections, optional hybrid retrieval, focused evidence, source quotes, used-context reporting, and measured evaluation.

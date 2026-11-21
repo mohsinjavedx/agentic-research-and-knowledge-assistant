@@ -38,6 +38,8 @@ def test_local_configuration() -> None:
         {"cors_origins": "http://localhost:3000/path"},
         {"app_env": "production"},
         {"llm_provider": "hosted", "hosted_llm_api_key": "", "hosted_llm_model": ""},
+        {"ollama_num_ctx": 2048, "llm_max_output_tokens": 2048},
+        {"ollama_num_ctx": 2048, "llm_max_output_tokens": 4096},
         {"embedding_provider": "api", "embedding_api_key": ""},
     ],
 )

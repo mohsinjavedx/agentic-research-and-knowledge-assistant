@@ -1,0 +1,2055 @@
+{
+  "version": 1,
+  "generated_at": "2026-11-21T13:15:50.315851+00:00",
+  "dataset": {
+    "path": "C:\\MOHSIN\\LLM projects\\New folder\\data\\eval\\golden_set.json",
+    "sha256": "5bed8b5d88cdca0a94e5fde86aec7878e1959973e3086b2fc2c5fe7ff255c696",
+    "revision": 2,
+    "question_count": 40,
+    "answerable_count": 30,
+    "out_of_corpus_count": 10,
+    "document_ids": [
+      "35d86749-bf13-55ac-8008-231937b43bab",
+      "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+      "be12ca47-9e95-56c9-abdc-104a9f7680f5"
+    ]
+  },
+  "metrics": {
+    "recall_at_5": 0.75,
+    "precision_at_5": 0.28,
+    "mrr": 0.725,
+    "p95_query_latency_ms": 121.63976500014535
+  },
+  "calibration": {
+    "similarity_threshold": 0.5342965881316839,
+    "out_of_corpus_flagged": 9,
+    "out_of_corpus_total": 10,
+    "answerable_flagged": 0,
+    "answerable_total": 30,
+    "rule": "flag when the best cosine similarity is less than or equal to the cutoff"
+  },
+  "acceptance": {
+    "checks": {
+      "recall_at_5": {
+        "value": 0.75,
+        "target": 0.8,
+        "passed": false
+      },
+      "precision_at_5": {
+        "value": 0.28,
+        "target": 0.6,
+        "passed": false
+      },
+      "mrr": {
+        "value": 0.725,
+        "target": 0.7,
+        "passed": true
+      },
+      "out_of_corpus_detection": {
+        "value": 0.9,
+        "target": 0.9,
+        "passed": true
+      },
+      "p95_query_latency_ms": {
+        "value": 121.63976500014535,
+        "target": 800.0,
+        "passed": true
+      }
+    },
+    "passed": false
+  },
+  "latency_method": "Warm local embedding model; query embedding plus database retrieval; excludes process/model cold start.",
+  "retrieval_mode": "hybrid",
+  "queries": [
+    {
+      "id": "education-single-01",
+      "question": "Which five benchmarks are used to evaluate the educational question-answering system?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 7
+        }
+      ],
+      "latency_ms": 2110.445099999197,
+      "max_cosine_similarity": 0.769254207611084,
+      "results": [
+        {
+          "chunk_id": "4777fae4-cc65-5989-b217-0b40e0e91031",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 7,
+          "cosine_similarity": 0.769254207611084,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "2d134f23-26c8-59ec-8dc1-3ff414b7f0eb",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 5,
+          "cosine_similarity": 0.7562689781188965,
+          "fusion_score": 0.03200204813108039
+        },
+        {
+          "chunk_id": "b5028ae3-b469-56ee-ad2e-fb4bc185f134",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3,
+          "cosine_similarity": 0.7339560389518738,
+          "fusion_score": 0.03055037313432836
+        },
+        {
+          "chunk_id": "8bd33edd-65c7-5a2f-b5fd-a71b66408b61",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 2,
+          "cosine_similarity": 0.7489147186279297,
+          "fusion_score": 0.030309988518943745
+        },
+        {
+          "chunk_id": "e774f058-e96f-555c-be07-8d08297a8a59",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8,
+          "cosine_similarity": 0.7531259508804067,
+          "fusion_score": 0.029957522915269395
+        }
+      ]
+    },
+    {
+      "id": "education-single-02",
+      "question": "How many multiple-choice questions does the E-EVAL benchmark contain?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8
+        }
+      ],
+      "latency_ms": 50.68810000375379,
+      "max_cosine_similarity": 0.7299378731828298,
+      "results": [
+        {
+          "chunk_id": "628a96e4-e877-5547-821a-2dd9981483f3",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8,
+          "cosine_similarity": 0.7243669033050537,
+          "fusion_score": 0.032266458495966696
+        },
+        {
+          "chunk_id": "c09418f6-ea0f-5926-af29-5fc4a79c53ee",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8,
+          "cosine_similarity": 0.728813111782074,
+          "fusion_score": 0.03225806451612903
+        },
+        {
+          "chunk_id": "2a6a8dc2-2821-55eb-9277-40624263fc2c",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 9,
+          "cosine_similarity": 0.6999632120132446,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "d67d0e4e-9505-50a3-b2e2-32a7a79279e5",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14,
+          "cosine_similarity": 0.7299378731828298,
+          "fusion_score": 0.030679156908665108
+        },
+        {
+          "chunk_id": "1163aa1e-7ea7-5a40-9e16-99c65114be68",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 12,
+          "cosine_similarity": 0.691997230052948,
+          "fusion_score": 0.030536130536130537
+        }
+      ]
+    },
+    {
+      "id": "education-single-03",
+      "question": "What role does the code interpreter play in the proposed educational QA system?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3
+        }
+      ],
+      "latency_ms": 45.32249999465421,
+      "max_cosine_similarity": 0.7571534369679367,
+      "results": [
+        {
+          "chunk_id": "140f751c-cd92-5fbd-83f5-eb90728ee3db",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3,
+          "cosine_similarity": 0.7500893920713314,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "4777fae4-cc65-5989-b217-0b40e0e91031",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 7,
+          "cosine_similarity": 0.7495305388886071,
+          "fusion_score": 0.03200204813108039
+        },
+        {
+          "chunk_id": "829fa6d9-bdf7-5d8d-ae31-6a4160fb7861",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 4,
+          "cosine_similarity": 0.7410234654559784,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "7462741b-8ab5-5ff4-a66c-cbcbe075353a",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 1,
+          "cosine_similarity": 0.7571534369679367,
+          "fusion_score": 0.031099324975891997
+        },
+        {
+          "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19,
+          "cosine_similarity": 0.7391359650573722,
+          "fusion_score": 0.031009615384615385
+        }
+      ]
+    },
+    {
+      "id": "education-table-01",
+      "question": "In Table 4, what OpenBookQA accuracy does GPT-4o achieve with RAG and the code interpreter?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14
+        }
+      ],
+      "latency_ms": 72.71709998894949,
+      "max_cosine_similarity": 0.8880013227462769,
+      "results": [
+        {
+          "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 13,
+          "cosine_similarity": 0.8880013227462769,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7840388650905751,
+          "fusion_score": 0.03225806451612903
+        },
+        {
+          "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7730847597122192,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 10,
+          "cosine_similarity": 0.7541159987449646,
+          "fusion_score": 0.029857397504456328
+        },
+        {
+          "chunk_id": "fefa1543-ae7d-5d4c-b535-2e03431d9bac",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 13,
+          "cosine_similarity": 0.7210611915904642,
+          "fusion_score": 0.029030910609857977
+        }
+      ]
+    },
+    {
+      "id": "education-table-02",
+      "question": "In Table 4, what OpenBookQA accuracy does Gemini-pro-1.5 achieve with RAG and the code interpreter?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14
+        }
+      ],
+      "latency_ms": 51.20859999442473,
+      "max_cosine_similarity": 0.8284551152126529,
+      "results": [
+        {
+          "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 13,
+          "cosine_similarity": 0.8284551152126529,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7190821003366769,
+          "fusion_score": 0.03128054740957967
+        },
+        {
+          "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7445154411946372,
+          "fusion_score": 0.03125
+        },
+        {
+          "chunk_id": "fefa1543-ae7d-5d4c-b535-2e03431d9bac",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 13,
+          "cosine_similarity": 0.6725312276203173,
+          "fusion_score": 0.029030910609857977
+        },
+        {
+          "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 10,
+          "cosine_similarity": 0.7160021280050916,
+          "fusion_score": 0.028985507246376812
+        }
+      ]
+    },
+    {
+      "id": "education-table-03",
+      "question": "In Table 5, what E-EVAL accuracy does GPT-4o reach with RAG and the code interpreter?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16
+        }
+      ],
+      "latency_ms": 73.7851000012597,
+      "max_cosine_similarity": 0.8353951573371887,
+      "results": [
+        {
+          "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 13,
+          "cosine_similarity": 0.8353951573371887,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7812036871910095,
+          "fusion_score": 0.031746031746031744
+        },
+        {
+          "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7569797264629524,
+          "fusion_score": 0.0315136476426799
+        },
+        {
+          "chunk_id": "1163aa1e-7ea7-5a40-9e16-99c65114be68",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 12,
+          "cosine_similarity": 0.7645648121833801,
+          "fusion_score": 0.030776515151515152
+        },
+        {
+          "chunk_id": "d67d0e4e-9505-50a3-b2e2-32a7a79279e5",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14,
+          "cosine_similarity": 0.8021569491075564,
+          "fusion_score": 0.0304147465437788
+        }
+      ]
+    },
+    {
+      "id": "education-synthesis-01",
+      "question": "Compare GPT-4o's reported RAG-plus-code-interpreter accuracy on OpenBookQA and Textbook Question Answering.",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 14
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16
+        }
+      ],
+      "latency_ms": 59.23169999732636,
+      "max_cosine_similarity": 0.8820071816444397,
+      "results": [
+        {
+          "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 13,
+          "cosine_similarity": 0.8820071816444397,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.8262091525259365,
+          "fusion_score": 0.03200204813108039
+        },
+        {
+          "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 10,
+          "cosine_similarity": 0.8114639520645142,
+          "fusion_score": 0.031009615384615385
+        },
+        {
+          "chunk_id": "09e117a5-92ca-56c5-93d8-3f8021af876b",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.8170904517173767,
+          "fusion_score": 0.029206349206349208
+        },
+        {
+          "chunk_id": "1163aa1e-7ea7-5a40-9e16-99c65114be68",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 12,
+          "cosine_similarity": 0.7902975678443909,
+          "fusion_score": 0.028991596638655463
+        }
+      ]
+    },
+    {
+      "id": "education-synthesis-02",
+      "question": "How does the paper combine retrieved knowledge with code execution, and what safety boundary does it describe for execution?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 11
+        }
+      ],
+      "latency_ms": 55.007400005706586,
+      "max_cosine_similarity": 0.7132413387298584,
+      "results": [
+        {
+          "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 10,
+          "cosine_similarity": 0.7026032209396362,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7021700353077067,
+          "fusion_score": 0.031009615384615385
+        },
+        {
+          "chunk_id": "6038b511-c218-5274-ac13-a069ca64690e",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 11,
+          "cosine_similarity": 0.7132413387298584,
+          "fusion_score": 0.030621785881252923
+        },
+        {
+          "chunk_id": "d37b3b6f-79f9-5afd-9df9-bd03afa1d11f",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 11,
+          "cosine_similarity": 0.6873294115066528,
+          "fusion_score": 0.029827662395050816
+        },
+        {
+          "chunk_id": "e30bbe6d-d9bb-575e-9ae9-acf92bc38036",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19,
+          "cosine_similarity": 0.7097566723823547,
+          "fusion_score": 0.029386529386529386
+        }
+      ]
+    },
+    {
+      "id": "education-synthesis-03",
+      "question": "What retrieval limitation does the educational QA study report, and what improvement does it propose?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 17
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19
+        }
+      ],
+      "latency_ms": 60.275499999988824,
+      "max_cosine_similarity": 0.756635844707489,
+      "results": [
+        {
+          "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19,
+          "cosine_similarity": 0.756635844707489,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "8bd33edd-65c7-5a2f-b5fd-a71b66408b61",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 2,
+          "cosine_similarity": 0.7111537456512451,
+          "fusion_score": 0.031009615384615385
+        },
+        {
+          "chunk_id": "8a6440b1-c8a4-544d-b5a6-1dd9421f55ef",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 20,
+          "cosine_similarity": 0.7147698828440847,
+          "fusion_score": 0.030158730158730156
+        },
+        {
+          "chunk_id": "751b5275-092e-5641-ba06-3fa18b60e65d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 5,
+          "cosine_similarity": 0.7090331315994263,
+          "fusion_score": 0.03007688828584351
+        },
+        {
+          "chunk_id": "b5028ae3-b469-56ee-ad2e-fb4bc185f134",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3,
+          "cosine_similarity": 0.6952191591262817,
+          "fusion_score": 0.02976190476190476
+        }
+      ]
+    },
+    {
+      "id": "education-synthesis-04",
+      "question": "How do the educational QA paper's results support combining external knowledge retrieval with multi-step reasoning?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 3
+        },
+        {
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19
+        }
+      ],
+      "latency_ms": 51.48570000892505,
+      "max_cosine_similarity": 0.7946968078613281,
+      "results": [
+        {
+          "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19,
+          "cosine_similarity": 0.7946968078613281,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "829fa6d9-bdf7-5d8d-ae31-6a4160fb7861",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 4,
+          "cosine_similarity": 0.7564762234687805,
+          "fusion_score": 0.031024531024531024
+        },
+        {
+          "chunk_id": "628a96e4-e877-5547-821a-2dd9981483f3",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8,
+          "cosine_similarity": 0.7612506151199341,
+          "fusion_score": 0.031009615384615385
+        },
+        {
+          "chunk_id": "0f064226-3b84-58f3-9025-5e50328d8539",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 16,
+          "cosine_similarity": 0.7476865276004833,
+          "fusion_score": 0.030679156908665108
+        },
+        {
+          "chunk_id": "4b80368c-606b-5331-8a02-c60c9ee4742b",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 4,
+          "cosine_similarity": 0.7701460123062134,
+          "fusion_score": 0.030621785881252923
+        }
+      ]
+    },
+    {
+      "id": "nutrition-single-01",
+      "question": "Which language model did the personalized nutrition system use, and why was it selected?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6
+        }
+      ],
+      "latency_ms": 48.40800000238232,
+      "max_cosine_similarity": 0.7241925001144409,
+      "results": [
+        {
+          "chunk_id": "8983e626-3d94-5982-b63a-0c551646c7a2",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 4,
+          "cosine_similarity": 0.7241925001144409,
+          "fusion_score": 0.03055037313432836
+        },
+        {
+          "chunk_id": "20f67d4f-e9b1-5333-8659-d9605b76e636",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6,
+          "cosine_similarity": 0.6903678774833679,
+          "fusion_score": 0.030017921146953404
+        },
+        {
+          "chunk_id": "546ae3cd-6bbf-5a1a-a7f7-ddce0c347279",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 13,
+          "cosine_similarity": 0.7208476066589355,
+          "fusion_score": 0.02964426877470356
+        },
+        {
+          "chunk_id": "742a64d6-3def-5885-a279-98941f8f8345",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 2,
+          "cosine_similarity": 0.7098343372344971,
+          "fusion_score": 0.028404512489927477
+        },
+        {
+          "chunk_id": "62cdf426-ef9c-5bbf-9650-d1c72afe95ae",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6,
+          "cosine_similarity": 0.6990388035774231,
+          "fusion_score": 0.028370221327967807
+        }
+      ]
+    },
+    {
+      "id": "nutrition-single-02",
+      "question": "Which API supplies the personalized nutrition system's real-time ingredient nutrient data?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
+      ],
+      "latency_ms": 93.74120000575203,
+      "max_cosine_similarity": 0.7420876026153564,
+      "results": [
+        {
+          "chunk_id": "20f67d4f-e9b1-5333-8659-d9605b76e636",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6,
+          "cosine_similarity": 0.7420876026153564,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "546ae3cd-6bbf-5a1a-a7f7-ddce0c347279",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 13,
+          "cosine_similarity": 0.7325460314750671,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "45491bb9-2744-5dca-8924-ccb8f2dcece5",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 5,
+          "cosine_similarity": 0.7370602488517761,
+          "fusion_score": 0.031054405392392875
+        },
+        {
+          "chunk_id": "ecbd34d2-027b-5352-8f85-8ba034aa84f4",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 13,
+          "cosine_similarity": 0.7261581853722457,
+          "fusion_score": 0.030536130536130537
+        },
+        {
+          "chunk_id": "4a7b48c0-0fc9-5df2-b389-2990765c29fd",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 5,
+          "cosine_similarity": 0.7099800109863281,
+          "fusion_score": 0.03047794966520434
+        }
+      ]
+    },
+    {
+      "id": "nutrition-single-03",
+      "question": "How many smoothie recipes were generated in the nutrition system's validation experiment?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
+      ],
+      "latency_ms": 70.80090000818018,
+      "max_cosine_similarity": 0.8108544945716858,
+      "results": [
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7621616125106812,
+          "fusion_score": 0.0315136476426799
+        },
+        {
+          "chunk_id": "0e941b39-4023-588d-8fe7-0952208d1e09",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.8108544945716858,
+          "fusion_score": 0.031099324975891997
+        },
+        {
+          "chunk_id": "20f67d4f-e9b1-5333-8659-d9605b76e636",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6,
+          "cosine_similarity": 0.7384750843048096,
+          "fusion_score": 0.031099324975891997
+        },
+        {
+          "chunk_id": "a6508721-881b-519a-8690-891a74502387",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.7622213363647461,
+          "fusion_score": 0.031009615384615385
+        },
+        {
+          "chunk_id": "970aa9cf-4d27-5e8c-bd03-dc9cae84c590",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10,
+          "cosine_similarity": 0.7604485750198364,
+          "fusion_score": 0.030776515151515152
+        }
+      ]
+    },
+    {
+      "id": "nutrition-table-01",
+      "question": "According to Table 1, what percentage of generated recipes passed nutritional validation?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
+      ],
+      "latency_ms": 64.32079999649432,
+      "max_cosine_similarity": 0.7970423698425293,
+      "results": [
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7970423698425293,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "970aa9cf-4d27-5e8c-bd03-dc9cae84c590",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10,
+          "cosine_similarity": 0.7732350826263428,
+          "fusion_score": 0.0315136476426799
+        },
+        {
+          "chunk_id": "055f4e3b-a781-52ac-9099-0524553ed0b3",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7799772256605993,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "0e941b39-4023-588d-8fe7-0952208d1e09",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.7919433116912842,
+          "fusion_score": 0.03128054740957967
+        },
+        {
+          "chunk_id": "a6508721-881b-519a-8690-891a74502387",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.7795519828796387,
+          "fusion_score": 0.031009615384615385
+        }
+      ]
+    },
+    {
+      "id": "nutrition-table-02",
+      "question": "According to Table 1, what percentage of recipes passed sustainability validation?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        }
+      ],
+      "latency_ms": 73.29500000923872,
+      "max_cosine_similarity": 0.7889546751976013,
+      "results": [
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7889546751976013,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "a6508721-881b-519a-8690-891a74502387",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.7519769668579102,
+          "fusion_score": 0.0315136476426799
+        },
+        {
+          "chunk_id": "0e941b39-4023-588d-8fe7-0952208d1e09",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.7643612623214722,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "055f4e3b-a781-52ac-9099-0524553ed0b3",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7716727486751306,
+          "fusion_score": 0.031054405392392875
+        },
+        {
+          "chunk_id": "2e07e6fc-f40c-5873-b101-6a219320ca51",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 11,
+          "cosine_similarity": 0.7550392746925354,
+          "fusion_score": 0.031009615384615385
+        }
+      ]
+    },
+    {
+      "id": "nutrition-table-03",
+      "question": "In Table 2, what is the minimum fiber amount per serving and how is the example recipe classified?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10
+        }
+      ],
+      "latency_ms": 71.62879999668803,
+      "max_cosine_similarity": 0.751901388168335,
+      "results": [
+        {
+          "chunk_id": "970aa9cf-4d27-5e8c-bd03-dc9cae84c590",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10,
+          "cosine_similarity": 0.751901388168335,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "a6508721-881b-519a-8690-891a74502387",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.6950758695602417,
+          "fusion_score": 0.032018442622950824
+        },
+        {
+          "chunk_id": "baba7e98-35ba-5cdf-89f2-8e2c89e82e75",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12,
+          "cosine_similarity": 0.7085785865783691,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.6845165491104126,
+          "fusion_score": 0.031024531024531024
+        },
+        {
+          "chunk_id": "055f4e3b-a781-52ac-9099-0524553ed0b3",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.6938710419497207,
+          "fusion_score": 0.030536130536130537
+        }
+      ]
+    },
+    {
+      "id": "nutrition-table-04",
+      "question": "In Table 2, what sodium limit per serving is used for validation?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10
+        }
+      ],
+      "latency_ms": 59.06529999629129,
+      "max_cosine_similarity": 0.735882043838501,
+      "results": [
+        {
+          "chunk_id": "a6508721-881b-519a-8690-891a74502387",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.735882043838501,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7005883455276489,
+          "fusion_score": 0.031754032258064516
+        },
+        {
+          "chunk_id": "970aa9cf-4d27-5e8c-bd03-dc9cae84c590",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10,
+          "cosine_similarity": 0.7059370875358582,
+          "fusion_score": 0.031754032258064516
+        },
+        {
+          "chunk_id": "843ab07b-b8b0-5f8b-b445-ce338db4b8a1",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10,
+          "cosine_similarity": 0.7043877453919576,
+          "fusion_score": 0.031746031746031744
+        },
+        {
+          "chunk_id": "055f4e3b-a781-52ac-9099-0524553ed0b3",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.6808022463560777,
+          "fusion_score": 0.030309988518943745
+        }
+      ]
+    },
+    {
+      "id": "nutrition-synthesis-01",
+      "question": "Compare the reported causes of nutritional-validation failures with the reasons for sustainability-validation failures.",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9
+        },
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12
+        }
+      ],
+      "latency_ms": 143.37890000024345,
+      "max_cosine_similarity": 0.7614257335662842,
+      "results": [
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7439218759536743,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "2e07e6fc-f40c-5873-b101-6a219320ca51",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 11,
+          "cosine_similarity": 0.7614257335662842,
+          "fusion_score": 0.03177805800756621
+        },
+        {
+          "chunk_id": "055f4e3b-a781-52ac-9099-0524553ed0b3",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7435356600146196,
+          "fusion_score": 0.031746031746031744
+        },
+        {
+          "chunk_id": "a6508721-881b-519a-8690-891a74502387",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.6872555017471313,
+          "fusion_score": 0.030834914611005692
+        },
+        {
+          "chunk_id": "0e941b39-4023-588d-8fe7-0952208d1e09",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8,
+          "cosine_similarity": 0.7033127546310425,
+          "fusion_score": 0.030309988518943745
+        }
+      ]
+    },
+    {
+      "id": "nutrition-synthesis-02",
+      "question": "How does contextual retrieval personalize smoothie recipes, and which constraints are used to validate them?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6
+        },
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 8
+        }
+      ],
+      "latency_ms": 72.68550001026597,
+      "max_cosine_similarity": 0.8431246280670166,
+      "results": [
+        {
+          "chunk_id": "20f67d4f-e9b1-5333-8659-d9605b76e636",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6,
+          "cosine_similarity": 0.8431246280670166,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "8983e626-3d94-5982-b63a-0c551646c7a2",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 4,
+          "cosine_similarity": 0.8326467275619507,
+          "fusion_score": 0.03200204813108039
+        },
+        {
+          "chunk_id": "742a64d6-3def-5885-a279-98941f8f8345",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 2,
+          "cosine_similarity": 0.7665947079658508,
+          "fusion_score": 0.029850746268656716
+        },
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.746078372001648,
+          "fusion_score": 0.029827662395050816
+        },
+        {
+          "chunk_id": "62cdf426-ef9c-5bbf-9650-d1c72afe95ae",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 6,
+          "cosine_similarity": 0.7932330369949341,
+          "fusion_score": 0.029709507042253523
+        }
+      ]
+    },
+    {
+      "id": "nutrition-synthesis-03",
+      "question": "What improvements does the paper suggest for the fiber and natural-sugar limitations in its nutrition results?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10
+        },
+        {
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12
+        }
+      ],
+      "latency_ms": 78.17090000025928,
+      "max_cosine_similarity": 0.757662699083252,
+      "results": [
+        {
+          "chunk_id": "970aa9cf-4d27-5e8c-bd03-dc9cae84c590",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10,
+          "cosine_similarity": 0.757662699083252,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "055f4e3b-a781-52ac-9099-0524553ed0b3",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7348036230924988,
+          "fusion_score": 0.03225806451612903
+        },
+        {
+          "chunk_id": "baba7e98-35ba-5cdf-89f2-8e2c89e82e75",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12,
+          "cosine_similarity": 0.7264272407547988,
+          "fusion_score": 0.031746031746031744
+        },
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.7084075634722462,
+          "fusion_score": 0.031009615384615385
+        },
+        {
+          "chunk_id": "843ab07b-b8b0-5f8b-b445-ce338db4b8a1",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 10,
+          "cosine_similarity": 0.7207170773193611,
+          "fusion_score": 0.030776515151515152
+        }
+      ]
+    },
+    {
+      "id": "medical-single-01",
+      "question": "What name does the medical question-answering study give to its proposed system?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 2
+        }
+      ],
+      "latency_ms": 63.77320000319742,
+      "max_cosine_similarity": 0.7995591997968916,
+      "results": [
+        {
+          "chunk_id": "a22aa60a-de4d-51c4-a6e8-a62f306aa7d3",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 2,
+          "cosine_similarity": 0.7995591997968916,
+          "fusion_score": 0.032266458495966696
+        },
+        {
+          "chunk_id": "562c4596-bc91-58d7-87f1-de661721f738",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 14,
+          "cosine_similarity": 0.7816069256301581,
+          "fusion_score": 0.031754032258064516
+        },
+        {
+          "chunk_id": "02e4dc75-c76b-5036-bab6-122f5b13ce0d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.7737571001052856,
+          "fusion_score": 0.030798389007344232
+        },
+        {
+          "chunk_id": "4777fae4-cc65-5989-b217-0b40e0e91031",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 7,
+          "cosine_similarity": 0.7113329172134399,
+          "fusion_score": 0.02938045560996381
+        },
+        {
+          "chunk_id": "2d134f23-26c8-59ec-8dc1-3ff414b7f0eb",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 5,
+          "cosine_similarity": 0.7259812951087952,
+          "fusion_score": 0.029273504273504274
+        }
+      ]
+    },
+    {
+      "id": "medical-single-02",
+      "question": "Which three languages are represented in the MEDQA dataset described in the paper?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3
+        }
+      ],
+      "latency_ms": 85.75329999439418,
+      "max_cosine_similarity": 0.7046487927436829,
+      "results": [
+        {
+          "chunk_id": "5575d0a3-d133-5ccf-9dee-d480fb3a24b3",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 16,
+          "cosine_similarity": 0.7046487927436829,
+          "fusion_score": 0.032018442622950824
+        },
+        {
+          "chunk_id": "9578a687-5e3d-5622-ad63-40e656267413",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.6747132539749146,
+          "fusion_score": 0.03131881575727918
+        },
+        {
+          "chunk_id": "c09418f6-ea0f-5926-af29-5fc4a79c53ee",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8,
+          "cosine_similarity": 0.6754807233810425,
+          "fusion_score": 0.03128054740957967
+        },
+        {
+          "chunk_id": "02e4dc75-c76b-5036-bab6-122f5b13ce0d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.6846216320991516,
+          "fusion_score": 0.03125763125763126
+        },
+        {
+          "chunk_id": "9b3685c7-2446-562d-9e2f-c5db2ebeef23",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 17,
+          "cosine_similarity": 0.6852023601531982,
+          "fusion_score": 0.029513888888888888
+        }
+      ]
+    },
+    {
+      "id": "medical-single-03",
+      "question": "Which of the medical system's retrieval approaches performed best according to the authors, and why?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 6
+        }
+      ],
+      "latency_ms": 60.54789999325294,
+      "max_cosine_similarity": 0.7369117736816406,
+      "results": [
+        {
+          "chunk_id": "a22aa60a-de4d-51c4-a6e8-a62f306aa7d3",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 2,
+          "cosine_similarity": 0.7360856752421167,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "562c4596-bc91-58d7-87f1-de661721f738",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 14,
+          "cosine_similarity": 0.721644716164786,
+          "fusion_score": 0.0315136476426799
+        },
+        {
+          "chunk_id": "bc2679b4-2a50-5bda-8f55-4bd7c886a18d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 4,
+          "cosine_similarity": 0.7268095233085613,
+          "fusion_score": 0.029957522915269395
+        },
+        {
+          "chunk_id": "db3c9142-231a-51c0-b217-9bf6ba4a0f1b",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.7369117736816406,
+          "fusion_score": 0.029551337359792925
+        },
+        {
+          "chunk_id": "02e4dc75-c76b-5036-bab6-122f5b13ce0d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.6718923449516296,
+          "fusion_score": 0.028850145288501453
+        }
+      ]
+    },
+    {
+      "id": "medical-single-04",
+      "question": "What are the four vector-store variants used by the medical answering model?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 5
+        }
+      ],
+      "latency_ms": 67.13229999877512,
+      "max_cosine_similarity": 0.7742391690158349,
+      "results": [
+        {
+          "chunk_id": "ab26b829-ab60-5523-a055-68660e73aecc",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 5,
+          "cosine_similarity": 0.7466869203261686,
+          "fusion_score": 0.032266458495966696
+        },
+        {
+          "chunk_id": "a22aa60a-de4d-51c4-a6e8-a62f306aa7d3",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 2,
+          "cosine_similarity": 0.7742391690158349,
+          "fusion_score": 0.03225806451612903
+        },
+        {
+          "chunk_id": "02e4dc75-c76b-5036-bab6-122f5b13ce0d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.7196961259751361,
+          "fusion_score": 0.029957522915269395
+        },
+        {
+          "chunk_id": "562c4596-bc91-58d7-87f1-de661721f738",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 14,
+          "cosine_similarity": 0.7376783270335725,
+          "fusion_score": 0.029513888888888888
+        },
+        {
+          "chunk_id": "55b2f0b2-8722-5a4d-a5c4-5e4467d493e4",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.7369337301532549,
+          "fusion_score": 0.02946912242686891
+        }
+      ]
+    },
+    {
+      "id": "medical-table-01",
+      "question": "In Table 4, what MCMLE and USMLE accuracies are reported for MPT-7B-Instruct?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 12
+        }
+      ],
+      "latency_ms": 120.49560000014026,
+      "max_cosine_similarity": 0.7474626302719116,
+      "results": [
+        {
+          "chunk_id": "ba384860-255c-5e0a-a5c9-f898632a3246",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11,
+          "cosine_similarity": 0.7474626302719116,
+          "fusion_score": 0.03278688524590164
+        },
+        {
+          "chunk_id": "7ed57fdb-178c-51dd-abc0-258db7f1d207",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.7362943887710571,
+          "fusion_score": 0.03200204813108039
+        },
+        {
+          "chunk_id": "23fccb73-a349-5c88-a328-b055bcb8c8f4",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 12,
+          "cosine_similarity": 0.6635308265686035,
+          "fusion_score": 0.03128054740957967
+        },
+        {
+          "chunk_id": "9578a687-5e3d-5622-ad63-40e656267413",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.6944625973701477,
+          "fusion_score": 0.03125
+        },
+        {
+          "chunk_id": "d4e478ee-c727-53b1-bb18-8927fad7537d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11,
+          "cosine_similarity": 0.672314465045929,
+          "fusion_score": 0.03076923076923077
+        }
+      ]
+    },
+    {
+      "id": "medical-table-02",
+      "question": "In Table 5, what does the variable Z represent in the medical answering model?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 15
+        }
+      ],
+      "latency_ms": 118.75490000238642,
+      "max_cosine_similarity": 0.7751894824263302,
+      "results": [
+        {
+          "chunk_id": "dac51756-257f-5302-b2c1-0e7e91b693ca",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 15,
+          "cosine_similarity": 0.7751894824263302,
+          "fusion_score": 0.03177805800756621
+        },
+        {
+          "chunk_id": "a22aa60a-de4d-51c4-a6e8-a62f306aa7d3",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 2,
+          "cosine_similarity": 0.7344762524650248,
+          "fusion_score": 0.031754032258064516
+        },
+        {
+          "chunk_id": "02e4dc75-c76b-5036-bab6-122f5b13ce0d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.7259322025159661,
+          "fusion_score": 0.031544957774465976
+        },
+        {
+          "chunk_id": "562c4596-bc91-58d7-87f1-de661721f738",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 14,
+          "cosine_similarity": 0.6918171438033267,
+          "fusion_score": 0.029957522915269395
+        },
+        {
+          "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 10,
+          "cosine_similarity": 0.6917648521591682,
+          "fusion_score": 0.028594771241830064
+        }
+      ]
+    },
+    {
+      "id": "medical-table-03",
+      "question": "According to the paper's evidence-coverage results, what share of USMLE questions have supporting evidence in the top ten results?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13
+        }
+      ],
+      "latency_ms": 84.97460000216961,
+      "max_cosine_similarity": 0.7441253066062927,
+      "results": [
+        {
+          "chunk_id": "7ed57fdb-178c-51dd-abc0-258db7f1d207",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.7441253066062927,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "7dd9924f-07b1-5026-829f-1dd2df79dc02",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.6595363020896912,
+          "fusion_score": 0.03177805800756621
+        },
+        {
+          "chunk_id": "9578a687-5e3d-5622-ad63-40e656267413",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.6827757358551025,
+          "fusion_score": 0.031746031746031744
+        },
+        {
+          "chunk_id": "ba384860-255c-5e0a-a5c9-f898632a3246",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11,
+          "cosine_similarity": 0.6867367029190063,
+          "fusion_score": 0.02928692699490662
+        },
+        {
+          "chunk_id": "c09418f6-ea0f-5926-af29-5fc4a79c53ee",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 8,
+          "cosine_similarity": 0.6130244731903076,
+          "fusion_score": 0.028782894736842105
+        }
+      ]
+    },
+    {
+      "id": "medical-synthesis-01",
+      "question": "How do the MCMLE and USMLE evidence-coverage results relate to the model's accuracy on those two datasets?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11
+        },
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13
+        }
+      ],
+      "latency_ms": 87.87059999303892,
+      "max_cosine_similarity": 0.8444215059280396,
+      "results": [
+        {
+          "chunk_id": "7ed57fdb-178c-51dd-abc0-258db7f1d207",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.8210884928703308,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "ba384860-255c-5e0a-a5c9-f898632a3246",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11,
+          "cosine_similarity": 0.8444215059280396,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "9578a687-5e3d-5622-ad63-40e656267413",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.7272563576698303,
+          "fusion_score": 0.03125763125763126
+        },
+        {
+          "chunk_id": "55b2f0b2-8722-5a4d-a5c4-5e4467d493e4",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.7414802312850952,
+          "fusion_score": 0.031009615384615385
+        },
+        {
+          "chunk_id": "7dd9924f-07b1-5026-829f-1dd2df79dc02",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.6680042743682861,
+          "fusion_score": 0.030117753623188408
+        }
+      ]
+    },
+    {
+      "id": "medical-synthesis-02",
+      "question": "Trace how a query becomes retrieved evidence in the medical model, including its similarity search method.",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 4
+        },
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 6
+        }
+      ],
+      "latency_ms": 69.17279999470338,
+      "max_cosine_similarity": 0.7518010363519504,
+      "results": [
+        {
+          "chunk_id": "5361994c-8ba7-5e8d-b0ab-53a5308beab7",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 6,
+          "cosine_similarity": 0.7518010363519504,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "deb03f97-6d61-5aec-9dff-902333e0656d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 8,
+          "cosine_similarity": 0.7075343342880709,
+          "fusion_score": 0.031544957774465976
+        },
+        {
+          "chunk_id": "55b2f0b2-8722-5a4d-a5c4-5e4467d493e4",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.7386170845811694,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "db3c9142-231a-51c0-b217-9bf6ba4a0f1b",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.7426960689632917,
+          "fusion_score": 0.030834914611005692
+        },
+        {
+          "chunk_id": "7ed57fdb-178c-51dd-abc0-258db7f1d207",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.6960122196677991,
+          "fusion_score": 0.03036576949620428
+        }
+      ]
+    },
+    {
+      "id": "medical-synthesis-03",
+      "question": "What differences between MCMLE and USMLE evidence availability help explain the different performance results?",
+      "answerable": true,
+      "ground_truth": [
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11
+        },
+        {
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13
+        }
+      ],
+      "latency_ms": 58.175300000584684,
+      "max_cosine_similarity": 0.7907077198798838,
+      "results": [
+        {
+          "chunk_id": "7ed57fdb-178c-51dd-abc0-258db7f1d207",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.7843946943047839,
+          "fusion_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "ba384860-255c-5e0a-a5c9-f898632a3246",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11,
+          "cosine_similarity": 0.7907077198798838,
+          "fusion_score": 0.032018442622950824
+        },
+        {
+          "chunk_id": "9578a687-5e3d-5622-ad63-40e656267413",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.7122701577979245,
+          "fusion_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "55b2f0b2-8722-5a4d-a5c4-5e4467d493e4",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 13,
+          "cosine_similarity": 0.7072864349313728,
+          "fusion_score": 0.03076923076923077
+        },
+        {
+          "chunk_id": "7dd9924f-07b1-5026-829f-1dd2df79dc02",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.6104845636794242,
+          "fusion_score": 0.029827662395050816
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-01",
+      "question": "What orbital period did the Kepler mission measure for Kepler-90i?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 46.39370000222698,
+      "max_cosine_similarity": 0.496961936264096,
+      "results": [
+        {
+          "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19,
+          "cosine_similarity": 0.4698854824866501,
+          "fusion_score": 0.029906956136464335
+        },
+        {
+          "chunk_id": "1b9c72f2-5ad9-5268-9abe-5211ae7e583d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 13,
+          "cosine_similarity": 0.496961936264096,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "25c46f07-a839-52bc-9c00-5941ae35095f",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 21,
+          "cosine_similarity": 0.49569465207143604,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "45491bb9-2744-5dca-8924-ccb8f2dcece5",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 5,
+          "cosine_similarity": 0.4541056887538939,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "7dd9924f-07b1-5026-829f-1dd2df79dc02",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.3897324320594202,
+          "fusion_score": 0.015873015873015872
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-02",
+      "question": "Which city hosted the 2016 Summer Olympic Games?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 45.419200003379956,
+      "max_cosine_similarity": 0.42732495069503784,
+      "results": [
+        {
+          "chunk_id": "1163aa1e-7ea7-5a40-9e16-99c65114be68",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 12,
+          "cosine_similarity": 0.408163845539093,
+          "fusion_score": 0.032266458495966696
+        },
+        {
+          "chunk_id": "c3a513fd-bbfe-5e3d-9933-67a48d06507b",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 6,
+          "cosine_similarity": 0.42732495069503784,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "f96d4257-beec-5d0a-8863-554663c58ba1",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 21,
+          "cosine_similarity": 0.4082528352737427,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "f91f05c7-41d8-57f1-963a-1345ac998f62",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 9,
+          "cosine_similarity": 0.4075644612312317,
+          "fusion_score": 0.015625
+        },
+        {
+          "chunk_id": "b321ed82-2c97-55d0-b20d-43b56cb7890a",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 18,
+          "cosine_similarity": 0.40493863821029663,
+          "fusion_score": 0.015384615384615385
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-03",
+      "question": "At what temperature does gallium melt in degrees Celsius?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 45.012800008407794,
+      "max_cosine_similarity": 0.5284306688052026,
+      "results": [
+        {
+          "chunk_id": "63390b4c-a27b-5296-bde0-bd427a855c74",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 22,
+          "cosine_similarity": 0.5284306688052026,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "9578a687-5e3d-5622-ad63-40e656267413",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.42485201358795166,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "2a6a8dc2-2821-55eb-9277-40624263fc2c",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 9,
+          "cosine_similarity": 0.5221298336982727,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "c3a513fd-bbfe-5e3d-9933-67a48d06507b",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 6,
+          "cosine_similarity": 0.43889930844306946,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "2ed11b67-639b-5110-a0e9-185b4cd1969e",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 17,
+          "cosine_similarity": 0.4852915108203888,
+          "fusion_score": 0.015873015873015872
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-04",
+      "question": "How many known rings does the planet Uranus have?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 49.11740000534337,
+      "max_cosine_similarity": 0.48617514967918396,
+      "results": [
+        {
+          "chunk_id": "b01a4f0c-0b97-547d-b53a-eec7048c7277",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 22,
+          "cosine_similarity": 0.48617514967918396,
+          "fusion_score": 0.03177805800756621
+        },
+        {
+          "chunk_id": "742a64d6-3def-5885-a279-98941f8f8345",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 2,
+          "cosine_similarity": 0.4091862440109253,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 19,
+          "cosine_similarity": 0.3968350887298584,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "2a6a8dc2-2821-55eb-9277-40624263fc2c",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 9,
+          "cosine_similarity": 0.4789530038833618,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "277ad0cd-c0cc-5079-a6dc-46b90fa99756",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 6,
+          "cosine_similarity": 0.4003737986199202,
+          "fusion_score": 0.015873015873015872
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-05",
+      "question": "Which scientists received the Nobel Prize for the discovery of gravitational waves?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 46.52350000105798,
+      "max_cosine_similarity": 0.4342483113482093,
+      "results": [
+        {
+          "chunk_id": "db3c9142-231a-51c0-b217-9bf6ba4a0f1b",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 3,
+          "cosine_similarity": 0.4342483113482093,
+          "fusion_score": 0.028370221327967807
+        },
+        {
+          "chunk_id": "634cb76c-2f0d-5eb7-b83e-ff4d539fe6fb",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 9,
+          "cosine_similarity": 0.421021444231911,
+          "fusion_score": 0.028283227848101264
+        },
+        {
+          "chunk_id": "ca425e2a-9a34-535e-8a3d-c5311f327909",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 1,
+          "cosine_similarity": 0.42788837635184473,
+          "fusion_score": 0.027984344422700584
+        },
+        {
+          "chunk_id": "dfbb9b60-5cde-5722-9501-9d19d153a16f",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 1,
+          "cosine_similarity": 0.4226230256967851,
+          "fusion_score": 0.026709401709401708
+        },
+        {
+          "chunk_id": "318561b7-c7dd-5756-a0b4-b053b21a348f",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 1,
+          "cosine_similarity": 0.357588054918175,
+          "fusion_score": 0.01639344262295082
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-06",
+      "question": "What was Brazil's gross domestic product in 2020?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 42.98189999826718,
+      "max_cosine_similarity": 0.5277224183082581,
+      "results": [
+        {
+          "chunk_id": "d73e49f2-50c8-5f5b-abfd-01f151f59687",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 15,
+          "cosine_similarity": 0.5277224183082581,
+          "fusion_score": 0.030886196246139225
+        },
+        {
+          "chunk_id": "a20560bb-8e11-5db6-b140-cd014e38a172",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 3,
+          "cosine_similarity": 0.4700023829936981,
+          "fusion_score": 0.029437229437229435
+        },
+        {
+          "chunk_id": "4a7b48c0-0fc9-5df2-b389-2990765c29fd",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 5,
+          "cosine_similarity": 0.4652310609817505,
+          "fusion_score": 0.029138513513513514
+        },
+        {
+          "chunk_id": "17a4f752-c0ed-5368-b69e-2c6b3bea15e3",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 15,
+          "cosine_similarity": 0.45958725987634863,
+          "fusion_score": 0.028693528693528692
+        },
+        {
+          "chunk_id": "2e07e6fc-f40c-5873-b101-6a219320ca51",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 11,
+          "cosine_similarity": 0.45407289266586304,
+          "fusion_score": 0.01639344262295082
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-07",
+      "question": "How many permanent teeth does a typical adult human have?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 47.08839999511838,
+      "max_cosine_similarity": 0.5342965881316839,
+      "results": [
+        {
+          "chunk_id": "2a6a8dc2-2821-55eb-9277-40624263fc2c",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 9,
+          "cosine_similarity": 0.5342965881316839,
+          "fusion_score": 0.029857397504456328
+        },
+        {
+          "chunk_id": "7dd9924f-07b1-5026-829f-1dd2df79dc02",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.5282192387646212,
+          "fusion_score": 0.02857142857142857
+        },
+        {
+          "chunk_id": "7b15354e-96aa-5984-b8b2-65061e867a81",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 9,
+          "cosine_similarity": 0.518573001580626,
+          "fusion_score": 0.027650648360030512
+        },
+        {
+          "chunk_id": "9578a687-5e3d-5622-ad63-40e656267413",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 10,
+          "cosine_similarity": 0.5146359358619434,
+          "fusion_score": 0.026547116736990152
+        },
+        {
+          "chunk_id": "baba7e98-35ba-5cdf-89f2-8e2c89e82e75",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12,
+          "cosine_similarity": 0.5159548674808405,
+          "fusion_score": 0.025978407557354925
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-08",
+      "question": "Which river forms part of the border between the United States and Mexico?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 68.96430000779219,
+      "max_cosine_similarity": 0.42117345333099365,
+      "results": [
+        {
+          "chunk_id": "9ac351e7-1198-5384-ab5e-4f833515d39c",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 8,
+          "cosine_similarity": 0.38932658402104936,
+          "fusion_score": 0.02694394213381555
+        },
+        {
+          "chunk_id": "019f4fff-0708-5e97-8b7d-95764d0299ab",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 10,
+          "cosine_similarity": 0.42117345333099365,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "562c4596-bc91-58d7-87f1-de661721f738",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 14,
+          "cosine_similarity": 0.3180326331834422,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "4a7b48c0-0fc9-5df2-b389-2990765c29fd",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 5,
+          "cosine_similarity": 0.41634973883628845,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "829fa6d9-bdf7-5d8d-ae31-6a4160fb7861",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 4,
+          "cosine_similarity": 0.36491143703460693,
+          "fusion_score": 0.016129032258064516
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-09",
+      "question": "What is the average June rainfall in Tokyo?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 44.790300002205186,
+      "max_cosine_similarity": 0.48465885176238,
+      "results": [
+        {
+          "chunk_id": "baba7e98-35ba-5cdf-89f2-8e2c89e82e75",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 12,
+          "cosine_similarity": 0.46805134415626526,
+          "fusion_score": 0.03200204813108039
+        },
+        {
+          "chunk_id": "4b80368c-606b-5331-8a02-c60c9ee4742b",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 4,
+          "cosine_similarity": 0.3660961389541626,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "504a3dfe-1521-59bf-bce6-ed292ebeaf6a",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 12,
+          "cosine_similarity": 0.48465885176238,
+          "fusion_score": 0.01639344262295082
+        },
+        {
+          "chunk_id": "8a6440b1-c8a4-544d-b5a6-1dd9421f55ef",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 20,
+          "cosine_similarity": 0.3485901563519338,
+          "fusion_score": 0.016129032258064516
+        },
+        {
+          "chunk_id": "d4e478ee-c727-53b1-bb18-8927fad7537d",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 11,
+          "cosine_similarity": 0.46615028381347656,
+          "fusion_score": 0.015873015873015872
+        }
+      ]
+    },
+    {
+      "id": "out-of-corpus-10",
+      "question": "What were the primary and secondary endpoints in the 2024 randomized trial of HMWHA after laser resurfacing?",
+      "answerable": false,
+      "ground_truth": [],
+      "latency_ms": 95.52550000080373,
+      "max_cosine_similarity": 0.5934034166754313,
+      "results": [
+        {
+          "chunk_id": "1b0fa81f-3eac-562b-8975-7872b8380efd",
+          "document_id": "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+          "page_number": 18,
+          "cosine_similarity": 0.5707922151920862,
+          "fusion_score": 0.029726775956284153
+        },
+        {
+          "chunk_id": "257ca610-e941-5817-a4bc-15c5fcca69cd",
+          "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+          "page_number": 18,
+          "cosine_similarity": 0.5934034166754313,
+          "fusion_score": 0.029138513513513514
+        },
+        {
+          "chunk_id": "d78534ca-f471-539b-969c-71496488bf13",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 16,
+          "cosine_similarity": 0.5713676725060649,
+          "fusion_score": 0.029083245521601686
+        },
+        {
+          "chunk_id": "4d6d0ea9-0ebe-5a7b-9ad1-753c6ab921b2",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 16,
+          "cosine_similarity": 0.5780092822318841,
+          "fusion_score": 0.02877846790890269
+        },
+        {
+          "chunk_id": "34782033-4e70-50bf-98ef-c03bc2e063d6",
+          "document_id": "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+          "page_number": 16,
+          "cosine_similarity": 0.5696238449103789,
+          "fusion_score": 0.027364110201042444
+        }
+      ]
+    }
+  ]
+}
