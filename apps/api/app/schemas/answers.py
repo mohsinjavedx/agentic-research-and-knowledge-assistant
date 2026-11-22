@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from app.schemas.retrieval import SearchRequest, SearchResult
+from app.schemas.retrieval import ContextGroup, SearchRequest, SearchResult
 
 
 class GroundedCitation(BaseModel):
@@ -74,3 +74,7 @@ class AnswerResponse(BaseModel):
     degraded_mode: bool
     evidence: list[SearchResult] = Field(default_factory=list)
     used_evidence: list[UsedEvidence] = Field(default_factory=list)
+    ranked_chunk_ids: list[UUID] = Field(default_factory=list)
+    context_groups: list[ContextGroup] = Field(default_factory=list)
+    reranking_applied: bool = False
+    reranker_error: str | None = None

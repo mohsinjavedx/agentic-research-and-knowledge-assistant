@@ -18,6 +18,7 @@ from app.db.session import Database
 from app.providers.embeddings import create_embedding_provider
 from app.providers.identity import EmbeddingCompatibilityError
 from app.providers.llm import create_llm_provider
+from app.providers.reranking import create_reranker
 from app.workers.expired_documents import run_expired_document_cleanup
 
 
@@ -31,9 +32,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         database = Database(settings)
         embedding_provider = create_embedding_provider(settings)
         llm_provider = create_llm_provider(settings)
+        reranker = create_reranker(settings)
         application.state.database = database
         application.state.embedding_provider = embedding_provider
         application.state.llm_provider = llm_provider
+        application.state.reranker = reranker
         cleanup_task: asyncio.Task[None] | None = None
         try:
             try:
@@ -65,8 +68,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                     try:
                         llm_provider.close()
                     finally:
-                        await database.close()
-                        logger.info("shutdown.completed")
+                        try:
+                            if reranker is not None:
+                                reranker.close()
+                        finally:
+                            await database.close()
+                            logger.info("shutdown.completed")
 
     application = FastAPI(
         title="Research & Knowledge Assistant", version="0.1.0", lifespan=lifespan

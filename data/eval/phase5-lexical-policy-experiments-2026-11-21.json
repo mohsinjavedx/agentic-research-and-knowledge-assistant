@@ -1,0 +1,2100 @@
+{
+  "or_all": {
+    "metrics": {
+      "recall@5": 0.7333333333333333,
+      "precision@5": 0.28,
+      "mrr": 0.6772222222222222
+    },
+    "queries": [
+      {
+        "id": "education-single-01",
+        "lexical_query": "Which OR five OR benchmarks OR are OR used OR to OR evaluate OR the OR educational OR question-answering OR system",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            7
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            2
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            5
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "education-single-02",
+        "lexical_query": "How OR many OR multiple-choice OR questions OR does OR the OR E-EVAL OR benchmark OR contain",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            12
+          ]
+        ]
+      },
+      {
+        "id": "education-single-03",
+        "lexical_query": "What OR role OR does OR the OR code OR interpreter OR play OR in OR the OR proposed OR educational OR QA OR system",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            3
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            7
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            1
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ]
+        ]
+      },
+      {
+        "id": "education-table-01",
+        "lexical_query": "In OR Table OR 4 OR what OR OpenBookQA OR accuracy OR does OR GPT-4o OR achieve OR with OR RAG OR and OR the OR code OR interpreter",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "education-table-02",
+        "lexical_query": "In OR Table OR 4 OR what OR OpenBookQA OR accuracy OR does OR Gemini-pro-1 OR 5 OR achieve OR with OR RAG OR and OR the OR code OR interpreter",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "education-table-03",
+        "lexical_query": "In OR Table OR 5 OR what OR E-EVAL OR accuracy OR does OR GPT-4o OR reach OR with OR RAG OR and OR the OR code OR interpreter",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            12
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            14
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-01",
+        "lexical_query": "Compare OR GPT-4o OR s OR reported OR RAG-plus-code-interpreter OR accuracy OR on OR OpenBookQA OR and OR Textbook OR Question OR Answering",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            7
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-02",
+        "lexical_query": "How OR does OR the OR paper OR combine OR retrieved OR knowledge OR with OR code OR execution OR and OR what OR safety OR boundary OR does OR it OR describe OR for OR execution",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-03",
+        "lexical_query": "What OR retrieval OR limitation OR does OR the OR educational OR QA OR study OR report OR and OR what OR improvement OR does OR it OR propose",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            2
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            20
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            5
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            3
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-04",
+        "lexical_query": "How OR do OR the OR educational OR QA OR paper OR s OR results OR support OR combining OR external OR knowledge OR retrieval OR with OR multi-step OR reasoning",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            3
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-single-01",
+        "lexical_query": "Which OR language OR model OR did OR the OR personalized OR nutrition OR system OR use OR and OR why OR was OR it OR selected",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            4
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            13
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            2
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-single-02",
+        "lexical_query": "Which OR API OR supplies OR the OR personalized OR nutrition OR system OR s OR real-time OR ingredient OR nutrient OR data",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            13
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-single-03",
+        "lexical_query": "How OR many OR smoothie OR recipes OR were OR generated OR in OR the OR nutrition OR system OR s OR validation OR experiment",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-01",
+        "lexical_query": "According OR to OR Table OR 1 OR what OR percentage OR of OR generated OR recipes OR passed OR nutritional OR validation",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-02",
+        "lexical_query": "According OR to OR Table OR 1 OR what OR percentage OR of OR recipes OR passed OR sustainability OR validation",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-03",
+        "lexical_query": "In OR Table OR 2 OR what OR is OR the OR minimum OR fiber OR amount OR per OR serving OR and OR how OR is OR the OR example OR recipe OR classified",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-04",
+        "lexical_query": "In OR Table OR 2 OR what OR sodium OR limit OR per OR serving OR is OR used OR for OR validation",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-synthesis-01",
+        "lexical_query": "Compare OR the OR reported OR causes OR of OR nutritional-validation OR failures OR with OR the OR reasons OR for OR sustainability-validation OR failures",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-synthesis-02",
+        "lexical_query": "How OR does OR contextual OR retrieval OR personalize OR smoothie OR recipes OR and OR which OR constraints OR are OR used OR to OR validate OR them",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            4
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            2
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-synthesis-03",
+        "lexical_query": "What OR improvements OR does OR the OR paper OR suggest OR for OR the OR fiber OR and OR natural-sugar OR limitations OR in OR its OR nutrition OR results",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-01",
+        "lexical_query": "What OR name OR does OR the OR medical OR question-answering OR study OR give OR to OR its OR proposed OR system",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            4
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            5
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-02",
+        "lexical_query": "Which OR three OR languages OR are OR represented OR in OR the OR MEDQA OR dataset OR described OR in OR the OR paper",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            16
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            17
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-03",
+        "lexical_query": "Which OR of OR the OR medical OR system OR s OR retrieval OR approaches OR performed OR best OR according OR to OR the OR authors OR and OR why",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            4
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-04",
+        "lexical_query": "What OR are OR the OR four OR vector-store OR variants OR used OR by OR the OR medical OR answering OR model",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "medical-table-01",
+        "lexical_query": "In OR Table OR 4 OR what OR MCMLE OR and OR USMLE OR accuracies OR are OR reported OR for OR MPT-7B-Instruct",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            12
+          ]
+        ]
+      },
+      {
+        "id": "medical-table-02",
+        "lexical_query": "In OR Table OR 5 OR what OR does OR the OR variable OR Z OR represent OR in OR the OR medical OR answering OR model",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            15
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "medical-table-03",
+        "lexical_query": "According OR to OR the OR paper OR s OR evidence-coverage OR results OR what OR share OR of OR USMLE OR questions OR have OR supporting OR evidence OR in OR the OR top OR ten OR results",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "medical-synthesis-01",
+        "lexical_query": "How OR do OR the OR MCMLE OR and OR USMLE OR evidence-coverage OR results OR relate OR to OR the OR model OR s OR accuracy OR on OR those OR two OR datasets",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "medical-synthesis-02",
+        "lexical_query": "Trace OR how OR a OR query OR becomes OR retrieved OR evidence OR in OR the OR medical OR model OR including OR its OR similarity OR search OR method",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            6
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            8
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "medical-synthesis-03",
+        "lexical_query": "What OR differences OR between OR MCMLE OR and OR USMLE OR evidence OR availability OR help OR explain OR the OR different OR performance OR results",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-01",
+        "lexical_query": "What OR orbital OR period OR did OR the OR Kepler OR mission OR measure OR for OR Kepler-90i",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            21
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-02",
+        "lexical_query": "Which OR city OR hosted OR the OR 2016 OR Summer OR Olympic OR Games",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            12
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            6
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            21
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            18
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-03",
+        "lexical_query": "At OR what OR temperature OR does OR gallium OR melt OR in OR degrees OR Celsius",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            22
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            6
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            17
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-04",
+        "lexical_query": "How OR many OR known OR rings OR does OR the OR planet OR Uranus OR have",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            22
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            2
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            6
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-05",
+        "lexical_query": "Which OR scientists OR received OR the OR Nobel OR Prize OR for OR the OR discovery OR of OR gravitational OR waves",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            1
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            1
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            1
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-06",
+        "lexical_query": "What OR was OR Brazil OR s OR gross OR domestic OR product OR in OR 2020",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            15
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            3
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            15
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-07",
+        "lexical_query": "How OR many OR permanent OR teeth OR does OR a OR typical OR adult OR human OR have",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-08",
+        "lexical_query": "Which OR river OR forms OR part OR of OR the OR border OR between OR the OR United OR States OR and OR Mexico",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-09",
+        "lexical_query": "What OR is OR the OR average OR June OR rainfall OR in OR Tokyo",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            12
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            20
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-10",
+        "lexical_query": "What OR were OR the OR primary OR and OR secondary OR endpoints OR in OR the OR 2024 OR randomized OR trial OR of OR HMWHA OR after OR laser OR resurfacing",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            18
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            18
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            16
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            16
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            16
+          ]
+        ]
+      }
+    ]
+  },
+  "or_content": {
+    "metrics": {
+      "recall@5": 0.7333333333333333,
+      "precision@5": 0.28,
+      "mrr": 0.6677777777777778
+    },
+    "queries": [
+      {
+        "id": "education-single-01",
+        "lexical_query": "five OR benchmarks OR are OR to OR evaluate OR the OR educational OR question-answering",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            7
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            2
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            1
+          ]
+        ]
+      },
+      {
+        "id": "education-single-02",
+        "lexical_query": "many OR multiple-choice OR questions OR the OR E-EVAL OR benchmark OR contain",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            12
+          ]
+        ]
+      },
+      {
+        "id": "education-single-03",
+        "lexical_query": "role OR the OR code OR interpreter OR play OR in OR the OR educational OR QA",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            3
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            7
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "education-table-01",
+        "lexical_query": "In OR Table OR 4 OR OpenBookQA OR accuracy OR GPT-4o OR achieve OR with OR RAG OR and OR the OR code OR interpreter",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "education-table-02",
+        "lexical_query": "In OR Table OR 4 OR OpenBookQA OR accuracy OR Gemini-pro-1 OR 5 OR achieve OR with OR RAG OR and OR the OR code OR interpreter",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "education-table-03",
+        "lexical_query": "In OR Table OR 5 OR E-EVAL OR accuracy OR GPT-4o OR reach OR with OR RAG OR and OR the OR code OR interpreter",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            12
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            14
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-01",
+        "lexical_query": "GPT-4o OR s OR RAG-plus-code-interpreter OR accuracy OR on OR OpenBookQA OR and OR Textbook OR Question OR Answering",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            7
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-02",
+        "lexical_query": "the OR combine OR retrieved OR knowledge OR with OR code OR execution OR and OR safety OR boundary OR it OR for OR execution",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-03",
+        "lexical_query": "retrieval OR limitation OR the OR educational OR QA OR report OR and OR improvement OR it OR propose",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            2
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            20
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            5
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ]
+        ]
+      },
+      {
+        "id": "education-synthesis-04",
+        "lexical_query": "do OR the OR educational OR QA OR s OR results OR support OR combining OR external OR knowledge OR retrieval OR with OR multi-step OR reasoning",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            3
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-single-01",
+        "lexical_query": "language OR model OR the OR personalized OR nutrition OR use OR and OR was OR it OR selected",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            4
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            2
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-single-02",
+        "lexical_query": "API OR supplies OR the OR personalized OR nutrition OR s OR real-time OR ingredient OR nutrient OR data",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            13
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            2
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            4
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-single-03",
+        "lexical_query": "many OR smoothie OR recipes OR were OR generated OR in OR the OR nutrition OR s OR validation OR experiment",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-01",
+        "lexical_query": "to OR Table OR 1 OR percentage OR of OR generated OR recipes OR passed OR nutritional OR validation",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-02",
+        "lexical_query": "to OR Table OR 1 OR percentage OR of OR recipes OR passed OR sustainability OR validation",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-03",
+        "lexical_query": "In OR Table OR 2 OR is OR the OR minimum OR fiber OR amount OR per OR serving OR and OR is OR the OR example OR recipe OR classified",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-table-04",
+        "lexical_query": "In OR Table OR 2 OR sodium OR limit OR per OR serving OR is OR for OR validation",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            8
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-synthesis-01",
+        "lexical_query": "the OR causes OR of OR nutritional-validation OR failures OR with OR the OR reasons OR for OR sustainability-validation OR failures",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            16
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-synthesis-02",
+        "lexical_query": "contextual OR retrieval OR personalize OR smoothie OR recipes OR and OR constraints OR are OR to OR validate OR them",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            6
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            4
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            3
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ]
+        ]
+      },
+      {
+        "id": "nutrition-synthesis-03",
+        "lexical_query": "improvements OR the OR suggest OR for OR the OR fiber OR and OR natural-sugar OR limitations OR in OR its OR nutrition OR results",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-01",
+        "lexical_query": "name OR the OR medical OR question-answering OR give OR to OR its",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            4
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-02",
+        "lexical_query": "three OR languages OR are OR represented OR in OR the OR MEDQA OR dataset OR described OR in OR the",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            16
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            17
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-03",
+        "lexical_query": "of OR the OR medical OR s OR retrieval OR approaches OR performed OR best OR to OR the OR authors OR and",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "medical-single-04",
+        "lexical_query": "are OR the OR four OR vector-store OR variants OR by OR the OR medical OR answering OR model",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "medical-table-01",
+        "lexical_query": "In OR Table OR 4 OR MCMLE OR and OR USMLE OR accuracies OR are OR for OR MPT-7B-Instruct",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            12
+          ]
+        ]
+      },
+      {
+        "id": "medical-table-02",
+        "lexical_query": "In OR Table OR 5 OR the OR variable OR Z OR represent OR in OR the OR medical OR answering OR model",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            15
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            2
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "medical-table-03",
+        "lexical_query": "to OR the OR s OR evidence-coverage OR results OR share OR of OR USMLE OR questions OR have OR supporting OR evidence OR in OR the OR top OR ten OR results",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            8
+          ]
+        ]
+      },
+      {
+        "id": "medical-synthesis-01",
+        "lexical_query": "do OR the OR MCMLE OR and OR USMLE OR evidence-coverage OR results OR relate OR to OR the OR model OR s OR accuracy OR on OR those OR two OR datasets",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "medical-synthesis-02",
+        "lexical_query": "Trace OR a OR query OR becomes OR retrieved OR evidence OR in OR the OR medical OR model OR including OR its OR similarity OR search OR method",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            6
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            8
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ]
+        ]
+      },
+      {
+        "id": "medical-synthesis-03",
+        "lexical_query": "differences OR between OR MCMLE OR and OR USMLE OR evidence OR availability OR help OR the OR different OR performance OR results",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            13
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-01",
+        "lexical_query": "orbital OR period OR the OR Kepler OR mission OR measure OR for OR Kepler-90i",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            13
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            21
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-02",
+        "lexical_query": "city OR hosted OR the OR 2016 OR Summer OR Olympic OR Games",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            12
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            6
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            21
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            18
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-03",
+        "lexical_query": "At OR temperature OR gallium OR melt OR in OR degrees OR Celsius",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            22
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            6
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            17
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-04",
+        "lexical_query": "many OR known OR rings OR the OR planet OR Uranus OR have",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            22
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            2
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            19
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            6
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-05",
+        "lexical_query": "scientists OR received OR the OR Nobel OR Prize OR for OR the OR discovery OR of OR gravitational OR waves",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            3
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            1
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            1
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            1
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-06",
+        "lexical_query": "was OR Brazil OR s OR gross OR domestic OR product OR in OR 2020",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            15
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            3
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            15
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-07",
+        "lexical_query": "many OR permanent OR teeth OR a OR typical OR adult OR human OR have",
+        "results": [
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            9
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            10
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-08",
+        "lexical_query": "river OR forms OR part OR of OR the OR border OR between OR the OR United OR States OR and OR Mexico",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            8
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            10
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            14
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            5
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-09",
+        "lexical_query": "is OR the OR average OR June OR rainfall OR in OR Tokyo",
+        "results": [
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            12
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            4
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            12
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            20
+          ],
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            11
+          ]
+        ]
+      },
+      {
+        "id": "out-of-corpus-10",
+        "lexical_query": "were OR the OR primary OR and OR secondary OR endpoints OR in OR the OR 2024 OR randomized OR trial OR of OR HMWHA OR after OR laser OR resurfacing",
+        "results": [
+          [
+            "be12ca47-9e95-56c9-abdc-104a9f7680f5",
+            18
+          ],
+          [
+            "35d86749-bf13-55ac-8008-231937b43bab",
+            18
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            16
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            16
+          ],
+          [
+            "a0fba681-ef99-5f3b-aee3-91ea98269e33",
+            16
+          ]
+        ]
+      }
+    ]
+  }
+}

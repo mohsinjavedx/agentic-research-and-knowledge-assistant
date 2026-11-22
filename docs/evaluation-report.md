@@ -1,5 +1,7 @@
 # Phase 0 acceptance report
 
+Latest Phase5 evidence is documented in the [Phase5 ablation guide](<phases guide/phase-5/phase-5-step-4-ablation.md>). All four implementation steps are present, but the measured quality-gain gate is unmet. On the unchanged40-question dataset: dense Recall@5=0.7667/MRR=0.6244, SQL Hybrid=0.7667/0.6078, and Hybrid+TinyBERT=0.7833/0.5694. Hybrid SQL p95=17.64ms and incremental benchmark-worker RSS=1.95MB; database/container memory is unmeasured. Dense and reranker-off remain defaults. The earlier phase evidence below is retained as historical evidence, not overwritten.
+
 Verification date: 14 November 2026. Scope: local project foundation only.
 
 | Gate | Evidence | Result |

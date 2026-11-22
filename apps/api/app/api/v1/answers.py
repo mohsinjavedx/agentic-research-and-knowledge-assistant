@@ -18,9 +18,9 @@ from app.providers.embeddings import (
 from app.providers.llm import LLMProvider, LLMProviderError
 from app.schemas.answers import AnswerRequest, AnswerResponse
 from app.services.generation.answer import generate_answer
+from app.services.retrieval.context import retrieve_context
 from app.services.retrieval.dense import RetrievedChunk
 from app.services.retrieval.scope import visible_document_ids
-from app.services.retrieval.search import retrieve_evidence
 
 logger = logging.getLogger("research.generation")
 router = APIRouter(prefix="/api/v1", tags=["answers"])
@@ -53,14 +53,16 @@ async def answer(request: Request, body: AnswerRequest, response: Response) -> A
         embedding_ms = (perf_counter() - stage_started_at) * 1000
 
         stage_started_at = perf_counter()
-        evidence = await retrieve_evidence(
+        retrieval = await retrieve_context(
             database,
             query_vector,
             body.query,
             allowed_doc_ids,
+            settings,
             top_k=body.top_k,
-            mode=settings.retrieval_mode,
+            reranker=request.app.state.reranker,
         )
+        evidence = retrieval.evidence
         vector_search_ms = (perf_counter() - stage_started_at) * 1000
 
         llm_called = bool(
@@ -89,7 +91,14 @@ async def answer(request: Request, body: AnswerRequest, response: Response) -> A
         response.headers["Server-Timing"] = ", ".join(
             f"{name};dur={duration:.2f}" for name, duration in timings
         )
-        return result
+        return result.model_copy(
+            update={
+                "ranked_chunk_ids": [row.chunk_id for row in retrieval.ranked],
+                "context_groups": retrieval.context_groups,
+                "reranking_applied": retrieval.reranking_applied,
+                "reranker_error": retrieval.reranker_error,
+            }
+        )
     except EmbeddingInputTooLong:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,

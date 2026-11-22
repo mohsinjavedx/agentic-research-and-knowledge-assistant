@@ -18,18 +18,7 @@ logger = logging.getLogger("research.generation")
 
 
 def _evidence_response(evidence: Sequence[RetrievedChunk]) -> list[SearchResult]:
-    return [
-        SearchResult(
-            chunk_id=item.chunk_id,
-            document_id=item.document_id,
-            page_number=item.page_number,
-            chunk_index=item.chunk_index,
-            text=item.text,
-            cosine_similarity=round(item.cosine_similarity, 6),
-            fusion_score=item.fusion_score,
-        )
-        for item in evidence
-    ]
+    return [SearchResult.model_validate(item) for item in evidence]
 
 
 def _used_evidence(
@@ -50,13 +39,9 @@ def _used_evidence(
                 retrieval_index=passage.retrieval_index,
                 start=passage.start,
                 end=passage.end,
-                text=passage.text,
-                chunk_id=source.chunk_id,
-                document_id=source.document_id,
-                page_number=source.page_number,
-                chunk_index=source.chunk_index,
-                cosine_similarity=round(source.cosine_similarity, 6),
-                fusion_score=source.fusion_score,
+                **SearchResult.model_validate(source)
+                .model_copy(update={"text": passage.text})
+                .model_dump(),
             )
         )
     return used

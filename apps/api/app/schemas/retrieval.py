@@ -28,6 +28,8 @@ class SearchRequest(BaseModel):
 
 
 class SearchResult(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     chunk_id: UUID
     document_id: UUID
     page_number: int
@@ -35,6 +37,20 @@ class SearchResult(BaseModel):
     text: str
     cosine_similarity: float
     fusion_score: float | None = None
+    context_group: UUID | None = None
+    is_adjacent_context: bool = False
+    rerank_score: float | None = None
+
+    @field_validator("cosine_similarity")
+    @classmethod
+    def rounded_similarity(cls, value: float) -> float:
+        return round(value, 6)
+
+
+class ContextGroup(BaseModel):
+    anchor_id: UUID
+    document_id: UUID
+    chunk_ids: list[UUID]
 
 
 class SearchResponse(BaseModel):
@@ -42,3 +58,7 @@ class SearchResponse(BaseModel):
     similarity_threshold: float
     insufficient_evidence: bool
     retrieval_mode: Literal["dense", "hybrid"] = "dense"
+    adjacent_context: list[SearchResult] = Field(default_factory=list)
+    context_groups: list[ContextGroup] = Field(default_factory=list)
+    reranking_applied: bool = False
+    reranker_error: str | None = None

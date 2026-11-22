@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "dataset_sha256": "e2ef3c61d4bde14f84b32f84988072ebb482592433e61ee9da94d5fd08735a40",
+  "definition": "Answerable questions mentioning an explicit acronym, GPT model, named QA benchmark, or numbered table. Frozen before Phase5 hybrid/reranker measurements.",
+  "query_regex": "\\b[A-Z][A-Z0-9_-]{1,}\\b|\\bGPT-\\w+|\\bOpenBookQA\\b|\\bScienceQA\\b|\\bTable\\s+\\d+",
+  "question_ids": [
+    "education-single-02",
+    "education-single-03",
+    "education-table-01",
+    "education-table-02",
+    "education-table-03",
+    "education-synthesis-01",
+    "education-synthesis-03",
+    "education-synthesis-04",
+    "nutrition-single-02",
+    "nutrition-table-01",
+    "nutrition-table-02",
+    "nutrition-table-03",
+    "nutrition-table-04",
+    "medical-single-02",
+    "medical-table-01",
+    "medical-table-02",
+    "medical-table-03",
+    "medical-synthesis-01",
+    "medical-synthesis-03"
+  ]
+}

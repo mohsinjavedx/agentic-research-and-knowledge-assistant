@@ -28,13 +28,21 @@ and citations with insufficient_evidence true.
 def build_messages(
     question: str, evidence: Sequence[RetrievedChunk]
 ) -> list[ChatCompletionMessageParam]:
-    blocks = [
-        (
+    blocks: list[str] = []
+    current_group = None
+    for index, item in enumerate(evidence):
+        if item.context_group != current_group:
+            if current_group is not None:
+                blocks.append("</context-group>")
+            current_group = item.context_group
+            if current_group is not None:
+                blocks.append(f'<context-group id="{current_group}">')
+        blocks.append(
             f'<evidence index="{index}" id="{item.chunk_id}" doc="{item.document_id}" '
             f'page="{item.page_number}">{escape(item.text, quote=True)}</evidence>'
         )
-        for index, item in enumerate(evidence)
-    ]
+    if current_group is not None:
+        blocks.append("</context-group>")
     user_content = (
         f"Question:\n{escape(question, quote=True)}\n\nUntrusted evidence:\n{''.join(blocks)}"
     )

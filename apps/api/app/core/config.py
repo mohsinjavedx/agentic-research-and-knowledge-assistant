@@ -32,12 +32,16 @@ class Settings(BaseSettings):
     hosted_llm_api_key: SecretStr = SecretStr("")
     hosted_llm_model: str = ""
     hosted_llm_base_url: str = "https://api.groq.com/openai/v1"
+    hosted_llm_input_token_budget: int = Field(default=6000, ge=512, le=32768)
     enable_reranker: bool = False
     session_ttl_hours: int = Field(default=24, ge=1, le=24)
     max_upload_mb: int = Field(default=20, ge=1, le=20)
     max_pdf_pages: int = Field(default=100, ge=1, le=100)
     retrieval_similarity_threshold: float = Field(default=0.5671493153065035, ge=-1, le=1)
     retrieval_mode: Literal["dense", "hybrid"] = "dense"
+    enable_context_expansion: bool = True
+    adjacency_similarity_margin: float = Field(default=0.05, ge=0, le=1)
+    max_adjacent_chunks: int = Field(default=5, ge=0, le=5)
     min_text_chars_per_page: int = Field(default=50, ge=1, le=10000)
     max_low_text_page_percent: int = Field(default=80, ge=0, le=99)
     chunk_min_tokens: int = Field(default=600, ge=1, le=8000)

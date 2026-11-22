@@ -90,6 +90,9 @@ def focus_evidence(question: str, evidence: Sequence[RetrievedChunk]) -> list[Ev
     }
     passages: list[EvidencePassage] = []
     for retrieval_index, (item, blocks) in enumerate(zip(evidence, parsed, strict=True)):
+        if item.context_group is not None:
+            passages.append(EvidencePassage(item, retrieval_index, 0, len(item.text)))
+            continue
         candidates = [
             (index, block)
             for index, block in enumerate(blocks)
@@ -120,4 +123,18 @@ def focus_evidence(question: str, evidence: Sequence[RetrievedChunk]) -> list[Ev
         while end > start and item.text[end - 1].isspace():
             end -= 1
         passages.append(EvidencePassage(item, retrieval_index, start, end))
-    return passages
+    ordered: list[EvidencePassage] = []
+    seen_groups = set()
+    for passage in passages:
+        group = passage.source.context_group
+        if group is None:
+            ordered.append(passage)
+        elif group not in seen_groups:
+            seen_groups.add(group)
+            ordered.extend(
+                sorted(
+                    (row for row in passages if row.source.context_group == group),
+                    key=lambda row: row.source.chunk_index,
+                )
+            )
+    return ordered
