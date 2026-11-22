@@ -20,11 +20,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <nav aria-label="Main navigation">
             <Link href="/workspace">Workspace</Link>
             <Link href="/documents">Documents</Link>
+            <Link href="/research">Research</Link>
           </nav>
-          <span className="phase-tag">Foundation preview</span>
+          <span className="phase-tag">Phase 6 / Research</span>
         </header>
         <main id="main">{children}</main>
-        <footer>Research & Knowledge Assistant <span>Phase 0 / Local development</span></footer>
+        <footer>Research & Knowledge Assistant <span>Phase 6 / Local development</span></footer>
       </body>
     </html>
   );

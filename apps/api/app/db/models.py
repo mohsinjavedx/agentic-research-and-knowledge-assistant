@@ -130,3 +130,42 @@ class Chunk(Base):
     fts_tokens: Mapped[str] = mapped_column(
         TSVECTOR, Computed("to_tsvector('english'::regconfig, normalized_text)", persisted=True)
     )
+
+
+class ResearchJob(Base):
+    __tablename__ = "research_jobs"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('queued','running','completed','failed')",
+            name="ck_research_jobs_status",
+        ),
+        CheckConstraint("iterations BETWEEN 0 AND 4", name="ck_research_jobs_iterations"),
+        CheckConstraint("tool_calls_count BETWEEN 0 AND 6", name="ck_research_jobs_tool_calls"),
+        CheckConstraint("top_k BETWEEN 1 AND 10", name="ck_research_jobs_top_k"),
+        Index("ix_research_jobs_session_created", "session_id", "created_at"),
+    )
+
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    session_id: Mapped[UUID] = mapped_column(Uuid, nullable=False)
+    query: Mapped[str] = mapped_column(Text)
+    document_ids: Mapped[list[str]] = mapped_column(JSONB)
+    top_k: Mapped[int] = mapped_column(Integer, server_default=text("5"))
+    status: Mapped[str] = mapped_column(String(16), server_default="queued")
+    steps: Mapped[list[dict[str, object]]] = mapped_column(
+        JSONB, server_default=text("'[]'::jsonb")
+    )
+    tool_calls: Mapped[list[dict[str, object]]] = mapped_column(
+        JSONB, server_default=text("'[]'::jsonb")
+    )
+    iterations: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    tool_calls_count: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    sufficiency_verdict: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    report: Mapped[dict[str, object] | None] = mapped_column(JSONB, nullable=True)
+    evidence: Mapped[list[dict[str, object]]] = mapped_column(
+        JSONB, server_default=text("'[]'::jsonb")
+    )
+    error_code: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
