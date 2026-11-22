@@ -13,6 +13,15 @@ router = APIRouter(prefix="/api/v1", tags=["sessions"])
 @router.post("/session", status_code=status.HTTP_204_NO_CONTENT)
 async def create_session(request: Request, response: Response) -> Response:
     settings: Settings = request.app.state.settings
+    existing_session = request.cookies.get(SESSION_COOKIE_NAME)
+    if existing_session is not None:
+        try:
+            UUID(existing_session)
+            response.status_code = status.HTTP_204_NO_CONTENT
+            response.headers["Cache-Control"] = "no-store"
+            return response
+        except ValueError:
+            pass
     response.status_code = status.HTTP_204_NO_CONTENT
     response.set_cookie(
         key=SESSION_COOKIE_NAME,
@@ -23,6 +32,7 @@ async def create_session(request: Request, response: Response) -> Response:
         httponly=True,
         samesite="lax",
     )
+    response.headers["Cache-Control"] = "no-store"
     response.headers["Cache-Control"] = "no-store"
     return response
 

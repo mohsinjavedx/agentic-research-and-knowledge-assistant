@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.answers import router as answers_router
 from app.api.v1.documents import router as documents_router
 from app.api.v1.health import router as health_router
+from app.api.v1.research import router as research_router
 from app.api.v1.search import router as search_router
 from app.api.v1.sessions import router as sessions_router
 from app.core.config import Settings, load_settings
@@ -84,6 +85,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(documents_router)
     application.include_router(search_router)
     application.include_router(answers_router)
+    application.include_router(research_router)
     application.add_middleware(RequestContextMiddleware)
     application.add_middleware(
         CORSMiddleware,

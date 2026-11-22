@@ -14,6 +14,8 @@ Each phase has its own folder and README. Individual step guides live inside tha
 
 Phase5: [Advanced RAG, hybrid SQL RRF, adjacent context, optional reranking, and ablation](phase-5/README.md). Each of its four steps has a separate guide. Implementation is present; measured quality gain remains below acceptance, so dense retrieval remains the default.
 
+Phase6: [Bounded agentic workflows](phase-6/README.md). All five implementation steps are present: typed state, LangGraph topology, allowlisted tools, hard budgets, and persisted async jobs. The required 25-task multi-document live acceptance set remains pending.
+
 ```text
 phases guide/
 |-- README.md
@@ -58,3 +60,5 @@ Phase 3 adds an attributed CC BY 4.0 sample corpus, a page-grounded 40-question 
 Phase 4 adds a session-scoped answer endpoint, prompt isolation, Instructor/Pydantic output validation, deterministic citation checks, and evidence fallback. Its API and unit tests pass, but live-model faithfulness and prompt-injection acceptance remain pending until an LLM provider is configured. See the [Phase 4 guide](phase-4/README.md).
 
 The [Phase 4 quality improvements](phase-4/quality-improvements/README.md) have six separate guides covering source-label corrections, optional hybrid retrieval, focused evidence, source quotes, used-context reporting, and measured evaluation.
+
+The Phase 6 guide has a separate verification guide for each of its five steps.

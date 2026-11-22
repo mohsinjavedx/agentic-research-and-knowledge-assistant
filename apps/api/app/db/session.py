@@ -6,9 +6,12 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app.core.config import Settings
 from app.db.embedding_compatibility import assert_embedding_compatibility
-from app.workers.recovery import recover_interrupted_documents
+from app.workers.recovery import (
+    recover_interrupted_documents,
+    recover_interrupted_research_jobs,
+)
 
-SCHEMA_REVISION = "0004_session_lifecycle"
+SCHEMA_REVISION = "0005_research_jobs"
 
 
 class Database:
@@ -36,9 +39,14 @@ class Database:
                 return
             async with self.sessions() as session, session.begin():
                 recovered = await recover_interrupted_documents(session)
+                recovered_jobs = await recover_interrupted_research_jobs(session)
             self._recovery_complete = True
             logging.getLogger("research.recovery").info(
-                "startup.ingestion_recovery_completed", extra={"recovered_documents": recovered}
+                "startup.recovery_completed",
+                extra={
+                    "recovered_documents": recovered,
+                    "recovered_research_jobs": recovered_jobs,
+                },
             )
 
     async def check(self) -> str:
