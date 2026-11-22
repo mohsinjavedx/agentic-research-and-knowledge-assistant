@@ -45,11 +45,19 @@ Each result contains a chunk ID, document ID, one-based page number, text, and c
 
 `RETRIEVAL_MODE` selects `dense` (default) or `hybrid`. Both methods share document visibility. Hybrid combines vector/full-text ranks and adds a separate `fusion_score`; it does not replace cosine similarity. Search returns `retrieval_mode`, and abstention uses the maximum returned cosine regardless of fusion ordering. The corrected comparison does not justify enabling hybrid by default yet.
 
+Phase5 moves hybrid fusion into one scoped PostgreSQL query with `websearch_to_tsquery`, branch candidates20 and RRF k60. Natural phrase/negation operators are preserved. `ENABLE_RERANKER=true` optionally scores20 candidates before selecting top-k; it is false by default. `rerank_score` is a separate neural logit, not a cosine or probability. Responses expose `reranking_applied` and a sanitized `reranker_error`; an optional-provider failure preserves the original retrieval order.
+
+With `ENABLE_CONTEXT_EXPANSION=true` (default), same-document index±1 neighbors can be added if both clear the cosine threshold and the neighbor is within `ADJACENCY_SIMILARITY_MARGIN=0.05` of its anchor. At most `MAX_ADJACENT_CHUNKS=5` extras are returned. Search `results` remains ranked top-k, with extras in `adjacent_context`. `context_groups` contains `anchor_id`, `document_id`, and member `chunk_ids` in source order. Each source retains its original identity/text/page and adds `context_group` and `is_adjacent_context` metadata.
+
 ## Grounded answers
 
 `POST /api/v1/answer` requires the same anonymous session cookie and accepts `query`, optional visible `document_ids`, and `top_k` (1–10, default 5). Document visibility is resolved with the same sample/current-session/expiry rules as dense search.
 
 The JSON response contains `answer`, `citations`, `insufficient_evidence`, `degraded_mode`, retrieved `evidence`, and exact `used_evidence` excerpts. Each citation contains a claim, `chunk_id`, `document_id`, one-based `page_number`, source `quote`, and `quote_start`/`quote_end` within the original normalized chunk. Quotes must occur in the actual supplied context and claims must occur in the answer. An invalid-only citation set, uncovered non-whitespace answer characters, or a model insufficiency verdict discards generated prose and abstains. These checks do not establish semantic entailment. Weak retrieval abstains before an LLM call.
+
+Phase5 adds `ranked_chunk_ids`, `context_groups`, `reranking_applied`, and `reranker_error`. `evidence` includes ranked cores plus bounded neighbors. Grouped sources are supplied together in source order with separate evidence indices; each citation still points to exactly one original chunk and range. `used_evidence.retrieval_index` indexes this full pool and can differ from the ordered model `context_index`.
+
+Local and hosted context packing selects whole groups or whole focused standalone passages, skipping units that cannot fit. `HOSTED_LLM_INPUT_TOKEN_BUDGET=6000` bounds the estimated hosted input (messages, schema,25% headroom and64 template tokens). This estimate does not replace the provider's tokenizer, account-wide rate limits, or model context/output constraints. Full retrieval remains visible even when later groups are omitted from model context.
 
 Generation selects focused complete Markdown passages. Local packing fits them within `OLLAMA_NUM_CTX`, reserving `LLM_MAX_OUTPUT_TOKENS` (default 512) and an input margin; oversized passages can be skipped. The full retrieved set remains in `evidence`. Each `used_evidence` item has `context_index`, `retrieval_index`, `start`, and `end`, and its text equals the source slice. Context indices need not equal retrieval indices. Ranges are half-open Unicode-code-point positions, not UTF-16 indices or PDF byte offsets. If no complete passage fits or structured output is incomplete/invalid, the route returns a sanitized HTTP 503.
 

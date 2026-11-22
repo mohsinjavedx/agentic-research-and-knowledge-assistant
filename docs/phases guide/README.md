@@ -12,6 +12,8 @@ Each guide records the delivered changes, source structure, runtime behavior, ru
 
 Each phase has its own folder and README. Individual step guides live inside that phase folder.
 
+Phase5: [Advanced RAG, hybrid SQL RRF, adjacent context, optional reranking, and ablation](phase-5/README.md). Each of its four steps has a separate guide. Implementation is present; measured quality gain remains below acceptance, so dense retrieval remains the default.
+
 ```text
 phases guide/
 |-- README.md

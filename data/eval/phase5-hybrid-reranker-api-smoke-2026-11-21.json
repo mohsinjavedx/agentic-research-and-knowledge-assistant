@@ -1,0 +1,169 @@
+{
+  "status_code": 200,
+  "body": {
+    "results": [
+      {
+        "chunk_id": "e774f058-e96f-555c-be07-8d08297a8a59",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 8,
+        "chunk_index": 18,
+        "text": "text contexts (6,532\nquestions, accounting for 30.8%). Additionally, the ScienceQA dataset provides detailed explanations for answers and\nrelated instructional videos, which help the system understand the reasoning process behind the questions. Evaluation\non the ScienceQA dataset can assess the model\u2019s reasoning ability when handling Multi-modal information, especially the\ncombination of images and text, and the role of RAG in integrating external knowledge, as shown in <u>Table 1.</u>\n\nThese five datasets vary in question difficulty, subject areas, assessment focuses, and data formats, each offering\nunique strengths. They provide multiple perspectives to evaluate the comprehensive capabilities of the proposed educational question-answering system. By conducting unified experiments and comparative analyses across these datasets,\nwe can quantitatively measure the system\u2019s performance in mathematical reasoning, scientific knowledge understanding,\nmulti-step logical deduction, and real-world educational applications. Additionally, this will help better explore the synergistic effects of RAG and Code Interpreter in handling complex educational question-answering scenarios.\n\n\n**3. Methodology**\n\n\nTo evaluate the effectiveness and applicability of combining Retrieval-Augmented Generation (RAG) with Large Language\nModel (LLM) Code Interpreters in the context of educational question-answering systems, systematic experiments and\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 8 / 23",
+        "cosine_similarity": 0.753126,
+        "fusion_score": 0.015873015873015872,
+        "context_group": "e774f058-e96f-555c-be07-8d08297a8a59",
+        "is_adjacent_context": false,
+        "rerank_score": 5.641591548919678
+      },
+      {
+        "chunk_id": "f8e05356-69c3-5eb1-853f-62f66b16510d",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 10,
+        "chunk_index": 23,
+        "text": "strate\nthe reasoning process and reduce errors in computational tasks was evaluated. Since all five primary datasets (AI2_ARC,\nOpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA) consist of multiple-choice questions, accuracy was chosen as the primary evaluation metric. Only the multiple-choice portions of these datasets were selected for\nevaluation to maintain consistency across metrics.\n\n\n**3.4 Implementation details of the RAG retrieval module**\n\n\nThe RAG mechanism was implemented using the following approach, including knowledge base construction, retrieval and\ntext selection, as well as fusion and input. The knowledge base was constructed by integrating publicly available text sources,\nsuch as Wikipedia excerpts, popular science websites, and digitized versions of various textbooks in both Chinese and English\nto ensure linguistic consistency in retrieval. The original text was segmented into sentences or paragraphs, and vector-based\nretrieval techniques [44] (e.g., Faiss or Milvus) were used to index the text. Embedding vectors for each text fragment were\ncomputed using per-trained language models like Sentence-BERT [45], facilitating similarity-based retrieval. For the retrieval\nprocess, the user query was converted into a vector representation, and cosine similarity was computed between the query\nvector and the vectors of text fragments in the knowledge base to retrieve the top-k most relevant document segments.\n\nWhen a user query qqq arrives, it is converted into an embedding vector _q \u2208_ _R_ . Each document fragment in the knowledge base is also represented by an embedding vector _di_ _\u2208_ _R_ . To find the most relevant fragments, we calculate the\ncosine similarity:\n\n\n_sim_ ( _q_, _di_ ) = _<u>q \u00b7 di</u>_\n(1)\n\n~~\ufffd~~ <u>\ufffd</u> _q_ ~~\ufffd~~ <u>\ufffd</u> ~~\ufffd~~ <u>\ufffd</u> _di_ ~~\ufffd~~ <u>\ufffd</u>",
+        "cosine_similarity": 0.717133,
+        "fusion_score": 0.013513513513513514,
+        "context_group": "f8e05356-69c3-5eb1-853f-62f66b16510d",
+        "is_adjacent_context": false,
+        "rerank_score": 2.68672776222229
+      },
+      {
+        "chunk_id": "fd9bbb86-db2b-5f9d-8451-9e4cf291b0da",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 7,
+        "chunk_index": 15,
+        "text": "as such as knowledge updating, reasoning, and computation, this\nstudy selects five representative public datasets that cover different difficulty levels and domains. These datasets include\nAI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA. Each of these datasets has\ndistinct characteristics in terms of question types, subject areas, and difficulty levels, which can help thoroughly validate\nthe system\u2019s adaptability and performance across diverse scenarios.\n\n**2.4.1 AI2_ARC.** AI2_ARC [37] (AI2 Reasoning Challenge) is a science assessment dataset proposed by the Allen\nInstitute for AI. The questions in this dataset primarily originate from science exams taken by students from elementary to\nhigh school in the United States, covering fields such as physics, chemistry, biology, and Earth sciences. This dataset not\nonly requires the model to understand and memorize scientific knowledge but also to possess reasoning, induction,\nand common-sense judgment abilities. Evaluation on AI2_ARC can assess the system\u2019s comprehensive strength in\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 7 / 23",
+        "cosine_similarity": 0.731875,
+        "fusion_score": 0.014705882352941176,
+        "context_group": "fd9bbb86-db2b-5f9d-8451-9e4cf291b0da",
+        "is_adjacent_context": false,
+        "rerank_score": 1.8581647872924805
+      },
+      {
+        "chunk_id": "4b80368c-606b-5331-8a02-c60c9ee4742b",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 4,
+        "chunk_index": 9,
+        "text": "multi-step calculation problems, the\nsystem shows intermediate results at each step to help the user follow the problem-solving process. Furthermore, if the\nuser has questions about any part of the answer, the system supports follow-up queries, allowing the user to retrieve additional information or run more reasoning steps. RAG and the code interpreter, the educational question-answering system\nis able to provide answers that are both rich in knowledge and up-to-date, while also handling complex computational\nand reasoning tasks. RAG ensures the system answers based on the most current knowledge, while the code interpreter\nallows for the precise execution of multi-step reasoning and computational tasks.\n\nThe findings of this study provide new insights and methodologies for enhancing educational question-answering\nsystems, demonstrating substantial improvements over vanilla Large Language Models (LLMs). Specifically, by integrating Retrieval-Augmented Generation (RAG) and the LLM Code Interpreter, our system achieves an average accuracy increase of 10\u201315 percentage points compared to vanilla LLM. This approach effectively addresses key limitations\nof vanilla LLMs, such as knowledge hallucination, limited computational capabilities, and inadequate reasoning performance. As technology continues to advance, this integrated framework is expected to play an increasingly critical\nrole in personalized education and intelligent tutoring, further promoting educational equity and significantly improving\neducational quality.\n\n\nPLOS One | <u>https://doi.org/10.1371/journal.pone.0337361</u> December 1, 2025 4 / 23",
+        "cosine_similarity": 0.72381,
+        "fusion_score": 0.014492753623188406,
+        "context_group": "4b80368c-606b-5331-8a02-c60c9ee4742b",
+        "is_adjacent_context": false,
+        "rerank_score": -1.037847876548767
+      },
+      {
+        "chunk_id": "071e9ad0-1e3d-5cbb-86d9-041341247a9d",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 19,
+        "chunk_index": 43,
+        "text": "Improvement measures:\n\nImprovements: access to real-time data APIs (e.g., Google Alerts) and add a time decay factor to the vector index.\n\n\n**5. Discussion and conclusion**\n\n\nIn this paper, we introduced a novel educational question-answering (QA) system that integrates Retrieval-Augmented\nGeneration (RAG) and LLM Code Interpreters to enhance the accuracy, reasoning, and adaptability of responses. Our\nresults across several diverse datasets demonstrate that this hybrid approach addresses many of the limitations observed\nin traditional QA systems, particularly in complex reasoning tasks, dynamic knowledge retrieval, and multi-step problem\nsolving.\n\n\n**5.1 Key findings**\n\n\nThe experimental evaluation provided compelling evidence for the effectiveness of integrating RAG and LLM Code Interpreters in educational contexts. The system\u2019s ability to retrieve relevant, up-to-date knowledge was significantly enhanced\nby the RAG framework, making it particularly valuable in educational environments where knowledge is constantly evolving. By supplementing the language model\u2019s inherent knowledge with real-time retrieval from external sources, the system\nensures more accurate and contextually appropriate answers, especially for scientific and technical questions that require\nup-to-date information. Additionally, the Code Interpreter played a crucial role in enabling the system to handle more complex reasoning tasks, such as multi-step calculations, logical reasoning, and algorithmic execution. By generating executable code to support reasoning, the system not only provided more precise answers but also allowed users to trace and\nvalidate the reasoning steps, enhancing transparency and trust. Furthermore, the system showed improved performance\nacross a wide range of educational tasks, from scientific reasoning to cross-disciplinary knowledge integration. It excelled\nin tasks that demanded not just factual recall but also logic, computation, and the synthesis of information from multiple\ndomains. Its robustness was evident in the system\u2019s adaptability to diverse educational scenarios, as demonstrated by\nexperiments on datasets like AI2_ARC, OpenBookQA, and E-EVAL. The system consistently produced accurate and reliable answers, even when tasks involved multiple logical steps or required external knowledge.\n\n\n**5.2 Challenges and limitations**",
+        "cosine_similarity": 0.750182,
+        "fusion_score": 0.015625,
+        "context_group": null,
+        "is_adjacent_context": false,
+        "rerank_score": -1.0712603330612183
+      }
+    ],
+    "similarity_threshold": 0.5671493153065035,
+    "insufficient_evidence": false,
+    "retrieval_mode": "hybrid",
+    "adjacent_context": [
+      {
+        "chunk_id": "4777fae4-cc65-5989-b217-0b40e0e91031",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 7,
+        "chunk_index": 14,
+        "text": "**<u>Fig 3. Code interpreter with LLM.</u>**\n\n\n<u>[https://doi.org/10.1371/journal.pone.0337361.g003](https://doi.org/10.1371/journal.pone.0337361.g003)</u>\n\n\nthereby reducing the risk of generating inaccurate answers and improving the reliability of the reasoning process. This\nmethod not only enhances the system\u2019s ability to handle complex tasks but also provides stronger computational and\nlogical verification capabilities for educational question answering systems.\n\nTraditional knowledge base question answering systems perform well in specific domains, but their limitations in\ndynamic knowledge updates, natural language understanding, and complex reasoning restrict their application in broad\neducational contexts. The introduction of large language models has significantly improved question answering systems\u2019\nabilities to generate and understand natural language, but challenges remain in reasoning and computational tasks,\nparticularly with the issue of \u201challucinations\u201d The RAG method, by combining information retrieval with generative models, has alleviated some of these hallucination issues, but its performance in complex mathematical computation and\nlogical reasoning tasks is still insufficient. The introduction of Code Interpreters further enhances the system\u2019s computational and reasoning capabilities, enabling more accurate and reliable answers by generating and executing code.\nBased on this, the educational question answering system proposed in this research, which combines RAG and LLM\nCode Interpreters, aims to leverage the strengths of both technologies to address the shortcomings of existing systems\nand improve the overall performance of educational question answering systems in knowledge acquisition and reasoning tasks, providing a more comprehensive and intelligent solution for question answering systems in the educational\ndomain.\n\n\n**2.4 Evaluation datasets**\n\n\nIn order to comprehensively and objectively evaluate the performance of the proposed educational question-answering\nsystem based on RAG and LLM Code Interpreter in areas such as knowledge updating, reasoning, and computation, this\nstudy selects five representative public datasets that cover different difficulty levels and domains. These datasets include\nAI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA. Each of these datasets has\ndistinct characteristics in terms of question types, subject areas, and difficulty levels, which can help thoroughly validate\nthe system\u2019s adaptability and performance across diverse scenarios.",
+        "cosine_similarity": 0.769254,
+        "fusion_score": null,
+        "context_group": "fd9bbb86-db2b-5f9d-8451-9e4cf291b0da",
+        "is_adjacent_context": true,
+        "rerank_score": null
+      },
+      {
+        "chunk_id": "2d134f23-26c8-59ec-8dc1-3ff414b7f0eb",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 5,
+        "chunk_index": 10,
+        "text": "**2 Related works**\n\n**2.1 Knowledge Base Question Answering Systems (KBQA)**\n\n\nPast educational question answering systems primarily relied on Knowledge Base Question Answering Systems [20\u201323]\n(KBQA), which respond to user queries using per-constructed, structured knowledge bases (such as Freebase [24], Wikidata [25], etc.). These systems are typically built upon Information Retrieval [17] (IR) techniques or Knowledge Graphs\n\n<u>[26] (KG). The system first parses the user\u2019s natural language question, identifies the entities, relationships, and attributes</u>\nwithin it, and then queries the constructed knowledge graph based on this information. In this manner, the system can\nextract relevant information from the predefined knowledge base and generate answers by incorporating the context of\nthe query. In specific domains (such as medicine, law, corporate knowledge, etc.), KBQA systems are generally able to\nprovide relatively accurate answers, particularly when dealing with structured and standardized questions, showcasing\nhigh accuracy in responses [27].\n\nHowever, traditional KBQA systems exhibit significant limitations. First, the construction and maintenance of the knowledge base often rely on substantial manual labor and rule-making. Especially in dynamic fields, the update cycle of the\nknowledge base typically cannot keep pace with real-world changes [28]. For example, when new academic research or\nindustry developments emerge, the relevant knowledge bases may fail to reflect these changes in time, causing the system to be unable to provide the most up-to-date information [21]. Second, methods based on structured knowledge bases\nstill face considerable challenges in dealing with the diversity and complexity of natural language [22]. Natural language\ncontains a large number of ambiguous, uncertain, or polysemous words, and in open-domain questions, traditional knowledge bases often struggle to handle this diversity effectively. When confronted with complex contexts or phenomena such\nas polysemy and metaphor, traditional KBQA systems tend to show insufficient accuracy and relevance in their answers.\nMoreover, traditional KBQA systems lack flexibility and adaptability, especially when addressing cross-disciplinary,\ncross-domain, or novel questions. [23] In such cases, the system\u2019s performance is often unsatisfactory, unable to provide\ncomprehensive and timely answers. In conclusion, these issues limit the effective application of traditional knowledge\nbase question answering systems in broad educational contexts, particularly when handling complex, variable natural\nlanguage queries.",
+        "cosine_similarity": 0.756269,
+        "fusion_score": null,
+        "context_group": "4b80368c-606b-5331-8a02-c60c9ee4742b",
+        "is_adjacent_context": true,
+        "rerank_score": null
+      },
+      {
+        "chunk_id": "c09418f6-ea0f-5926-af29-5fc4a79c53ee",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 8,
+        "chunk_index": 17,
+        "text": "reasoning questions. Compared to the other\ndatasets, E-EVAL places a greater emphasis on assessing the model\u2019s performance in real educational contexts, such as\nthe ability to handle misspellings, long-sentence comprehension, reasoning chain completeness, and dynamic invocation\nof knowledge across different subjects. Evaluation on this dataset can verify the system\u2019s adaptability and robustness in\nmulti-subject and multi-question-type scenarios and provide insights into the user experience in real educational settings.\n\n**2.4.4 Textbook Question Answering (TQA).** The TQA dataset comes from high school science textbooks and\nincludes 1,076 course contents from life sciences, Earth sciences, and physical sciences [40]. Each course content\nconsists of text paragraphs, tables, and natural images, with each lesson containing a vocabulary section that defines\nscientific concepts introduced in the lesson, along with a summary paragraph that briefly outlines the key concepts. The\nTQA dataset includes a total of 78,338 sentences and 3,455 images, and each lesson is also linked to online teaching\nvideos to help students better understand concepts through visual representations. Evaluation on the TQA dataset can\nvalidate the effectiveness of the RAG framework in retrieving external textbook knowledge and integrating it with pretrained models, as well as the performance of the Code Interpreter in complex Multi-modal educational contexts.\n\n**2.4.5 ScienceQA.** The ScienceQA [41] dataset consists of 21,208 multiple-choice questions from elementary and high\nschool science courses, with the majority of the questions combining text and image content. The questions in this dataset\nare divided into three categories: questions with image context (10,332 questions, accounting for 48.7%), questions with\ntext context (10,220 questions, accounting for 48.2%), and questions containing both image and text contexts (6,532\nquestions, accounting for 30.8%). Additionally, the ScienceQA dataset provides detailed explanations for answers and\nrelated instructional videos, which help the system understand the reasoning process behind the questions. Evaluation\non the ScienceQA dataset can assess the model\u2019s reasoning ability when handling Multi-modal information, especially the\ncombination of images and text, and the role of RAG in integrating external knowledge, as shown in <u>Table 1.</u>",
+        "cosine_similarity": 0.722957,
+        "fusion_score": null,
+        "context_group": "e774f058-e96f-555c-be07-8d08297a8a59",
+        "is_adjacent_context": true,
+        "rerank_score": null
+      },
+      {
+        "chunk_id": "829fa6d9-bdf7-5d8d-ae31-6a4160fb7861",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 4,
+        "chunk_index": 8,
+        "text": "**Fig 1. Overview of the proposed educational question-answering (Q&A) system integrating Retrieval-Augmented Generation (RAG) and Large**\n**<u>Language Model (LLM) Code Interpreter.</u>**\n\n\n<u>[https://doi.org/10.1371/journal.pone.0337361.g001](https://doi.org/10.1371/journal.pone.0337361.g001)</u>\n\n\npapers, and more. The key goal of this process is to ensure that the generated answer is built on the most up-to-date and\nrelevant knowledge, avoiding the hallucination issues common in traditional LLMs. The retrieved information, along with\nthe original user query, is then input into the LLM. At this stage, the LLM generates the answer based on the user\u2019s question and the retrieved external knowledge. The system utilizes the language model\u2019s powerful comprehension and reasoning abilities, combining this with the external information to produce the response. If the question involves multi-step\nreasoning or requires complex computations, the generated answer may trigger the use of the code interpreter. When the\nLLM\u2019s generated answer requires the execution of a program, the system automatically activates the LLM Code Interpreter. In this case, the LLM generates the corresponding code (such as Python code) to execute the reasoning process.\nThe code interpreter runs this code within a sandbox environment, ensuring the safety of the computational and reasoning steps. Once the code execution is successful, the calculation results from the interpreter and the LLM-generated text\nanswer are integrated (this process can repeat multiple times, executing several blocks of code), forming the final system\nresponse. The system then delivers the final answer to the user, while also displaying the relevant reasoning process or\ncode execution logs to increase the answer\u2019s venerability and understanding. For multi-step calculation problems, the\nsystem shows intermediate results at each step to help the user follow the problem-solving process. Furthermore, if the\nuser has questions about any part of the answer, the system supports follow-up queries, allowing the user to retrieve additional information or run more reasoning steps. RAG and the code interpreter, the educational question-answering system\nis able to provide answers that are both rich in knowledge and up-to-date, while also handling complex computational\nand reasoning tasks.",
+        "cosine_similarity": 0.716503,
+        "fusion_score": null,
+        "context_group": "4b80368c-606b-5331-8a02-c60c9ee4742b",
+        "is_adjacent_context": true,
+        "rerank_score": null
+      },
+      {
+        "chunk_id": "045299c7-752c-590a-8fff-a028bc35a6da",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "page_number": 10,
+        "chunk_index": 22,
+        "text": "reasoning, or programmatic inference, the model generates executable code (e.g., Python) during the answering process,\nwhich is then run in a sandboxed environment to produce accurate computational results or verify logical processes. This\nconfiguration evaluates the role of code execution in enhancing the model\u2019s mathematical reasoning and logical inference\naccuracy. The fourth and final setup (LLM + RAG + Code Interpreter), which represents the complete system proposed in\nthis study, combines both retrieval and code execution. In this setup, the model first retrieves relevant knowledge, then\nuses the Code Interpreter to perform complex calculations or logical inferences, generating answers based on the latest\nretrieved information. This combined approach is explored to determine whether it leads to superior and more reliable\nresults in educational question-answering tasks.\n\n\n**3.3 Datasets and task settings**\n\n\nThe datasets used in this study, AI2_ARC, OpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA\nwere introduced in r **elated works s** ection. Each dataset covers different subject domains, difficulty levels, and types\nof questions. The study evaluates the models from several perspectives, including basic comprehension and language\ngeneration, multi-step logical reasoning and calculation, cross-domain knowledge and contextual relations, as well as\ninteroperability and venerability. For tasks involving concept explanation and simple question-answering, the models\u2019 ability to accurately respond to questions was assessed. For tasks requiring multi-step mathematical operations and scientific\nreasoning, the ability of the models to correctly derive intermediate steps and results was evaluated. The study also examines how effectively the RAG mechanism supports cross-domain, up-to-date knowledge retrieval to enhance accuracy for\nsuch questions. Additionally, the ability of the Code Interpreter to generate and execute code to transparently demonstrate\nthe reasoning process and reduce errors in computational tasks was evaluated. Since all five primary datasets (AI2_ARC,\nOpenBookQA, E-EVAL, Textbook Question Answering (TQA), and ScienceQA) consist of multiple-choice questions, accuracy was chosen as the primary evaluation metric. Only the multiple-choice portions of these datasets were selected for\nevaluation to maintain consistency across metrics.\n\n\n**3.4 Implementation details of the RAG retrieval module**",
+        "cosine_similarity": 0.699592,
+        "fusion_score": null,
+        "context_group": "f8e05356-69c3-5eb1-853f-62f66b16510d",
+        "is_adjacent_context": true,
+        "rerank_score": null
+      }
+    ],
+    "context_groups": [
+      {
+        "anchor_id": "e774f058-e96f-555c-be07-8d08297a8a59",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "chunk_ids": [
+          "c09418f6-ea0f-5926-af29-5fc4a79c53ee",
+          "e774f058-e96f-555c-be07-8d08297a8a59"
+        ]
+      },
+      {
+        "anchor_id": "f8e05356-69c3-5eb1-853f-62f66b16510d",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "chunk_ids": [
+          "045299c7-752c-590a-8fff-a028bc35a6da",
+          "f8e05356-69c3-5eb1-853f-62f66b16510d"
+        ]
+      },
+      {
+        "anchor_id": "fd9bbb86-db2b-5f9d-8451-9e4cf291b0da",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "chunk_ids": [
+          "4777fae4-cc65-5989-b217-0b40e0e91031",
+          "fd9bbb86-db2b-5f9d-8451-9e4cf291b0da"
+        ]
+      },
+      {
+        "anchor_id": "4b80368c-606b-5331-8a02-c60c9ee4742b",
+        "document_id": "35d86749-bf13-55ac-8008-231937b43bab",
+        "chunk_ids": [
+          "829fa6d9-bdf7-5d8d-ae31-6a4160fb7861",
+          "4b80368c-606b-5331-8a02-c60c9ee4742b",
+          "2d134f23-26c8-59ec-8dc1-3ff414b7f0eb"
+        ]
+      }
+    ],
+    "reranking_applied": true,
+    "reranker_error": null
+  }
+}

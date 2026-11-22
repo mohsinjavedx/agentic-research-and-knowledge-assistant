@@ -1,18 +1,18 @@
 """Scoped vector/keyword candidates combined by reciprocal rank fusion."""
 
-import asyncio
-import re
 from collections.abc import Sequence
 from dataclasses import replace
+from typing import Any
 from uuid import UUID
 
-from sqlalchemy import func, select
+from sqlalchemy import Select, func, select, union_all
 
 from app.db.models import Chunk
 from app.db.session import Database
-from app.services.retrieval.dense import RetrievedChunk, retrieve_chunks, validate_query_vector
+from app.services.retrieval.dense import RetrievedChunk, validate_query_vector
 
 CANDIDATES_PER_BRANCH = 20
+RRF_CONSTANT = 60
 
 
 def fuse_rankings(
@@ -40,12 +40,9 @@ async def retrieve_keywords(
     database: Database, query_vector: list[float], query: str, allowed_doc_ids: list[UUID]
 ) -> list[RetrievedChunk]:
     validate_query_vector(query_vector)
-    # OR candidates avoid requiring every word of a natural-language question.
-    # Tokenization removes websearch operators; the value remains a bound SQL parameter.
-    words = list(dict.fromkeys(re.findall(r"[^\W_]+", query.lower())))[:64]
-    if not allowed_doc_ids or not words:
+    if not allowed_doc_ids or not query.strip():
         return []
-    parsed_query = func.websearch_to_tsquery("english", " OR ".join(words))
+    parsed_query = func.websearch_to_tsquery("english", query)
     distance = Chunk.embedding.cosine_distance(query_vector).label("distance")
     rank = func.ts_rank_cd(Chunk.fts_tokens, parsed_query)
     statement = (
@@ -69,6 +66,54 @@ async def retrieve_keywords(
     ]
 
 
+def hybrid_statement(
+    query_vector: list[float], query: str, allowed_doc_ids: list[UUID], top_k: int
+) -> Select[Any]:
+    distance = Chunk.embedding.cosine_distance(query_vector).label("distance")
+    vector_top = (
+        select(Chunk.id, distance)
+        .where(Chunk.document_id.in_(allowed_doc_ids))
+        .order_by(distance, Chunk.id)
+        .limit(CANDIDATES_PER_BRANCH)
+        .cte("vector_top")
+    )
+    parsed_query = func.websearch_to_tsquery("english", query)
+    lexical_score = func.ts_rank_cd(Chunk.fts_tokens, parsed_query).label("lexical_score")
+    lexical_top = (
+        select(Chunk.id, lexical_score)
+        .where(Chunk.document_id.in_(allowed_doc_ids), Chunk.fts_tokens.op("@@")(parsed_query))
+        .order_by(lexical_score.desc(), Chunk.id)
+        .limit(CANDIDATES_PER_BRANCH)
+        .cte("lexical_top")
+    )
+    vector_ranks = select(
+        vector_top.c.id,
+        func.row_number().over(order_by=(vector_top.c.distance, vector_top.c.id)).label("rank"),
+    ).cte("vector_ranks")
+    lexical_ranks = select(
+        lexical_top.c.id,
+        func.row_number()
+        .over(order_by=(lexical_top.c.lexical_score.desc(), lexical_top.c.id))
+        .label("rank"),
+    ).cte("lexical_ranks")
+    votes = union_all(select(vector_ranks), select(lexical_ranks)).cte("rank_votes")
+    fused = (
+        select(
+            votes.c.id,
+            func.sum(1.0 / (RRF_CONSTANT + votes.c.rank)).label("fusion_score"),
+            func.min(votes.c.rank).label("best_rank"),
+        )
+        .group_by(votes.c.id)
+        .cte("fused")
+    )
+    return (
+        select(Chunk, distance, fused.c.fusion_score)
+        .join(fused, fused.c.id == Chunk.id)
+        .order_by(fused.c.fusion_score.desc(), fused.c.best_rank, Chunk.id)
+        .limit(top_k)
+    )
+
+
 async def retrieve_hybrid(
     database: Database,
     query_vector: list[float],
@@ -82,8 +127,19 @@ async def retrieve_hybrid(
     validate_query_vector(query_vector)
     if not allowed_doc_ids:
         return []
-    dense, lexical = await asyncio.gather(
-        retrieve_chunks(database, query_vector, allowed_doc_ids, top_k=CANDIDATES_PER_BRANCH),
-        retrieve_keywords(database, query_vector, query, allowed_doc_ids),
-    )
-    return fuse_rankings([dense, lexical], top_k=top_k)
+    async with database.sessions() as session:
+        rows = (
+            await session.execute(hybrid_statement(query_vector, query, allowed_doc_ids, top_k))
+        ).all()
+    return [
+        RetrievedChunk(
+            chunk_id=item.id,
+            document_id=item.document_id,
+            page_number=item.page_start,
+            chunk_index=item.chunk_index,
+            text=item.normalized_text,
+            cosine_similarity=1.0 - float(cosine_distance),
+            fusion_score=float(score),
+        )
+        for item, cosine_distance, score in rows
+    ]

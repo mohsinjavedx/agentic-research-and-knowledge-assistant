@@ -1,4 +1,5 @@
 import asyncio
+from uuid import UUID
 
 import httpx
 import pytest
@@ -8,6 +9,7 @@ from openai.types.chat import ChatCompletionMessageParam
 
 from app.providers.llm import LLMTimeoutError, OpenAICompatibleLLM
 from app.schemas.answers import GroundedResponse
+from app.services.retrieval.dense import RetrievedChunk
 
 
 def test_instructor_wrapped_timeout_is_classified_as_timeout(
@@ -35,6 +37,15 @@ def test_instructor_wrapped_timeout_is_classified_as_timeout(
     monkeypatch.setattr(provider, "_generate_sync", raise_wrapped_timeout)
     try:
         with pytest.raises(LLMTimeoutError):
-            asyncio.run(provider.generate("What is in the evidence?", []))
+            asyncio.run(
+                provider.generate(
+                    "What is in the evidence?",
+                    [
+                        RetrievedChunk(
+                            UUID(int=1), UUID(int=2), 1, 0, "A fact in the evidence.", 0.8
+                        )
+                    ],
+                )
+            )
     finally:
         provider.close()

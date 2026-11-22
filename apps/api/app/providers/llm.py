@@ -1,7 +1,6 @@
 """Structured answer generation through local or OpenAI-compatible chat endpoints."""
 
 import asyncio
-import json
 import logging
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -16,9 +15,8 @@ from pydantic import ValidationError
 
 from app.core.config import Settings
 from app.schemas.answers import GroundedResponse
-from app.services.chunking.tokenizer import token_count
-from app.services.generation.evidence import EvidencePassage, focus_evidence
-from app.services.generation.prompt import build_messages
+from app.services.generation.context import pack_context
+from app.services.generation.evidence import EvidencePassage
 from app.services.retrieval.dense import RetrievedChunk
 
 logger = logging.getLogger("research.generation")
@@ -70,6 +68,7 @@ class OpenAICompatibleLLM:
         model: str,
         timeout_seconds: int,
         extra_body: dict[str, object] | None = None,
+        input_token_budget: int = 6000,
     ) -> None:
         self._openai_client = OpenAI(
             base_url=base_url,
@@ -80,10 +79,23 @@ class OpenAICompatibleLLM:
         self._client = instructor.from_openai(self._openai_client, mode=instructor.Mode.JSON_SCHEMA)
         self._model = model
         self._extra_body = extra_body
+        self._input_token_budget = input_token_budget
+
+    def _messages(
+        self, question: str, evidence: Sequence[RetrievedChunk]
+    ) -> tuple[list[ChatCompletionMessageParam], list[EvidencePassage]]:
+        messages, passages = pack_context(
+            question,
+            evidence,
+            input_budget=self._input_token_budget,
+            schema_factory=lambda count: GroundedResponse.model_json_schema(),
+        )
+        if not passages:
+            raise LLMProviderError("The hosted context budget cannot fit complete evidence.")
+        return messages, passages
 
     async def generate(self, question: str, evidence: Sequence[RetrievedChunk]) -> GenerationResult:
-        passages = focus_evidence(question, evidence)
-        messages = build_messages(question, [item.prompt_chunk() for item in passages])
+        messages, passages = self._messages(question, evidence)
         try:
             response = await asyncio.to_thread(self._generate_sync, messages)
             return GenerationResult(response, passages)
@@ -168,20 +180,13 @@ class OllamaLLM:
     def _messages(
         self, question: str, evidence: Sequence[RetrievedChunk]
     ) -> tuple[list[ChatCompletionMessageParam], list[EvidencePassage]]:
-        selected: list[ChatCompletionMessageParam] | None = None
-        selected_passages: list[EvidencePassage] = []
-        for passage in focus_evidence(question, evidence):
-            trial = [*selected_passages, passage]
-            candidate = build_messages(question, [item.prompt_chunk() for item in trial])
-            schema_tokens = token_count(json.dumps(_ollama_response_schema(len(trial))))
-            tokens = token_count(json.dumps(candidate, ensure_ascii=False)) + schema_tokens
-            # cl100k_base is an estimate, not Ollama's tokenizer. Reserve 25% plus
-            # template overhead and the complete output allowance. Never clip a source.
-            estimated_input = (tokens * 5 + 3) // 4 + 64
-            if estimated_input + self._max_output_tokens > self._num_ctx:
-                continue
-            selected, selected_passages = candidate, trial
-        if selected is None:
+        selected, selected_passages = pack_context(
+            question,
+            evidence,
+            input_budget=self._num_ctx - self._max_output_tokens,
+            schema_factory=_ollama_response_schema,
+        )
+        if not selected_passages:
             raise LLMProviderError(
                 "The configured local context cannot fit a complete evidence passage."
             )
@@ -252,4 +257,5 @@ def create_llm_provider(settings: Settings) -> LLMProvider:
         api_key=settings.hosted_llm_api_key.get_secret_value(),
         model=settings.hosted_llm_model,
         timeout_seconds=settings.llm_timeout_seconds,
+        input_token_budget=settings.hosted_llm_input_token_budget,
     )

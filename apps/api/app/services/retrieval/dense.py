@@ -21,6 +21,9 @@ class RetrievedChunk:
     text: str
     cosine_similarity: float
     fusion_score: float | None = None
+    context_group: UUID | None = None
+    is_adjacent_context: bool = False
+    rerank_score: float | None = None
 
 
 def validate_query_vector(query_vector: list[float]) -> None:

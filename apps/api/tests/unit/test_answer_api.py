@@ -1,5 +1,6 @@
 import asyncio
 from collections.abc import Iterator, Sequence
+from dataclasses import replace
 from unittest.mock import AsyncMock
 from uuid import UUID
 
@@ -10,7 +11,9 @@ from app.core.config import Settings
 from app.main import create_app
 from app.providers.llm import GenerationResult, LLMProviderError, LLMRateLimitError, LLMTimeoutError
 from app.schemas.answers import GeneratedCitation, GroundedResponse
-from app.services.generation.evidence import EvidencePassage
+from app.schemas.retrieval import ContextGroup
+from app.services.generation.evidence import EvidencePassage, focus_evidence
+from app.services.retrieval.context import RetrievalResult
 from app.services.retrieval.dense import RetrievedChunk
 
 DOC_ID = UUID("35d86749-bf13-55ac-8008-231937b43bab")
@@ -76,8 +79,8 @@ def answer_client(
         AsyncMock(return_value=[DOC_ID]),
     )
     monkeypatch.setattr(
-        "app.api.v1.answers.retrieve_evidence",
-        AsyncMock(return_value=evidence()),
+        "app.api.v1.answers.retrieve_context",
+        AsyncMock(return_value=RetrievalResult(evidence(), evidence())),
     )
     llm = FakeLLM()
     settings = Settings(
@@ -165,3 +168,51 @@ def test_answer_endpoint_surfaces_unexpected_llm_errors_safely(
 
     assert response.status_code == 503
     assert "DO_NOT_RETURN_PROVIDER_DETAILS" not in response.text
+
+
+def test_answer_cites_adjacent_source_after_prompt_reordering_with_original_offsets(
+    answer_client,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    client, llm, _ = answer_client
+    core = replace(evidence()[0], text="Continued on the next page.", context_group=CHUNK_ID)
+    neighbor = replace(
+        evidence()[0],
+        chunk_id=UUID(int=99),
+        page_number=7,
+        chunk_index=2,
+        context_group=CHUNK_ID,
+        is_adjacent_context=True,
+    )
+    group = ContextGroup(
+        anchor_id=CHUNK_ID, document_id=DOC_ID, chunk_ids=[neighbor.chunk_id, core.chunk_id]
+    )
+    monkeypatch.setattr(
+        "app.api.v1.answers.retrieve_context",
+        AsyncMock(return_value=RetrievalResult([core], [core, neighbor], [group])),
+    )
+
+    async def generate(question, chunks):
+        passages = focus_evidence(question, chunks)
+        return GenerationResult(
+            GroundedResponse(
+                answer=neighbor.text,
+                insufficient_evidence=False,
+                citations=[
+                    GeneratedCitation(claim=neighbor.text, evidence_index=0, quote=neighbor.text)
+                ],
+            ),
+            passages,
+        )
+
+    llm.generate = generate
+    response = client.post("/api/v1/answer", json={"query": "What did the study evaluate?"})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["ranked_chunk_ids"] == [str(core.chunk_id)]
+    assert body["context_groups"][0]["chunk_ids"] == [str(neighbor.chunk_id), str(core.chunk_id)]
+    assert body["used_evidence"][0]["retrieval_index"] == 1
+    assert body["used_evidence"][0]["is_adjacent_context"] is True
+    citation = body["citations"][0]
+    assert citation["chunk_id"] == str(neighbor.chunk_id) and citation["page_number"] == 7
+    assert neighbor.text[citation["quote_start"] : citation["quote_end"]] == citation["quote"]

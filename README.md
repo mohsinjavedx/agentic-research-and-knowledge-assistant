@@ -209,3 +209,9 @@ Stop terminal servers with Ctrl+C. `docker compose stop` stops the project datab
 See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 indexing/lifecycle work and Phase 3 scoped retrieval are implemented, but Phase 3's measured quality targets are not all met. Phase 4 answer generation is implemented with mock-tested safeguards; live model acceptance remains pending. Public upload UI, agentic workflows, and cloud deployment remain outstanding. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>), [Phase 3 guides](<docs/phases guide/phase-3/README.md>), and [Phase 4 guides](<docs/phases guide/phase-4/README.md>) for scope and verification status.
 
 For the Phase 0 changes, detailed file structure, startup flow, and component responsibilities, read the [Phase 0 project foundation guide](<docs/phases guide/phase-0/phase-0-project-foundation.md>).
+
+## Phase 5 implementation
+
+SQL Hybrid RRF, source-preserving adjacent context, optional quantized CPU reranking, and a frozen-input three-mode ablation are implemented. Separate [Phase5 step guides](<docs/phases guide/phase-5/README.md>) document the source files, runtime behavior, commands, and measured results. The hybrid quality-gain acceptance target is **unmet**; dense remains the default, and `ENABLE_RERANKER=false` remains the free-tier default. Worker-only memory measurements do not establish deployment-wide RAM usage.
+
+Run `uv run --project apps/api python scripts/run_phase5_ablation.py` from the root to create a new report. It exits nonzero when measured acceptance fails and preserves existing reports.
