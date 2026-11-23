@@ -11,10 +11,13 @@ __pycache__/
 htmlcov/
 node_modules/
 .next/
+.next-proxy-test/
 out/
 *.tsbuildinfo
 *.log
 tmp/
 uploads/
 models/
+playwright-report/
+test-results/
 .DS_Store

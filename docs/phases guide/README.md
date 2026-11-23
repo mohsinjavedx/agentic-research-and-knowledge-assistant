@@ -14,6 +14,8 @@ Each phase has its own folder and README. Individual step guides live inside tha
 
 Phase5: [Advanced RAG, hybrid SQL RRF, adjacent context, optional reranking, and ablation](phase-5/README.md). Each of its four steps has a separate guide. Implementation is present; measured quality gain remains below acceptance, so dense retrieval remains the default.
 
+Phase7: [Frontend and user experience](phase-7/README.md). Its four implementation steps and responsive/error-state acceptance checks are tracked separately.
+
 Phase6: [Bounded agentic workflows](phase-6/README.md). All five implementation steps are present: typed state, LangGraph topology, allowlisted tools, hard budgets, and persisted async jobs. The required 25-task multi-document live acceptance set remains pending.
 
 ```text

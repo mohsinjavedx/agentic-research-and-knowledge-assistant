@@ -62,3 +62,25 @@ Local and hosted context packing selects whole groups or whole focused standalon
 Generation selects focused complete Markdown passages. Local packing fits them within `OLLAMA_NUM_CTX`, reserving `LLM_MAX_OUTPUT_TOKENS` (default 512) and an input margin; oversized passages can be skipped. The full retrieved set remains in `evidence`. Each `used_evidence` item has `context_index`, `retrieval_index`, `start`, and `end`, and its text equals the source slice. Context indices need not equal retrieval indices. Ranges are half-open Unicode-code-point positions, not UTF-16 indices or PDF byte offsets. If no complete passage fits or structured output is incomplete/invalid, the route returns a sanitized HTTP 503.
 
 On an upstream timeout or HTTP 429, the route returns HTTP 200 with `degraded_mode: true`, empty answer citations, and retrieved evidence passages. `insufficient_evidence: false` describes successful retrieval even when generation fails. Other LLM errors return a sanitized HTTP 503. Configure native local Ollama through `OLLAMA_BASE_URL`, `OLLAMA_MODEL`, `OLLAMA_NUM_CTX`, `LLM_MAX_OUTPUT_TOKENS`, and `LLM_TIMEOUT_SECONDS`; hosted OpenAI-compatible endpoints use `HOSTED_LLM_BASE_URL`, `HOSTED_LLM_MODEL`, and `HOSTED_LLM_API_KEY`. Hosted requests send retrieved text to the configured provider.
+
+## Phase7 browser document library
+
+`GET /api/v1/documents` requires the session cookie and returns up to100 ready
+global samples/current-session unexpired documents: `document_id`, `filename`,
+`page_count`, `is_sample`, `status`. Foreign/expired documents are excluded.
+
+`POST /api/v1/documents?filename=paper.pdf` requires the session cookie and raw
+PDF bytes with `Content-Type: application/pdf` (not multipart). It returns201
+with the indexed document summary. Streams are bounded by the configured20MiB
+limit and existing100-page/signature/filename checks. Native parsing is serialized
+on an app-owned worker; queued cancellation and running/error paths close streams.
+Existing scope/checksum idempotence and session TTL apply.
+
+Validation errors return `detail: {code, message}`, including422
+`OCR_NOT_SUPPORTED`,413 `FILE_TOO_LARGE`, and415 format/MIME errors. Provider/database
+failures return sanitized503 responses. No user-supplied filename becomes a path.
+
+The frontend defaults to same-origin `/api/v1` proxying. `API_INTERNAL_URL` selects
+the server-side upstream; credentials are not put in browser environment variables.
+Proxy transport permits21MB and190 seconds; API limits and shorter browser
+operation deadlines still apply.

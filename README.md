@@ -19,7 +19,7 @@ Copy-Item .env.example .env
 docker compose up -d --wait db
 ```
 
-If `.env` already exists, keep it. It is ignored by Git. Set `POSTGRES_PASSWORD` and the matching password in `DATABASE_URL` before starting a fresh database. Compose exposes PostgreSQL on `127.0.0.1:55432` to avoid common local database conflicts. Data lives in a named Docker volume and survives container restarts.
+If `.env` already exists, keep it. It is ignored by Git. Set `POSTGRES_PASSWORD` and the matching password in `DATABASE_URL` before starting a fresh database. Compose exposes PostgreSQL on `127.0.0.1:15432` by default (`DB_PORT` is configurable). Keep the port in `DATABASE_URL` consistent. Windows can reserve ports, including the previously used55432; choose an available port if Docker reports access denied. Data lives in a named Docker volume and survives container restarts.
 
 Generation now defaults to Groq's `openai/gpt-oss-120b` in the example configuration. Set `HOSTED_LLM_API_KEY` in the root `.env` before starting the backend. The provider URL is `https://api.groq.com/openai/v1`; embeddings remain local BGE. For optional Ollama inference, set `LLM_PROVIDER=local` instead. See the [Groq configuration guide](<docs/phases guide/phase-4/quality-improvements/groq-hosted-generation.md>) for verification and measured pilot results.
 
@@ -206,7 +206,7 @@ Placeholder directories preserve the guide's structure without pretending later-
 
 Stop terminal servers with Ctrl+C. `docker compose stop` stops the project database without deleting data; `docker compose up -d --wait db` starts it again. The database uses `restart: unless-stopped` so Docker can restart it after an unexpected exit or a Docker restart; an explicitly stopped container stays stopped until started again. If readiness reports `db: "unavailable"`, check `docker compose ps -a` and start the database before retrying. Do not remove the named volume unless you intend to erase this project's database. For the API image, build with `docker build -t research-api apps/api`, then run migrations and the API with your environment supplied externally. Never bake `.env` into an image.
 
-See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 indexing/lifecycle work and Phase 3 scoped retrieval are implemented, but Phase 3's measured quality targets are not all met. Phase 4 answer generation is implemented with mock-tested safeguards; live model acceptance remains pending. Public upload UI, agentic workflows, and cloud deployment remain outstanding. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>), [Phase 3 guides](<docs/phases guide/phase-3/README.md>), and [Phase 4 guides](<docs/phases guide/phase-4/README.md>) for scope and verification status.
+See [architecture](docs/architecture.md), [API contracts](docs/api-contracts.md), and [security boundaries](docs/threat-model.md). The Phase 1 representative-corpus acceptance benchmark remains pending. Phase 2 indexing/lifecycle work and Phase 3 scoped retrieval are implemented, but Phase 3's measured quality targets are not all met. Phase 4 answer generation is implemented with mock-tested safeguards; live-model acceptance remains pending. The Phase 7 sample workspace, citation drawer, readiness banner, and research timeline are implemented; private PDF upload and OCR rejection are now implemented and tested. See the [Phase 2 guides](<docs/phases guide/phase-2/README.md>), [Phase 3 guides](<docs/phases guide/phase-3/README.md>), [Phase 4 guides](<docs/phases guide/phase-4/README.md>), and [Phase 7 guides](<docs/phases guide/phase-7/README.md>) for scope and verification status.
 
 For the Phase 0 changes, detailed file structure, startup flow, and component responsibilities, read the [Phase 0 project foundation guide](<docs/phases guide/phase-0/phase-0-project-foundation.md>).
 
@@ -215,3 +215,15 @@ For the Phase 0 changes, detailed file structure, startup flow, and component re
 SQL Hybrid RRF, source-preserving adjacent context, optional quantized CPU reranking, and a frozen-input three-mode ablation are implemented. Separate [Phase5 step guides](<docs/phases guide/phase-5/README.md>) document the source files, runtime behavior, commands, and measured results. The hybrid quality-gain acceptance target is **unmet**; dense remains the default, and `ENABLE_RERANKER=false` remains the free-tier default. Worker-only memory measurements do not establish deployment-wide RAM usage.
 
 Run `uv run --project apps/api python scripts/run_phase5_ablation.py` from the root to create a new report. It exits nonzero when measured acceptance fails and preserves existing reports.
+
+## Phase 7 frontend
+
+The web app includes an actionable cold-start readiness banner, preselected
+sample-paper questions, exact-source citation drawers, and a live research-job
+timeline. See the [Phase 7 step guides](<docs/phases guide/phase-7/README.md>)
+for visual verification instructions and acceptance limitations. The browser
+workflow uses deterministic mocked responses; it does not claim live-model
+answer quality. The completed UI adds a private PDF library, working uploads with
+OCR/size/type feedback, Unicode-safe inline citations, and bounded loading states.
+Typography and icons are bundled locally; transitions respect reduced motion.
+See [verification](<docs/phases guide/phase-7/verification.md>) for measured results.

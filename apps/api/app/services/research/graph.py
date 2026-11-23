@@ -17,7 +17,9 @@ from app.schemas.research import (
 )
 from app.schemas.retrieval import SearchResult
 
-type ResearchStepCallback = Callable[[ResearchStep], Awaitable[None]]
+type ResearchStepCallback = Callable[
+    [ResearchStep, Sequence[ResearchToolCall], Sequence[SearchResult]], Awaitable[None]
+]
 
 MAX_RESEARCH_ITERATIONS = 4
 MAX_RESEARCH_TOOL_CALLS = 6
@@ -95,6 +97,8 @@ def build_research_graph(
         *,
         iterations: int | None = None,
         tool_calls_count: int | None = None,
+        progress_tool_calls: Sequence[ResearchToolCall] | None = None,
+        progress_evidence: Sequence[SearchResult] | None = None,
     ) -> list[ResearchStep]:
         step = ResearchStep(
             name=name,
@@ -106,7 +110,11 @@ def build_research_graph(
             ),
         )
         if on_step is not None:
-            await on_step(step)
+            await on_step(
+                step,
+                state["tool_calls"] if progress_tool_calls is None else progress_tool_calls,
+                state["retrieved_evidence"] if progress_evidence is None else progress_evidence,
+            )
         return [*state["steps"], step]
 
     async def plan(state: ResearchGraphState) -> dict[str, object]:
@@ -130,8 +138,9 @@ def build_research_graph(
             raise ResearchBudgetExceeded()
         all_calls = [*state["tool_calls"], *calls]
         total_calls = state["tool_calls_count"] + len(calls)
+        all_evidence = _merge_evidence(state["retrieved_evidence"], evidence)
         return {
-            "retrieved_evidence": _merge_evidence(state["retrieved_evidence"], evidence),
+            "retrieved_evidence": all_evidence,
             "tool_calls": all_calls,
             "tool_calls_count": total_calls,
             "iterations": state["iterations"] + 1,
@@ -141,6 +150,8 @@ def build_research_graph(
                 f"Executed {len(calls)} tool call(s).",
                 iterations=state["iterations"] + 1,
                 tool_calls_count=total_calls,
+                progress_tool_calls=all_calls,
+                progress_evidence=all_evidence,
             ),
         }
 
@@ -159,10 +170,14 @@ def build_research_graph(
 
     async def retrieve_more(state: ResearchGraphState) -> dict[str, object]:
         evidence = await operations.retrieve_more(state)
+        all_evidence = _merge_evidence(state["retrieved_evidence"], evidence)
         return {
-            "retrieved_evidence": _merge_evidence(state["retrieved_evidence"], evidence),
+            "retrieved_evidence": all_evidence,
             "steps": await record_step(
-                state, "retrieve_more", f"Added {len(evidence)} evidence item(s)."
+                state,
+                "retrieve_more",
+                f"Added {len(evidence)} evidence item(s).",
+                progress_evidence=all_evidence,
             ),
         }
 

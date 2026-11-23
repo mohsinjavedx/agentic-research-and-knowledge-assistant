@@ -1,6 +1,7 @@
 """Session-scoped asynchronous research jobs."""
 
 import logging
+from collections.abc import Sequence
 from datetime import timedelta
 from uuid import UUID
 
@@ -52,7 +53,13 @@ def _response(job: ResearchJob) -> ResearchJobResponse:
     )
 
 
-async def _persist_step(database: Database, job_id: UUID, step: ResearchStep) -> None:
+async def _persist_step(
+    database: Database,
+    job_id: UUID,
+    step: ResearchStep,
+    tool_calls: Sequence[ResearchToolCall],
+    evidence: Sequence[SearchResult],
+) -> None:
     async with database.sessions() as session, session.begin():
         job = await session.get(ResearchJob, job_id)
         if job is None:
@@ -60,6 +67,8 @@ async def _persist_step(database: Database, job_id: UUID, step: ResearchStep) ->
         job.steps = [*job.steps, step.model_dump(mode="json")]
         job.iterations = step.iteration
         job.tool_calls_count = step.tool_calls_count
+        job.tool_calls = [call.model_dump(mode="json") for call in tool_calls]
+        job.evidence = [item.model_dump(mode="json") for item in evidence]
 
 
 async def _persist_failure(
@@ -113,8 +122,12 @@ async def run_research_job(
             )
             job.status = ResearchStatus.RUNNING.value
 
-        async def record_step(step: ResearchStep) -> None:
-            await _persist_step(database, job_id, step)
+        async def record_step(
+            step: ResearchStep,
+            tool_calls: Sequence[ResearchToolCall],
+            evidence: Sequence[SearchResult],
+        ) -> None:
+            await _persist_step(database, job_id, step, tool_calls, evidence)
 
         result = await execute_research_job(
             database,

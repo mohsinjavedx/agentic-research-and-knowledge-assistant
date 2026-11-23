@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-11-23T09:04:31.773909+00:00",
+  "transport": "real same-origin Next rewrite to configured API; real embeddings and configured hosted model",
+  "health_status": 200,
+  "session_status": 204,
+  "library_status": 200,
+  "visible_paper_count": 3,
+  "answer_status": 200,
+  "answer": "The five benchmarks are AI2_ARC, OpenBookQA, E\u2011EVAL, Textbook Question Answering (TQA), and ScienceQA.",
+  "insufficient_evidence": false,
+  "degraded_mode": false,
+  "citation_count": 1,
+  "all_quotes_match_original_ranges": true
+}
