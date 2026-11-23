@@ -1,5 +1,6 @@
 import asyncio
 import json
+from collections.abc import Sequence
 from pathlib import Path
 from uuid import UUID, uuid4
 
@@ -10,6 +11,7 @@ from app.schemas.research import (
     ResearchReport,
     ResearchRequest,
     ResearchStatus,
+    ResearchStep,
     ResearchStepStatus,
     ResearchToolCall,
 )
@@ -119,6 +121,24 @@ def test_graph_runs_plan_retrieve_assess_synthesize_and_verify(question: str) ->
         "verify_citations",
     ]
     assert operations.retrieve_count == 1
+
+
+def test_progress_callback_contains_tool_calls_and_evidence_after_execution() -> None:
+    progress: list[tuple[str, Sequence[ResearchToolCall], Sequence[SearchResult]]] = []
+
+    async def record_progress(
+        step: ResearchStep,
+        tool_calls: Sequence[ResearchToolCall],
+        evidence: Sequence[SearchResult],
+    ) -> None:
+        progress.append((step.name, tool_calls, evidence))
+
+    graph = build_research_graph(FakeOperations(sufficient_after=1), on_step=record_progress)
+    asyncio.run(graph.ainvoke(_initial_state("Compare two papers")))
+
+    executed = next(item for item in progress if item[0] == "execute_tools")
+    assert [call.name for call in executed[1]] == ["search_documents"]
+    assert executed[2] == [EVIDENCE]
 
 
 def test_graph_synthesizes_partial_report_at_iteration_limit() -> None:

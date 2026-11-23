@@ -122,6 +122,10 @@ def test_research_job_runs_persists_progress_and_enforces_session_ownership() ->
             assert body["status"] == "completed"
             assert body["iterations"] == 1
             assert body["tool_calls_count"] == 2
+            assert [call["name"] for call in body["tool_calls"]] == [
+                "search_documents",
+                "compare_sections",
+            ]
             assert [step["name"] for step in body["steps"]] == [
                 "plan",
                 "execute_tools",

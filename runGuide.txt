@@ -9,9 +9,11 @@ if (-not (Test-Path .env)) {
 docker compose up -d --wait db
 
 cd apps/api
-uv sync --frozen
+uv sync --frozen --group local-embeddings
 uv run alembic upgrade head
-uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000 --no-access-log
+# First setup: index the included papers (safe to rerun).
+uv run python -m app.services.indexing.seed_samples
+uv run uvicorn app.main:app --reload --reload-dir app --host 127.0.0.1 --port 8000 --no-access-log
 
 
 -- FRONTEND
@@ -25,6 +27,23 @@ npm run dev
 App: http://localhost:3000
 API documentation: http://127.0.0.1:8000/docs
 Readiness check: http://127.0.0.1:8000/api/v1/health
+
+Database: 127.0.0.1:15432 by default. DB_PORT and the port in DATABASE_URL must match.
+Port 55432 is reserved by Windows on this machine. Existing database data is preserved.
+The frontend proxies /api/v1 to the backend, so use the app's normal origin.
+Set API_INTERNAL_URL in apps/web/.env.local only if the backend runs elsewhere.
+Fonts and icons are bundled locally; no browser font CDN is required.
+
+-- PHASE 7 CHECKS (from apps/web)
+npm run lint
+npm run typecheck
+npm run format:check
+npm run test:e2e
+npm run test:proxy
+npm run build
+
+The proxy checks start an isolated local server on3101 and a fake upstream on18005.
+The browser suite mocks answers and research jobs; it does not measure model quality.
 
 
 cd "C:\MOHSIN\LLM projects\New folder"

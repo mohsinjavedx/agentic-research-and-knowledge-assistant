@@ -3,9 +3,10 @@
 `POST /api/v1/research` validates the request and current session-visible document
 scope, persists a queued `ResearchJob`, and returns HTTP 202. The API process then
 runs the LangGraph in a background task. Every completed graph node is written to
-the job's `steps[]`; tool-call records, counters, evidence, and the final cited
-report are persisted as well. `GET /api/v1/research/{job_id}` is session-owner
-scoped and returns 404 for another session.
+the job's `steps[]`, along with the current tool-call records, counters, and
+retrieved evidence. The final cited report is persisted after the graph finishes.
+`GET /api/v1/research/{job_id}` is session-owner scoped and returns 404 for
+another session.
 
 The migration adds bounded counters and JSONB progress fields. Startup recovery
 marks queued/running jobs older than five minutes as failed with

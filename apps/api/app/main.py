@@ -20,6 +20,7 @@ from app.providers.embeddings import create_embedding_provider
 from app.providers.identity import EmbeddingCompatibilityError
 from app.providers.llm import create_llm_provider
 from app.providers.reranking import create_reranker
+from app.services.indexing.upload import PDFUploadProcessor
 from app.workers.expired_documents import run_expired_document_cleanup
 
 
@@ -34,10 +35,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         embedding_provider = create_embedding_provider(settings)
         llm_provider = create_llm_provider(settings)
         reranker = create_reranker(settings)
+        upload_processor = PDFUploadProcessor()
         application.state.database = database
         application.state.embedding_provider = embedding_provider
         application.state.llm_provider = llm_provider
         application.state.reranker = reranker
+        application.state.upload_processor = upload_processor
         cleanup_task: asyncio.Task[None] | None = None
         try:
             try:
@@ -64,7 +67,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                         pass
             finally:
                 try:
-                    embedding_provider.close()
+                    try:
+                        await asyncio.to_thread(upload_processor.close)
+                    finally:
+                        embedding_provider.close()
                 finally:
                     try:
                         llm_provider.close()

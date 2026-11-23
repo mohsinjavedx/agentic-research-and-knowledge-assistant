@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { BackendReadinessProvider } from "@/components/backend-readiness";
+import { AppShell } from "@/components/app-shell";
+import { SourceLibraryProvider } from "@/components/source-library";
+import "@fontsource-variable/manrope";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,21 +14,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
-        <a className="skip-link" href="#main">Skip to content</a>
-        <header className="site-header">
-          <Link className="wordmark" href="/" aria-label="Research desk home">
-            <span className="mark" aria-hidden="true">r<span>.</span></span>
-            Research desk
-          </Link>
-          <nav aria-label="Main navigation">
-            <Link href="/workspace">Workspace</Link>
-            <Link href="/documents">Documents</Link>
-            <Link href="/research">Research</Link>
-          </nav>
-          <span className="phase-tag">Phase 6 / Research</span>
-        </header>
-        <main id="main">{children}</main>
-        <footer>Research & Knowledge Assistant <span>Phase 6 / Local development</span></footer>
+        <BackendReadinessProvider>
+          <SourceLibraryProvider>
+            <AppShell>{children}</AppShell>
+          </SourceLibraryProvider>
+        </BackendReadinessProvider>
       </body>
     </html>
   );
