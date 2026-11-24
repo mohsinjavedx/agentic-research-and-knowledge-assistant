@@ -52,4 +52,4 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-markers = ["integration: requires migrated PostgreSQL with pgvector"]
+markers = ["integration: requires migrated PostgreSQL with pgvector", "rate_limits: exercise real persistent admission control"]

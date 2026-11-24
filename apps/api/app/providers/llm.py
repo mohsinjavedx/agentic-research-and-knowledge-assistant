@@ -4,7 +4,7 @@ import asyncio
 import logging
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Protocol
+from typing import Any, Protocol, cast
 
 import httpx
 import instructor
@@ -14,6 +14,7 @@ from openai.types.chat import ChatCompletionMessageParam
 from pydantic import ValidationError
 
 from app.core.config import Settings
+from app.core.telemetry import ProviderCall, begin_provider_call
 from app.schemas.answers import GroundedResponse
 from app.services.generation.context import pack_context
 from app.services.generation.evidence import EvidencePassage
@@ -96,14 +97,29 @@ class OpenAICompatibleLLM:
 
     async def generate(self, question: str, evidence: Sequence[RetrievedChunk]) -> GenerationResult:
         messages, passages = self._messages(question, evidence)
+        usage = begin_provider_call("hosted")
         try:
-            response = await asyncio.to_thread(self._generate_sync, messages)
+            response = await asyncio.to_thread(self._generate_sync, messages, usage)
             return GenerationResult(response, passages)
         except APITimeoutError:
             raise LLMTimeoutError() from None
         except RateLimitError:
             raise LLMRateLimitError() from None
         except InstructorRetryException as exc:
+            # Instructor initializes total_usage to zero even if no usage was
+            # received. Only a complete set of actual attempt responses is known.
+            attempts = exc.failed_attempts or []
+            counts = [
+                getattr(getattr(row.completion, "usage", None), "total_tokens", None)
+                for row in attempts
+            ]
+            if (
+                exc.n_attempts > 0
+                and len(attempts) == exc.n_attempts
+                and [row.attempt_number for row in attempts] == list(range(1, exc.n_attempts + 1))
+                and all(type(count) is int and count >= 0 for count in counts)
+            ):
+                usage.complete(sum(cast(list[int], counts)))
             errors: list[BaseException] = [
                 attempt.exception
                 for attempt in exc.failed_attempts or []
@@ -128,14 +144,21 @@ class OpenAICompatibleLLM:
                 "The language model returned an invalid structured response."
             ) from None
 
-    def _generate_sync(self, messages: list[ChatCompletionMessageParam]) -> GroundedResponse:
-        return self._client.chat.completions.create(
-            model=self._model,
-            messages=messages,
-            response_model=GroundedResponse,
-            max_retries=1,
-            extra_body=self._extra_body,
+    def _generate_sync(
+        self, messages: list[ChatCompletionMessageParam], usage: ProviderCall
+    ) -> GroundedResponse:
+        response, completion = cast(
+            tuple[GroundedResponse, Any],
+            self._client.create_with_completion(
+                model=self._model,
+                messages=messages,
+                response_model=GroundedResponse,
+                max_retries=1,
+                extra_body=self._extra_body,
+            ),
         )
+        usage.complete(getattr(getattr(completion, "usage", None), "total_tokens", None))
+        return response
 
     def close(self) -> None:
         self._openai_client.close()
@@ -196,6 +219,7 @@ class OllamaLLM:
         messages, passages = self._messages(question, evidence)
         source_count = len(passages)
         logger.info("answer.local_context_prepared", extra={"evidence_count": source_count})
+        usage = begin_provider_call("local")
         payload = {
             "model": self._model,
             "messages": messages,
@@ -221,6 +245,17 @@ class OllamaLLM:
                     body = response.json()
                     if not isinstance(body, dict):
                         raise LLMProviderError("The language model returned an invalid response.")
+                    prompt_count, answer_count = (
+                        body.get("prompt_eval_count"),
+                        body.get("eval_count"),
+                    )
+                    if (
+                        type(prompt_count) is int
+                        and type(answer_count) is int
+                        and prompt_count >= 0
+                        and answer_count >= 0
+                    ):
+                        usage.complete(prompt_count + answer_count)
                     if body.get("done") is not True or body.get("done_reason") == "length":
                         raise LLMProviderError("The language model did not complete its response.")
                     draft = GroundedResponse.model_validate_json(body["message"]["content"])

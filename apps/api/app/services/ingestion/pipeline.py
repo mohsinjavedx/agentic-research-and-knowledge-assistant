@@ -6,9 +6,11 @@ from uuid import NAMESPACE_URL, UUID, uuid5
 
 from app.schemas.chunks import ChunkSchema
 from app.services.chunking.splitter import MarkdownChunker
+from app.services.ingestion.control import check_cancelled
 from app.services.ingestion.errors import PDFExtractionError
 from app.services.ingestion.extraction import ExtractedDocument, PDFMarkdownExtractor
 from app.services.ingestion.normalization import MarkdownNormalizer, NormalizedDocument
+from app.services.ingestion.sandbox import SandboxedPDFExtractor
 from app.services.ingestion.validation import PDFValidator
 
 
@@ -24,12 +26,12 @@ class PDFIngestionService:
         self,
         *,
         validator: PDFValidator | None = None,
-        extractor: PDFMarkdownExtractor | None = None,
+        extractor: PDFMarkdownExtractor | SandboxedPDFExtractor | None = None,
         normalizer: MarkdownNormalizer | None = None,
         chunker: MarkdownChunker | None = None,
     ) -> None:
         self.validator = validator or PDFValidator()
-        self.extractor = extractor or PDFMarkdownExtractor()
+        self.extractor = extractor or SandboxedPDFExtractor()
         self.normalizer = normalizer or MarkdownNormalizer()
         self.chunker = chunker or MarkdownChunker()
 
@@ -49,9 +51,12 @@ class PDFIngestionService:
         document_id: UUID | None = None,
     ) -> PreparedDocument:
         extracted = self.extract(source, filename=filename, content_type=content_type)
+        check_cancelled()
         identity = document_id or uuid5(NAMESPACE_URL, "research-pdf:" + extracted.checksum)
         normalized = self.normalizer.normalize(extracted)
+        check_cancelled()
         chunks = self.chunker.split(normalized, document_id=identity)
+        check_cancelled()
         if not chunks:
             raise PDFExtractionError(message="No indexable text remains after boundary cleanup.")
         return PreparedDocument(str(identity), normalized, chunks)

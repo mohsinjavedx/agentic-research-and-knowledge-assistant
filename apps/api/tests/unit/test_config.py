@@ -80,6 +80,7 @@ def test_production_provider_configuration() -> None:
             llm_provider="hosted",
             hosted_llm_api_key="test-llm-key",
             hosted_llm_model="example-model",
+            privacy_hash_key="test-only-privacy-key-at-least-32-characters",
         ),
     )
     assert settings.app_env == "production"

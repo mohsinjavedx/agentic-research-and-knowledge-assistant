@@ -29,7 +29,7 @@ In one terminal:
 cd apps/api
 uv sync --frozen
 uv run alembic upgrade head
-uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000 --no-access-log
+uv run uvicorn app.main:app --reload --reload-dir app --host 127.0.0.1 --port 8000 --no-access-log --no-proxy-headers
 ```
 
 In another:
@@ -189,7 +189,9 @@ The build uses Webpack with one worker and memory optimizations to accommodate t
 
 Readiness reports the embedding model and LLM provider configuration; it does not claim a model inference check. Both health responses disable caching. Database outages are bounded by a configurable timeout and recover on subsequent health requests. Schema changes happen through Alembic, never automatically on API startup.
 
-Application logs are JSON with a UUID `request_id`, timestamp, event, route template, method, status, and latency. `X-Request-ID` is returned to callers; valid incoming UUIDs are preserved. Query strings, raw exception messages, credentials, uploaded text, and request bodies are excluded. Run uvicorn with `--no-access-log` to avoid separate access logs containing query strings.
+Application logs are JSON with a UUID `request_id`, hashed `session_id`, route template, method, status, latency, actual/unknown `tokens_used`, provider and error code. `X-Request-ID` is returned to callers; valid incoming UUIDs are preserved. Query strings, raw exception messages, credentials, uploaded text, and request bodies are excluded. Run uvicorn with `--no-access-log --no-proxy-headers` to avoid query-string access logs and untrusted forwarded identities.
+
+Phase 8 adds PostgreSQL quotas (5 chat/minute, 2 research/10 minutes, 3 uploads/hour), disposable PDF parser processes with 15-second deadlines and resource limits, and repeatable full-history/frontend-bundle gitleaks scanning. Apply migration 0006. Production requires a persistent `PRIVACY_HASH_KEY` of at least 32 characters. See the [Phase 8 guides](docs/phases%20guide/phase-8/README.md) for verification commands and shared-proxy quota behavior.
 
 ## Layout
 

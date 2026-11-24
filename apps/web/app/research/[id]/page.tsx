@@ -5,13 +5,13 @@ import { useParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import {
   ArrowLeft,
-  ArrowsClockwise,
+  RefreshCw as ArrowsClockwise,
   Check,
-  CheckCircle,
-  Compass,
-  Sparkle,
-  WarningCircle,
-} from "@phosphor-icons/react";
+  CircleCheck as CheckCircle,
+  BrainCircuit as Compass,
+  BrainCircuit as Sparkle,
+  CircleAlert as WarningCircle,
+} from "lucide-react";
 import { CitationBadge, CitationDrawer } from "@/components/citation-drawer";
 import { useBackendReadiness } from "@/components/backend-readiness";
 import MarkdownReport from "@/components/markdown-report";
@@ -19,6 +19,7 @@ import { type ResearchCitation } from "@/lib/api";
 import { sampleDocumentLabel } from "@/lib/samples";
 import { useResearchJob } from "@/lib/use-research-job";
 import { useSourceLibrary } from "@/components/source-library";
+import { ReportActions } from "@/components/report-actions";
 
 export default function ResearchJobPage() {
   const { id } = useParams<{ id: string }>();
@@ -82,6 +83,10 @@ export default function ResearchJobPage() {
         ...job.report.sections.map((section) => `## ${section.heading}\n\n${section.content}`),
       ].join("\n\n")
     : "";
+  const coverageWarning = job.report?.partial_coverage
+    ? (job.report.disclaimer ??
+      "This report has partial source coverage. Inspect the available evidence before relying on its conclusions.")
+    : null;
   function openCitation(citation: ResearchCitation, trigger: HTMLButtonElement) {
     citationTrigger.current = trigger;
     setSelectedCitation(citation);
@@ -131,21 +136,25 @@ export default function ResearchJobPage() {
         <article className="run-report" aria-labelledby="report-heading">
           <div className="section-heading">
             <h2 id="report-heading">{job.report ? "Final report" : "Your research report"}</h2>
-            <Sparkle size={20} weight="duotone" color="var(--accent)" />
+            <Sparkle size={20} color="var(--accent)" />
           </div>
           {job.report ? (
             <div className="research-report reveal-in">
-              {job.report.partial_coverage && (
-                <p className="research-disclaimer">
-                  {job.report.disclaimer ??
-                    "This report has partial source coverage. Inspect the available evidence before relying on its conclusions."}
-                </p>
-              )}
+              {coverageWarning && <p className="research-disclaimer">{coverageWarning}</p>}
               <MarkdownReport
                 content={reportMarkdown}
                 citations={job.report.citations}
                 evidence={job.evidence}
                 onCitationOpen={openCitation}
+              />
+              <ReportActions
+                jobId={job.job_id}
+                query={job.query}
+                title={job.report.title}
+                content={reportMarkdown}
+                documentIds={[...new Set(job.evidence.map((item) => item.document_id))]}
+                coverageWarning={coverageWarning}
+                citations={job.report.citations}
               />
               <section className="report-citations">
                 <h3>Verified source passages</h3>
@@ -204,7 +213,7 @@ export default function ResearchJobPage() {
                 {job.steps.map((step, index) => (
                   <li key={`${step.name}-${index}`}>
                     <span className={`timeline-dot ${step.status}`}>
-                      {step.status === "completed" && <Check size={8} weight="bold" />}
+                      {step.status === "completed" && <Check size={10} strokeWidth={3} />}
                     </span>
                     <div className="timeline-step-heading">
                       <strong>{step.name.replaceAll("_", " ")}</strong>

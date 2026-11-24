@@ -11,7 +11,7 @@ from app.workers.recovery import (
     recover_interrupted_research_jobs,
 )
 
-SCHEMA_REVISION = "0005_research_jobs"
+SCHEMA_REVISION = "0006_rate_limit_events"
 
 
 class Database:

@@ -1,4 +1,5 @@
 import asyncio
+import multiprocessing
 from io import BytesIO
 from threading import Event, Lock
 from time import sleep
@@ -6,6 +7,50 @@ from time import sleep
 import pytest
 
 from app.services.indexing.upload import PDFUploadProcessor
+
+
+def stalled_parser(connection, payload):
+    connection.recv_bytes()
+    sleep(60)
+
+
+def test_cancelled_active_parser_is_joined_and_staging_and_stream_are_closed(monkeypatch, tmp_path):
+    from app.services.ingestion.validation import PDFValidator
+
+    finished = []
+    monkeypatch.setattr("app.services.ingestion.sandbox._worker", stalled_parser)
+
+    def prepare(settings, provider, source, **kwargs):
+        with PDFValidator(temp_root=tmp_path).validate(source, filename="paper.pdf"):
+            finished.append("must-not-embed")
+
+    monkeypatch.setattr("app.services.indexing.upload.embed_stream", prepare)
+
+    async def run():
+        worker = PDFUploadProcessor()
+        source = BytesIO(b"%PDF-1.7\nStaged test bytes")
+        before = {child.pid for child in multiprocessing.active_children()}
+        task = asyncio.create_task(
+            worker.prepare(None, None, source, "paper.pdf", "application/pdf")
+        )
+        try:
+            for _ in range(100):
+                if list(tmp_path.iterdir()) and multiprocessing.active_children():
+                    break
+                await asyncio.sleep(0.02)
+            else:
+                pytest.fail("No active parser observed")
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await task
+            assert source.closed
+            assert list(tmp_path.iterdir()) == []
+            assert {child.pid for child in multiprocessing.active_children()} == before
+            assert finished == []
+        finally:
+            await asyncio.to_thread(worker.close)
+
+    asyncio.run(run())
 
 
 def test_concurrent_uploads_serialize_native_parsing_and_close_sources(monkeypatch):

@@ -4,24 +4,27 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
+  ArrowRight,
   ArrowUp,
-  ArrowUpRight,
   BookOpen,
-  Books,
-  ChatCircleText,
-  CheckCircle,
-  Compass,
-  FilePdf,
-  Plus,
-  Quotes,
+  BrainCircuit,
+  ChevronDown,
+  FileText,
+  Files,
+  MessageSquare,
+  Network,
+  Paperclip,
+  PanelRightOpen,
   ShieldCheck,
-  Sparkle,
-  Stop,
-} from "@phosphor-icons/react";
+  Square,
+} from "lucide-react";
 import { useBackendReadiness } from "@/components/backend-readiness";
-import { CitationBadge, CitationDrawer } from "@/components/citation-drawer";
+import { CitationDrawer } from "@/components/citation-drawer";
+import { ConversationAnswer } from "@/components/conversation-answer";
 import { useSourceLibrary } from "@/components/source-library";
-import MarkdownReport from "@/components/markdown-report";
+import { useWorkspaceMemory } from "@/components/workspace-memory";
+import { ScopePicker, WorkspaceSources, EvidenceList } from "@/components/workspace-sources";
+import { ModalDialog } from "@/components/modal-dialog";
 import { SAMPLE_DOCUMENTS } from "@/lib/samples";
 import { selectionError } from "@/lib/request-rules";
 import {
@@ -30,10 +33,35 @@ import {
   ensureResearchSession,
   userFacingApiError,
   type AnswerCitation,
-  type AnswerResponse,
 } from "@/lib/api";
 
-const STARTERS = [
+const TASK_STARTERS = [
+  {
+    query: "Summarize my uploaded documents.",
+    label: "Summarize my documents",
+    hint: "Bring the main ideas into focus",
+    icon: FileText,
+  },
+  {
+    query: "Find the key concepts across my research papers.",
+    label: "Find key concepts",
+    hint: "Connect ideas across selected papers",
+    icon: BookOpen,
+  },
+  {
+    query: "Compare the main arguments in my documents.",
+    label: "Compare main arguments",
+    hint: "Explore agreements and differences",
+    icon: Network,
+  },
+  {
+    query: "Find evidence supporting a particular claim.",
+    label: "Find supporting evidence",
+    hint: "Start here, then add your specific claim",
+    icon: BrainCircuit,
+  },
+] as const;
+const SAMPLE_STARTERS = [
   {
     label: "Educational QA benchmarks",
     hint: "Find the five evaluation benchmarks",
@@ -49,56 +77,78 @@ const STARTERS = [
       "Which language model did the personalized nutrition system use, and why was it selected?",
     ids: [SAMPLE_DOCUMENTS[1].id],
     mode: "answer",
-    icon: Sparkle,
+    icon: FileText,
   },
   {
     label: "Compare the three papers",
-    hint: "Connect findings across all three sources",
+    hint: "Connect evaluation methods across sources",
     query: "Compare the evaluation approaches described in these papers.",
     ids: SAMPLE_DOCUMENTS.map((paper) => paper.id),
     mode: "research",
-    icon: Compass,
+    icon: BrainCircuit,
+  },
+  {
+    label: "Medical retrieval strategies",
+    hint: "Explore how the system finds evidence",
+    query:
+      "Which of the medical system’s retrieval approaches performed best according to the authors, and why?",
+    ids: [SAMPLE_DOCUMENTS[2].id],
+    mode: "answer",
+    icon: Network,
   },
 ] as const;
-
 type Mode = "answer" | "research";
 
 export function ResearchWorkspace({ initialMode = "answer" }: { initialMode?: Mode }) {
+  const { activeId, draftVersion } = useWorkspaceMemory();
+  return <WorkspaceView key={activeId ?? `new-${draftVersion}`} initialMode={initialMode} />;
+}
+
+function WorkspaceView({ initialMode }: { initialMode: Mode }) {
   const router = useRouter();
   const { isReady } = useBackendReadiness();
-  const {
-    documents,
-    selectedIds,
-    setSelectedIds,
-    error: libraryError,
-    refresh,
-  } = useSourceLibrary();
+  const { documents, selectedIds, setSelectedIds, loaded } = useSourceLibrary();
+  const scopeReady =
+    loaded ||
+    (selectedIds.length > 0 &&
+      selectedIds.every((id) => documents.some((paper) => paper.id === id)));
+  const { conversations, activeId, rememberAnswer, rememberResearch } = useWorkspaceMemory();
+  const active = conversations.find((item) => item.id === activeId && item.kind === "answer");
   const [mode, setMode] = useState<Mode>(initialMode);
-  const [query, setQuery] = useState("");
-  const [answer, setAnswer] = useState<AnswerResponse | null>(null);
-  const [answeredQuery, setAnsweredQuery] = useState("");
-  const [selectedCitation, setSelectedCitation] = useState<AnswerCitation | null>(null);
+  const [query, setQuery] = useState(active?.query ?? "");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [sourcesOpen, setSourcesOpen] = useState(true);
+  const [scopeOpen, setScopeOpen] = useState(false);
+  const [evidenceOpen, setEvidenceOpen] = useState(false);
+  const [selectedCitation, setSelectedCitation] = useState<AnswerCitation | null>(null);
+  const [inspectedCitation, setInspectedCitation] = useState<AnswerCitation | null>(null);
+  const [sourceTab, setSourceTab] = useState<"scope" | "evidence">(
+    active?.answer ? "evidence" : "scope",
+  );
   const request = useRef<AbortController | null>(null);
+  const running = useRef(false);
   const citationTrigger = useRef<HTMLButtonElement | null>(null);
+  const evidenceTrigger = useRef<HTMLButtonElement | null>(null);
   const textarea = useRef<HTMLTextAreaElement | null>(null);
   const form = useRef<HTMLFormElement | null>(null);
-  const answerPanel = useRef<HTMLElement | null>(null);
-  const selectionKey = selectedIds.join(",");
-  const [answerScope, setAnswerScope] = useState("");
-  const visibleAnswer = answerScope === selectionKey ? answer : null;
-
+  const visibleAnswer =
+    active &&
+    active.documentIds.length === selectedIds.length &&
+    active.documentIds.every((id) => selectedIds.includes(id))
+      ? (active.answer ?? null)
+      : null;
   useEffect(() => () => request.current?.abort(), []);
-  useEffect(() => {
-    if (visibleAnswer)
-      answerPanel.current?.scrollIntoView({
-        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-        block: "nearest",
-      });
-  }, [visibleAnswer]);
-
+  const closeCitation = useCallback(() => setSelectedCitation(null), [setSelectedCitation]);
+  function openCitation(citation: AnswerCitation, trigger: HTMLButtonElement) {
+    citationTrigger.current = trigger;
+    setSourcesOpen(true);
+    setSourceTab("evidence");
+    setInspectedCitation({ ...citation });
+    setSelectedCitation(citation);
+  }
   async function run(question: string, ids: readonly string[], requestedMode: Mode) {
+    if (running.current) return;
     if (!question.trim()) {
       setError("Write a question to start exploring your papers.");
       textarea.current?.focus();
@@ -108,348 +158,330 @@ export function ResearchWorkspace({ initialMode = "answer" }: { initialMode?: Mo
       setError("Wait for the research service to connect, then try again.");
       return;
     }
+    if (!scopeReady) {
+      setError("Wait for the document library to load, then try again.");
+      return;
+    }
     const scopeError = selectionError(ids.length, requestedMode);
     if (scopeError) {
       setError(scopeError);
       return;
     }
-    request.current?.abort();
     const controller = new AbortController();
     request.current = controller;
-    setSelectedIds([...ids]);
-    setMode(requestedMode);
-    setQuery(question);
+    running.current = true;
     setBusy(true);
     setError("");
-    setAnswer(null);
     setSelectedCitation(null);
     try {
       await ensureResearchSession();
       if (controller.signal.aborted) return;
       if (requestedMode === "research") {
         const job = await createResearchJob(question, [...ids], controller.signal);
+        if (controller.signal.aborted) return;
+        rememberResearch(question, [...ids], job.job_id);
         router.push(`/research/${job.job_id}`);
       } else {
-        const result = await answerQuestion(question, [...ids], controller.signal);
-        if (controller.signal.aborted) return;
-        setAnswer(result);
-        setAnswerScope(ids.join(","));
-        setAnsweredQuery(question);
+        const answer = await answerQuestion(question, [...ids], controller.signal);
+        if (!controller.signal.aborted) rememberAnswer(question, [...ids], answer);
       }
     } catch (reason) {
       if (request.current === controller) setError(userFacingApiError(reason));
     } finally {
-      if (request.current === controller) setBusy(false);
+      if (request.current === controller) {
+        setBusy(false);
+        running.current = false;
+      }
     }
   }
-
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void run(query, selectedIds, mode);
   }
-  function openCitation(citation: AnswerCitation, trigger: HTMLButtonElement) {
-    citationTrigger.current = trigger;
-    setSelectedCitation(citation);
-  }
-  const closeCitation = useCallback(() => setSelectedCitation(null), []);
-
   return (
-    <div className="workspace-view page-enter">
-      <header className="page-heading">
-        <div>
-          <span className="context-label">
-            <span className="tiny-orbit" />
-            Your research, connected
-          </span>
-          <h1>
-            A clearer view of
-            <br className="desktop-break" /> your research.
-          </h1>
-          <p className="lede">Ask better questions. Follow the evidence. Find what matters.</p>
-        </div>
-        <span className="heading-art" aria-hidden="true">
-          <Quotes weight="duotone" size={48} />
+    <div
+      className={`workspace-view page-enter${sourcesOpen ? "" : " sources-hidden"}${visibleAnswer ? " has-answer" : ""}`}
+    >
+      <div className="workspace-page-bar">
+        <span>
+          <MessageSquare size={15} />{" "}
+          {mode === "answer" ? "Research conversation" : "Agentic research"}
         </span>
-      </header>
+        <button
+          className="text-button desktop-source-toggle"
+          onClick={() => setSourcesOpen((value) => !value)}
+          aria-pressed={sourcesOpen}
+        >
+          <PanelRightOpen size={15} />
+          <span>{sourcesOpen ? "Sources" : "Show sources"}</span>
+        </button>
+        <button
+          className="text-button compact-source-toggle"
+          aria-haspopup="dialog"
+          onClick={(event) => {
+            if (visibleAnswer) {
+              evidenceTrigger.current = event.currentTarget;
+              setEvidenceOpen(true);
+            } else setScopeOpen(true);
+          }}
+        >
+          <PanelRightOpen size={15} />
+          Sources
+        </button>
+      </div>
       <div className="workspace-grid">
         <div className="workspace-primary">
-          <form
-            ref={form}
-            className={`question-composer${busy ? " is-working" : ""}`}
-            onSubmit={submit}
-          >
-            <div className="composer-modes" aria-label="Research mode">
-              <button
-                type="button"
-                aria-pressed={mode === "answer"}
-                className={mode === "answer" ? "selected" : ""}
-                disabled={busy}
-                onClick={() => setMode("answer")}
-              >
-                <ChatCircleText size={17} />
-                Quick answer
-              </button>
-              <button
-                type="button"
-                aria-pressed={mode === "research"}
-                className={mode === "research" ? "selected" : ""}
-                disabled={busy}
-                onClick={() => setMode("research")}
-              >
-                <Compass size={17} />
-                Deep research
-              </button>
-            </div>
-            <label className="sr-only" htmlFor="workspace-question">
-              Your research question
-            </label>
-            <textarea
-              ref={textarea}
-              id="workspace-question"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
-                  event.preventDefault();
-                  form.current?.requestSubmit();
-                }
+          {visibleAnswer && active ? (
+            <ConversationAnswer
+              answer={visibleAnswer}
+              question={active.query}
+              id={active.id}
+              busy={busy || !isReady || !scopeReady}
+              onCitationOpen={openCitation}
+              onRetry={() => void run(active.query, active.documentIds, "answer")}
+              onSources={(trigger) => {
+                evidenceTrigger.current = trigger;
+                setEvidenceOpen(true);
               }}
-              disabled={busy}
-              maxLength={4000}
-              rows={4}
-              placeholder={
-                mode === "answer"
-                  ? "What would you like to understand?"
-                  : "What would you like to compare across your papers?"
-              }
             />
-            <div className="composer-footer">
-              <span className="composer-sources">
-                <Books size={17} />
-                {selectedIds.length} {selectedIds.length === 1 ? "paper" : "papers"} selected
+          ) : (
+            <header className="workspace-intro">
+              <span className="workspace-intro-symbol">
+                <BrainCircuit size={26} />
               </span>
-              <div className="composer-submit">
-                <span className="key-hint">Ctrl + Enter</span>
-                {busy ? (
+              <span className="context-label">A clearer path through your knowledge</span>
+              <h1>What would you like to research?</h1>
+              <p>
+                Ask questions across your documents.
+                <br />
+                Discover answers with evidence you can follow.
+              </p>
+            </header>
+          )}
+          {!visibleAnswer && (
+            <section className="starter-section" aria-label="Suggested research questions">
+              <div className="starter-list">
+                {TASK_STARTERS.map(({ query: prompt, label, hint, icon: Icon }) => (
                   <button
-                    type="button"
-                    className="button secondary"
-                    onClick={() => request.current?.abort()}
+                    className="starter-button"
+                    key={prompt}
+                    aria-label={prompt}
+                    disabled={busy || !scopeReady || !selectedIds.length}
+                    onClick={() => {
+                      setQuery(prompt);
+                      setError("");
+                      textarea.current?.focus();
+                    }}
                   >
-                    <Stop size={15} />
-                    Cancel
+                    <Icon size={18} />
+                    <strong>{label}</strong>
+                    <small>{hint}</small>
+                    <ArrowRight size={14} className="starter-arrow" />
                   </button>
-                ) : (
-                  <button className="button" type="submit" disabled={!isReady}>
-                    {mode === "answer" ? "Ask papers" : "Start research"}
-                    <ArrowUp size={17} />
-                  </button>
-                )}
+                ))}
               </div>
-            </div>
-          </form>
-          <p className="composer-caption">
-            <ShieldCheck size={14} /> Grounded in your selected papers. Every citation is yours to
-            inspect.
-          </p>
-          {error && (
-            <div className="notice error" role="alert">
-              <strong>Let&apos;s try that again.</strong>
-              <p>{error}</p>
-            </div>
+              <p className="suggestion-hint">
+                Uses your selected papers. Edit the question, then send when you’re ready.
+              </p>
+              <details className="sample-examples">
+                <summary>Included-paper examples</summary>
+                <p>
+                  Choosing an example switches the selected papers to its included sample sources.
+                </p>
+                <div className="sample-example-list">
+                  {SAMPLE_STARTERS.map(
+                    ({ label, query: starterQuery, ids, mode: starterMode, icon: Icon }) => (
+                      <button
+                        className="sample-example-button"
+                        key={label}
+                        aria-label={label}
+                        disabled={
+                          busy || !ids.every((id) => documents.some((paper) => paper.id === id))
+                        }
+                        onClick={() => {
+                          setSelectedIds([...ids]);
+                          setMode(starterMode);
+                          setQuery(starterQuery);
+                          setError("");
+                          textarea.current?.focus();
+                        }}
+                      >
+                        <Icon size={18} />
+                        <span>{label}</span>
+                      </button>
+                    ),
+                  )}
+                </div>
+              </details>
+            </section>
           )}
           {busy && (
             <section className="answer-loading" role="status" aria-live="polite">
               <div className="loading-label">
                 <span className="activity-indicator" />
-                {mode === "answer" ? "Reading your sources..." : "Starting your research..."}
+                {mode === "answer" ? "Reading your sources…" : "Starting your research…"}
               </div>
               <div className="skeleton-line" />
               <div className="skeleton-line" />
               <div className="skeleton-line short" />
-              <p>You can cancel this request at any time.</p>
+              <p>
+                The result will appear when it is ready. Cancel stops waiting for this response.
+              </p>
             </section>
           )}
-          {visibleAnswer && (
-            <section
-              ref={answerPanel}
-              className="answer-panel reveal-in"
-              aria-labelledby="answer-heading"
+          {error && (
+            <div className="notice error" role="alert">
+              <strong>Let’s try that again.</strong>
+              <p>{error}</p>
+            </div>
+          )}
+          <div className="composer-area">
+            <form
+              ref={form}
+              className={`question-composer${busy ? " is-working" : ""}`}
+              onSubmit={submit}
             >
-              <div className="answer-heading">
-                <span className="answer-symbol">
-                  <Sparkle weight="duotone" />
-                </span>
-                <h2 id="answer-heading">A closer look</h2>
-                <span className="subtle-pill">
-                  {visibleAnswer.degraded_mode
-                    ? "Evidence fallback"
-                    : visibleAnswer.insufficient_evidence
-                      ? "More evidence needed"
-                      : "Cited answer"}
-                </span>
+              <div className="composer-modes" aria-label="Research mode">
+                <button
+                  type="button"
+                  aria-pressed={mode === "answer"}
+                  disabled={busy}
+                  className={mode === "answer" ? "selected" : ""}
+                  onClick={() => setMode("answer")}
+                >
+                  <MessageSquare size={14} /> Quick answer
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={mode === "research"}
+                  disabled={busy}
+                  className={mode === "research" ? "selected" : ""}
+                  onClick={() => setMode("research")}
+                >
+                  <BrainCircuit size={14} /> Deep research
+                </button>
               </div>
-              <p className="answered-question">{answeredQuery}</p>
-              {visibleAnswer.insufficient_evidence && (
-                <p className="notice">
-                  These papers did not provide enough evidence for a reliable answer. Try a narrower
-                  question or select different sources.
-                </p>
-              )}
-              {visibleAnswer.degraded_mode && (
-                <p className="notice">
-                  The answer service is temporarily unavailable. Your retrieved sources remain
-                  available below.
-                </p>
-              )}
-              <MarkdownReport
-                content={visibleAnswer.answer}
-                citations={visibleAnswer.citations}
-                evidence={visibleAnswer.evidence}
-                onCitationOpen={openCitation}
+              <label className="sr-only" htmlFor="workspace-question">
+                Your research question
+              </label>
+              <textarea
+                id="workspace-question"
+                ref={textarea}
+                value={query}
+                onChange={(event) => {
+                  setQuery(event.target.value);
+                  event.currentTarget.style.height = "auto";
+                  event.currentTarget.style.height = `${Math.min(event.currentTarget.scrollHeight, 140)}px`;
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
+                    event.preventDefault();
+                    form.current?.requestSubmit();
+                  }
+                }}
+                disabled={busy}
+                maxLength={4000}
+                rows={3}
+                placeholder={
+                  mode === "answer"
+                    ? "Ask anything about your documents…"
+                    : "What would you like to compare across your papers?"
+                }
               />
-              {visibleAnswer.citations.length > 0 && (
-                <div className="answer-citations">
-                  <span className="source-caption">
-                    <CheckCircle size={15} /> Verified source passages
-                  </span>
-                  <div className="citation-list">
-                    {visibleAnswer.citations.map((citation, index) => (
-                      <CitationBadge
-                        key={`${citation.chunk_id}-${index}`}
-                        citation={citation}
-                        disabled={
-                          !visibleAnswer.evidence.some(
-                            (item) =>
-                              item.chunk_id === citation.chunk_id &&
-                              item.document_id === citation.document_id,
-                          )
-                        }
-                        onOpen={openCitation}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {(visibleAnswer.degraded_mode || visibleAnswer.insufficient_evidence) &&
-                visibleAnswer.evidence.length > 0 && (
-                  <details className="evidence-disclosure">
-                    <summary>Inspect retrieved evidence ({visibleAnswer.evidence.length})</summary>
-                    {visibleAnswer.evidence.map((source) => (
-                      <div key={source.chunk_id}>
-                        <strong>Page {source.page_number}</strong>
-                        <p>{source.text}</p>
-                      </div>
-                    ))}
-                  </details>
-                )}
-            </section>
-          )}
-          <section className="starter-section" aria-labelledby="starter-heading">
-            <div className="section-heading">
-              <h2 id="starter-heading">A good place to start</h2>
-              <span>Try a question</span>
-            </div>
-            <div className="starter-list">
-              {STARTERS.map(
-                ({ label, hint, query: starterQuery, ids, mode: starterMode, icon: Icon }) => (
-                  <button
-                    key={label}
-                    className="starter-button"
-                    type="button"
-                    aria-label={label}
-                    disabled={
-                      !isReady ||
-                      busy ||
-                      !ids.every((id) => documents.some((paper) => paper.id === id))
-                    }
-                    onClick={() => void run(starterQuery, ids, starterMode)}
+              <div className="composer-footer">
+                <div className="composer-tools">
+                  <Link
+                    href="/documents"
+                    className="icon-button"
+                    aria-label="Add a PDF"
+                    title="Upload a PDF to your library"
                   >
-                    <span className="starter-icon">
-                      <Icon weight="duotone" />
-                    </span>
-                    <strong>{label}</strong>
-                    <small>{hint}</small>
-                    <ArrowUpRight className="starter-arrow" size={16} />
+                    <Paperclip size={17} />
+                  </Link>
+                  <span className="tool-divider" />
+                  <button
+                    className="composer-sources"
+                    type="button"
+                    disabled={busy}
+                    onClick={() => setScopeOpen(true)}
+                  >
+                    <Files size={14} />
+                    {selectedIds.length} {selectedIds.length === 1 ? "paper" : "papers"}
+                    <ChevronDown size={12} />
                   </button>
-                ),
-              )}
-            </div>
-          </section>
-          <div className="workspace-footnote">
-            <span className="footnote-rule" />
-            <p>
-              Good answers invite a closer look.
-              <br />
-              Open a source badge to see exactly where a claim comes from.
+                </div>
+                <div className="composer-submit">
+                  {query.length > 0 && <span className="character-count">{query.length}/4000</span>}
+                  {busy ? (
+                    <button
+                      type="button"
+                      className="button secondary"
+                      title="Stop waiting for this response"
+                      onClick={() => request.current?.abort()}
+                    >
+                      <Square size={13} />
+                      Cancel
+                    </button>
+                  ) : (
+                    <button
+                      className="button send-button"
+                      type="submit"
+                      disabled={!isReady || !scopeReady || !query.trim()}
+                    >
+                      {mode === "answer" ? "Ask papers" : "Start research"}
+                      <ArrowUp size={16} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </form>
+            <p className="composer-caption">
+              <ShieldCheck size={12} />
+              <span>Each question searches your selected papers independently.</span>
+              <span className="composer-key-hint">
+                Enter to send <span>·</span> Shift + Enter for a new line
+              </span>
             </p>
           </div>
         </div>
-        <aside className="sources-panel">
-          <div className="section-heading">
-            <h2>Your sources</h2>
-            <span className="count-badge">{selectedIds.length}</span>
-          </div>
-          <p className="panel-description">Choose the papers that shape your answer.</p>
-          <fieldset className="sample-picker" disabled={busy}>
-            <legend className="sr-only">Selected papers</legend>
-            {documents.map((paper, index) => (
-              <label
-                className={`sample-option${selectedIds.includes(paper.id) ? " is-selected" : ""}`}
-                key={paper.id}
-              >
-                <span className={`paper-icon paper-color-${index % 3}`}>
-                  <FilePdf size={23} weight="duotone" />
-                </span>
-                <span className="paper-copy">
-                  <strong>{paper.shortTitle}</strong>
-                  <small>{paper.detail}</small>
-                  <span className="paper-type">
-                    {paper.isSample ? "Sample paper" : "Private upload"}
-                    {paper.pages ? ` \u00b7 ${paper.pages} pages` : ""}
-                  </span>
-                </span>
-                <input
-                  type="checkbox"
-                  checked={selectedIds.includes(paper.id)}
-                  aria-label={paper.title}
-                  onChange={() => {
-                    setSelectedIds((current) =>
-                      current.includes(paper.id)
-                        ? current.filter((id) => id !== paper.id)
-                        : [...current, paper.id],
-                    );
-                    setSelectedCitation(null);
-                    setError("");
-                  }}
-                />
-              </label>
-            ))}
-          </fieldset>
-          {libraryError && (
-            <div className="notice library-notice">
-              <p>{libraryError}</p>
-              <button className="text-button" type="button" onClick={refresh}>
-                Retry library
-              </button>
-            </div>
-          )}
-          {documents.length === 0 && !libraryError && (
-            <p className="panel-description">
-              No indexed papers yet. Add a searchable PDF to begin.
-            </p>
-          )}
-          <Link className="add-source" href="/documents">
-            <Plus size={17} />
-            Add a PDF
-            <ArrowUpRight size={15} />
-          </Link>
-          <div className="source-tip">
-            <Quotes size={22} weight="duotone" />
-            <p>One paper gives you an answer. A few can give you a new perspective.</p>
-          </div>
-        </aside>
+        {sourcesOpen && (
+          <WorkspaceSources
+            key={active?.id ?? "new"}
+            answer={visibleAnswer}
+            busy={busy}
+            tab={sourceTab}
+            onTabChange={setSourceTab}
+            inspectedCitation={inspectedCitation}
+            onCitationOpen={openCitation}
+            onHide={() => setSourcesOpen(false)}
+          />
+        )}
       </div>
+      <ModalDialog open={scopeOpen} title="Select sources" onClose={() => setScopeOpen(false)}>
+        <p>Choose which papers this question can use.</p>
+        <ScopePicker disabled={busy} />
+        <div className="modal-actions">
+          <button className="button" onClick={() => setScopeOpen(false)}>
+            Use selected papers
+          </button>
+        </div>
+      </ModalDialog>
+      <ModalDialog
+        open={evidenceOpen}
+        title="Sources & evidence"
+        className="evidence-modal"
+        onClose={() => setEvidenceOpen(false)}
+      >
+        {visibleAnswer && (
+          <EvidenceList
+            answer={visibleAnswer}
+            onCitationOpen={(citation, trigger) => {
+              setEvidenceOpen(false);
+              openCitation(citation, evidenceTrigger.current ?? trigger);
+            }}
+          />
+        )}
+      </ModalDialog>
       <CitationDrawer
         key={
           selectedCitation

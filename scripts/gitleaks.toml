@@ -1,0 +1,28 @@
+# Every built-in detector stays enabled. These field+path+shape exceptions cover
+# Next-generated server-only material. Self-tests require injected provider tokens
+# in these SAME files and copies of keys in client assets to remain detectable.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+  [[rules.allowlists]]
+  description = "Next-generated preview keys in server manifests/cache only"
+  condition = "AND"
+  regexTarget = "match"
+  paths = ['''(?:^|[/\\])\.next[/\\](?:dev[/\\])?(?:server[/\\]preview-props\.json|prerender-manifest\.json|cache[/\\]\.previewinfo)$''']
+  regexes = ['''(?i)previewMode(?:Signing|Encryption)Key["']?\s*[:=]\s*["']?[0-9a-f]{64}["']?''']
+
+  [[rules.allowlists]]
+  description = "Next-generated server action encryption key in server manifests/cache only"
+  condition = "AND"
+  regexTarget = "match"
+  paths = ['''(?:^|[/\\])\.next[/\\](?:dev[/\\])?server[/\\]server-reference-manifest\.json$''']
+  regexes = ['''(?i)encryptionKey["']?\s*[:=]\s*["']?[A-Za-z0-9+/]{43}=["']?''']
+
+  [[rules.allowlists]]
+  description = "Next-generated server action cache encryption.key"
+  condition = "AND"
+  regexTarget = "match"
+  paths = ['''(?:^|[/\\])\.next[/\\](?:dev[/\\])?cache[/\\]\.rscinfo$''']
+  regexes = ['''(?i)encryption\.key["']?\s*[:=]\s*["']?[A-Za-z0-9+/]{43}=["']?''']

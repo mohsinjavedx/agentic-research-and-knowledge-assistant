@@ -26,6 +26,21 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base import Base
 
 
+class RateLimitEvent(Base):
+    __tablename__ = "rate_limit_events"
+    __table_args__ = (
+        CheckConstraint("action IN ('chat','research','upload')", name="ck_rate_limit_action"),
+        Index("ix_rate_limit_ip_window", "action", "ip_hash", "created_at"),
+        Index("ix_rate_limit_session_window", "action", "session_hash", "created_at"),
+        Index("ix_rate_limit_expiry", "created_at"),
+    )
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    action: Mapped[str] = mapped_column(String(16))
+    ip_hash: Mapped[str] = mapped_column(String(64))
+    session_hash: Mapped[str] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 class Document(Base):
     __tablename__ = "documents"
     __table_args__ = (

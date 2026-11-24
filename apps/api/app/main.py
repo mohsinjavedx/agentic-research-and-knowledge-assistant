@@ -15,6 +15,7 @@ from app.api.v1.sessions import router as sessions_router
 from app.core.config import Settings, load_settings
 from app.core.logging import configure_logging
 from app.core.middleware import RequestContextMiddleware
+from app.core.rate_limits import RateLimitMiddleware
 from app.db.session import Database
 from app.providers.embeddings import create_embedding_provider
 from app.providers.identity import EmbeddingCompatibilityError
@@ -92,6 +93,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(search_router)
     application.include_router(answers_router)
     application.include_router(research_router)
+    application.add_middleware(RateLimitMiddleware)
     application.add_middleware(RequestContextMiddleware)
     application.add_middleware(
         CORSMiddleware,
@@ -99,7 +101,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_credentials=True,
         allow_methods=["GET", "POST", "DELETE"],
         allow_headers=["Content-Type", "X-Request-ID"],
-        expose_headers=["X-Request-ID"],
+        expose_headers=["X-Request-ID", "Retry-After", "Server-Timing"],
     )
     return application
 

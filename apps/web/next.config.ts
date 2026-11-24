@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   experimental: {
     cpus: 1,
     webpackMemoryOptimizations: true,
-    optimizePackageImports: ["@phosphor-icons/react"],
+    optimizePackageImports: ["lucide-react"],
     proxyClientMaxBodySize: "21mb",
     proxyTimeout: 190_000,
   },

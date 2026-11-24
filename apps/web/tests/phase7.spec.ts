@@ -1,14 +1,36 @@
-import { expect, test } from "@playwright/test";
-import { citation, documents, health, ids, job, jobId, mockApi } from "./fixtures";
+import { expect, test, type Page } from "@playwright/test";
+import {
+  citation,
+  documents,
+  health,
+  ids,
+  job,
+  jobId,
+  mockApi,
+  selectIncludedExample,
+} from "./fixtures";
+
+async function submitStarter(page: Page, name: string) {
+  await selectIncludedExample(page, name);
+  await page
+    .getByRole("button", {
+      name: name === "Compare the three papers" ? "Start research" : "Ask papers",
+      exact: true,
+    })
+    .click();
+}
 
 test("first visitor asks, inspects an inline Unicode citation, then completes a comparison", async ({
   page,
 }) => {
   const journal = await mockApi(page);
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "Educational QA benchmarks" })).toBeEnabled();
+  await page.getByRole("link", { name: "Start researching", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Summarize my uploaded documents.", exact: true }),
+  ).toBeEnabled();
   await page.screenshot({ path: "test-results/workspace-1280.png", fullPage: true });
-  await page.getByRole("button", { name: "Educational QA benchmarks" }).click();
+  await submitStarter(page, "Educational QA benchmarks");
   await expect(page.locator(".markdown-content").first()).toContainText(citation.claim);
   expect(journal.answerBodies[0]).toMatchObject({
     document_ids: [ids[0]],
@@ -26,7 +48,8 @@ test("first visitor asks, inspects an inline Unicode citation, then completes a 
   await page.keyboard.press("Escape");
   await expect(dialog).not.toBeVisible();
   await expect(inline).toBeFocused();
-  await page.getByRole("button", { name: "Compare the three papers" }).click();
+  await page.getByRole("link", { name: "New research", exact: true }).click();
+  await submitStarter(page, "Compare the three papers");
   await expect(page).toHaveURL(`/research/${jobId}`);
   await expect(
     page.getByRole("heading", { name: "Evaluation across three papers", exact: true }).first(),
@@ -44,7 +67,7 @@ test("first visitor asks, inspects an inline Unicode citation, then completes a 
 test("a mismatched source range never receives an invented highlight", async ({ page }) => {
   await mockApi(page, { invalidQuote: true });
   await page.goto("/workspace");
-  await page.getByRole("button", { name: "Educational QA benchmarks" }).click();
+  await submitStarter(page, "Educational QA benchmarks");
   await page.getByRole("button", { name: "Open Educational QA, page 7" }).first().click();
   await expect(page.getByRole("dialog").locator("mark")).toHaveCount(0);
   await expect(page.getByRole("dialog").getByText(/exact highlight unavailable/i)).toBeVisible();
@@ -53,7 +76,7 @@ test("a mismatched source range never receives an invented highlight", async ({ 
 test("quota errors release the composer and explain how to retry", async ({ page }) => {
   await mockApi(page, { quota: true });
   await page.goto("/workspace");
-  await page.getByRole("button", { name: "Educational QA benchmarks" }).click();
+  await submitStarter(page, "Educational QA benchmarks");
   await expect(page.locator('.notice[role="alert"]')).toContainText("request limit");
   await expect(page.getByRole("button", { name: "Ask papers", exact: true })).toBeEnabled();
 });
@@ -69,6 +92,9 @@ test("sleeping backend shows a delayed banner then unlocks the composer", async 
   });
   await page.clock.install();
   await page.goto("/workspace");
+  await page
+    .getByRole("textbox", { name: "Your research question" })
+    .fill("Explain the selected papers");
   await expect(page.getByRole("button", { name: "Ask papers", exact: true })).toBeDisabled();
   await page.clock.fastForward(3100);
   await expect(page.getByText(/waking up/i).first()).toBeVisible();
@@ -167,7 +193,7 @@ test("an answer request deadline releases the controls with a retryable message"
   await mockApi(page);
   await page.route("**/api/v1/answer", () => new Promise(() => {}));
   await page.goto("/workspace");
-  await page.getByRole("button", { name: "Educational QA benchmarks" }).click();
+  await submitStarter(page, "Educational QA benchmarks");
   await expect(page.getByRole("button", { name: "Cancel", exact: true })).toBeVisible();
   await page.clock.fastForward(120_100);
   await expect(page.locator('.notice[role="alert"]')).toContainText("took too long");
@@ -226,7 +252,7 @@ test("private citations keep filenames and reset their copy status", async ({ pa
   );
   await page.goto("/workspace");
   await expect(page.getByRole("checkbox", { name: "first-study.pdf", exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Educational QA benchmarks" }).click();
+  await submitStarter(page, "Educational QA benchmarks");
   const inline = page.locator(".markdown-content");
   await inline.getByRole("button", { name: "Open first-study.pdf, page 1" }).click();
   await expect(
@@ -257,7 +283,7 @@ for (const width of [360, 768, 1280]) {
       );
     }
     await page.goto("/workspace");
-    await page.getByRole("button", { name: "Educational QA benchmarks" }).click();
+    await submitStarter(page, "Educational QA benchmarks");
     await page.getByRole("button", { name: "Open Educational QA, page 7" }).first().click();
     await expect(page.getByRole("dialog")).toBeVisible();
     await expect(page.getByRole("dialog").locator("mark")).toHaveText(citation.quote);

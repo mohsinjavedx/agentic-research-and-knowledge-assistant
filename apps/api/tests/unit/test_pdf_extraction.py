@@ -13,7 +13,11 @@ from app.services.ingestion.validation import PDFValidationError, PDFValidator
 
 
 def service(tmp_path: Path) -> PDFIngestionService:
-    return PDFIngestionService(validator=PDFValidator(temp_root=tmp_path))
+    # These are native adapter contract tests and inject dependency faults in-process.
+    # test_pdf_sandbox exercises the production default across the real process boundary.
+    return PDFIngestionService(
+        validator=PDFValidator(temp_root=tmp_path), extractor=PDFMarkdownExtractor()
+    )
 
 
 def test_extracts_markdown_with_source_metadata_and_cleans_up(

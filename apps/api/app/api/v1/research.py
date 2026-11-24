@@ -228,6 +228,7 @@ async def create_research_job(
                 raise HTTPException(
                     status_code=status.HTTP_429_TOO_MANY_REQUESTS,
                     detail="Research request limit reached. Try again later.",
+                    headers={"Retry-After": "600"},
                 )
             job = ResearchJob(
                 session_id=session_id,

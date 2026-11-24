@@ -27,7 +27,13 @@ type BackendReadinessValue = {
 
 const BackendReadinessContext = createContext<BackendReadinessValue | null>(null);
 
-export function BackendReadinessProvider({ children }: { children: ReactNode }) {
+export function BackendReadinessProvider({
+  children,
+  enabled = true,
+}: {
+  children: ReactNode;
+  enabled?: boolean;
+}) {
   const [readiness, setReadiness] = useState<Readiness>({ kind: "checking" });
   const [wakeDelayElapsed, setWakeDelayElapsed] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -39,6 +45,7 @@ export function BackendReadinessProvider({ children }: { children: ReactNode }) 
   }, []);
 
   useEffect(() => {
+    if (!enabled) return;
     const controller = new AbortController();
     let active = true;
     let timedOut = false;
@@ -76,7 +83,7 @@ export function BackendReadinessProvider({ children }: { children: ReactNode }) 
       clearTimeout(deadlineTimer);
       controller.abort();
     };
-  }, [attempt]);
+  }, [attempt, enabled]);
 
   const value = useMemo(
     () => ({

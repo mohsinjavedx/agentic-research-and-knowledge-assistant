@@ -8,9 +8,10 @@ from app.core.config import Settings
 from app.providers.embeddings import EmbeddingProvider
 from app.services.indexing.preparation import embedding_chunker
 from app.services.indexing.service import EmbeddedDocument
+from app.services.ingestion.control import check_cancelled
 from app.services.ingestion.detection import PDFTextDensityDetector
-from app.services.ingestion.extraction import PDFMarkdownExtractor
 from app.services.ingestion.pipeline import PDFIngestionService
+from app.services.ingestion.sandbox import SandboxedPDFExtractor
 from app.services.ingestion.validation import PDFValidator
 
 
@@ -38,7 +39,7 @@ def embed_stream(
     validator = PDFValidator(
         max_upload_mb=settings.max_upload_mb, max_pdf_pages=settings.max_pdf_pages
     )
-    extractor = PDFMarkdownExtractor(
+    extractor = SandboxedPDFExtractor(
         text_detector=PDFTextDensityDetector(
             min_text_chars_per_page=settings.min_text_chars_per_page,
             max_low_text_page_percent=settings.max_low_text_page_percent,
@@ -52,6 +53,7 @@ def embed_stream(
     prepared = ingestion.prepare(
         source, filename=filename, content_type=content_type, document_id=document_id
     )
+    check_cancelled()
     vectors = provider.embed_documents([chunk.normalized_text for chunk in prepared.chunks])
     return EmbeddedDocument(
         document_id=UUID(prepared.document_id),

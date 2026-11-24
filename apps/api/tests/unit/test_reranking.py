@@ -12,6 +12,7 @@ from tokenizers.pre_tokenizers import Whitespace
 from tokenizers.processors import TemplateProcessing
 
 from app.core.config import load_settings
+from app.core.telemetry import RequestTelemetry, telemetry_context
 from app.providers.reranking import RerankerError, TinyBERTReranker, create_reranker
 from app.services.retrieval.context import retrieve_context
 from app.services.retrieval.dense import RetrievedChunk
@@ -55,6 +56,28 @@ def tokenizer() -> Tokenizer:
     )
     engine.enable_truncation(max_length=512, strategy="only_second")
     return engine
+
+
+def test_reranker_counts_actual_non_padding_tokens_in_every_batch():
+    counted = []
+
+    class Session:
+        def run(self, names, inputs):
+            counted.append(int(inputs["attention_mask"].sum()))
+            return [np.ones((len(inputs["input_ids"]), 1), dtype=np.float32)]
+
+    provider = TinyBERTReranker()
+    provider._tokenizer = tokenizer()
+    provider._session = Session()
+    telemetry = RequestTelemetry(session_id=None)
+    token = telemetry_context.set(telemetry)
+    try:
+        provider.rerank("query", candidates(6))
+        assert len(counted) == 2
+        assert telemetry.snapshot()["tokens_used"] == sum(counted)
+        assert telemetry.snapshot()["provider"] == "local"
+    finally:
+        telemetry_context.reset(token)
 
 
 def test_disabled_reranker_never_downloads_or_loads(monkeypatch: pytest.MonkeyPatch) -> None:

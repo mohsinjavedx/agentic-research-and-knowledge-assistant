@@ -12,6 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.api.v1.sessions import require_session_id
 from app.core.config import Settings
+from app.core.telemetry import set_error_code
 from app.db.models import Document
 from app.db.session import Database
 from app.providers.embeddings import EmbeddingProvider, EmbeddingProviderError
@@ -102,6 +103,7 @@ async def upload_document(
                 raise HTTPException(503, "The uploaded document could not be loaded.")
             return _summary(document)
     except (PDFValidationError, PDFExtractionError) as exc:
+        set_error_code(exc.error_code)
         raise HTTPException(
             exc.status_code,
             detail={

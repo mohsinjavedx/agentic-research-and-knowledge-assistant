@@ -111,12 +111,12 @@ def test_cli_extraction_failure_does_not_create_an_output_file(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
     from app.services.ingestion.errors import PDFExtractionError
-    from app.services.ingestion.extraction import PDFMarkdownExtractor
+    from app.services.ingestion.sandbox import SandboxedPDFExtractor
 
     def fail(*args: object, **kwargs: object) -> None:
         raise PDFExtractionError(page_number=1)
 
-    monkeypatch.setattr(PDFMarkdownExtractor, "extract", fail)
+    monkeypatch.setattr(SandboxedPDFExtractor, "extract", fail)
     source = tmp_path / "source.pdf"
     source.write_bytes(layout_pdf("text"))
     output = tmp_path / "pages.json"

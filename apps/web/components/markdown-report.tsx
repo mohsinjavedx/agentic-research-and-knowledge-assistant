@@ -21,6 +21,7 @@ function MarkdownLink({ href, children }: { href?: string; children?: ReactNode 
     return (
       <CitationBadge
         citation={citation}
+        referenceNumber={Number(match![1]) + 1}
         disabled={
           !evidence.some(
             (item) =>
@@ -38,7 +39,13 @@ function MarkdownLink({ href, children }: { href?: string; children?: ReactNode 
 }
 
 // Stable component identity keeps inline citation trigger DOM/focus across rerenders.
-const markdownComponents = { a: MarkdownLink };
+const markdownComponents = {
+  a: MarkdownLink,
+  // Retrieved/model text is untrusted. Images can leak private content through their URLs.
+  img: ({ alt }: { alt?: string }) => (
+    <span className="muted">{alt ? `[Image omitted: ${alt}]` : "[Image omitted]"}</span>
+  ),
+};
 
 export default function MarkdownReport({
   content,

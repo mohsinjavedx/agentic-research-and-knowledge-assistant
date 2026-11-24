@@ -11,6 +11,7 @@ import numpy as np
 from tokenizers import Tokenizer
 
 from app.core.config import Settings
+from app.core.telemetry import begin_provider_call
 from app.services.retrieval.dense import RetrievedChunk
 
 RERANKER_MODEL = "Xenova/ms-marco-TinyBERT-L-2-v2"
@@ -86,11 +87,13 @@ class TinyBERTReranker:
             ids[index, :length] = row.ids
             masks[index, :length] = row.attention_mask
             types[index, :length] = row.type_ids
+        usage = begin_provider_call("local")
         logits = np.asarray(
             self._session.run(
                 None, {"input_ids": ids, "attention_mask": masks, "token_type_ids": types}
             )[0]
         )
+        usage.complete(int(masks.sum()))
         if logits.shape != (len(texts), 1) or not np.isfinite(logits).all():
             raise RerankerError("RERANKER_INVALID_OUTPUT")
         return [float(value) for value in logits[:, 0]]

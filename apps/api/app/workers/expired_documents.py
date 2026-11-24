@@ -4,11 +4,11 @@ import asyncio
 import logging
 
 from sqlalchemy import delete, func, select, text
-from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.db.errors import DATABASE_ERRORS
 from app.db.locks import EMBEDDING_INDEX_ADVISORY_LOCK
-from app.db.models import Document
+from app.db.models import Document, RateLimitEvent
 from app.db.session import Database
 
 logger = logging.getLogger("research.document_cleanup")
@@ -35,7 +35,17 @@ async def purge_expired_documents(database: Database) -> int:
             text("SELECT pg_advisory_xact_lock(:lock_key)"),
             {"lock_key": EMBEDDING_INDEX_ADVISORY_LOCK},
         )
+        await cleanup_expired_rate_limits(session)
         return await cleanup_expired_documents(session)
+
+
+async def cleanup_expired_rate_limits(session: AsyncSession) -> None:
+    """The longest admission window is one hour; retain every active event."""
+    await session.execute(
+        delete(RateLimitEvent).where(
+            RateLimitEvent.created_at < func.now() - text("INTERVAL '1 hour'")
+        )
+    )
 
 
 async def run_expired_document_cleanup(database: Database) -> None:
@@ -43,7 +53,7 @@ async def run_expired_document_cleanup(database: Database) -> None:
     while True:
         try:
             deleted = await purge_expired_documents(database)
-        except SQLAlchemyError:
+        except DATABASE_ERRORS:
             logger.warning(
                 "documents.expiry_cleanup_failed",
                 extra={"error_code": "EXPIRY_CLEANUP_FAILED"},

@@ -8,6 +8,7 @@ import numpy as np
 from tokenizers import Tokenizer
 
 from app.core.config import Settings
+from app.core.telemetry import begin_provider_call
 from app.providers.identity import BGE_MODEL, BGE_REVISION, EmbeddingIdentity
 
 QUERY_INSTRUCTION = "Represent this sentence for searching relevant passages: "
@@ -152,10 +153,11 @@ class LocalBGEProvider(_BGEProvider):
         vectors: list[list[float]] = []
         for start in range(0, len(texts), self.batch_size):
             batch = texts[start : start + self.batch_size]
+            usage = begin_provider_call("local")
             try:
-                hidden = self._get_session().run(
-                    ["last_hidden_state"], self.tokenizer.inputs(batch)
-                )[0]
+                inputs = self.tokenizer.inputs(batch)
+                hidden = self._get_session().run(["last_hidden_state"], inputs)[0]
+                usage.complete(int(inputs["attention_mask"].sum()))
                 vectors.extend(normalize_vectors(hidden[:, 0, :], len(batch)))
             except EmbeddingProviderError:
                 raise
@@ -193,6 +195,7 @@ class APIEmbeddingProvider(_BGEProvider):
         result: list[list[float]] = []
         for start in range(0, len(texts), self.batch_size):
             batch = texts[start : start + self.batch_size]
+            usage = begin_provider_call("api")
             try:
                 response = self._client.post(
                     self.url,
@@ -201,6 +204,9 @@ class APIEmbeddingProvider(_BGEProvider):
                 )
                 response.raise_for_status()
                 payload = response.json()
+                reported_usage = payload.get("usage")
+                if isinstance(reported_usage, dict):
+                    usage.complete(reported_usage.get("total_tokens"))
                 if payload.get("model", BGE_MODEL) != BGE_MODEL:
                     raise ValueError
                 rows = payload["data"]

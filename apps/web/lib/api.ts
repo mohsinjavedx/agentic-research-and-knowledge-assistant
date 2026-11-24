@@ -128,11 +128,21 @@ export async function uploadDocument(file: File, signal: AbortSignal): Promise<D
   return parseDocument(await response.json());
 }
 
+export async function deleteDocument(id: string, signal: AbortSignal): Promise<void> {
+  const response = await fetch(`${API_URL}/api/v1/documents/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    credentials: "include",
+    signal: AbortSignal.any([signal, AbortSignal.timeout(15_000)]),
+  });
+  if (!response.ok) throw await toApiError(response, "The document could not be deleted.");
+}
+
 export class ApiError extends Error {
   constructor(
     message: string,
     readonly status: number,
     readonly code: string | null = null,
+    readonly retryAfterSeconds: number | null = null,
   ) {
     super(message);
     this.name = "ApiError";
@@ -313,7 +323,14 @@ async function toApiError(response: Response, fallback: string): Promise<ApiErro
     (typeof detail === "string" && detail.toLowerCase().includes("ocr")
       ? "OCR_NOT_SUPPORTED"
       : null);
-  return new ApiError(message, response.status, code);
+  const retry = response.headers.get("Retry-After");
+  const seconds = retry && /^\d+$/.test(retry) ? Number(retry) : null;
+  return new ApiError(
+    message,
+    response.status,
+    code,
+    seconds !== null && Number.isSafeInteger(seconds) ? seconds : null,
+  );
 }
 
 export function userFacingApiError(error: unknown): string {
@@ -331,7 +348,9 @@ export function userFacingApiError(error: unknown): string {
     return "This PDF has too little extractable text. Choose a searchable, text-based PDF; OCR is not supported.";
   }
   if (error.status === 429) {
-    return "The request limit was reached. Wait a few minutes, then try again.";
+    return error.retryAfterSeconds !== null
+      ? `The request limit was reached. Try again in ${error.retryAfterSeconds} seconds.`
+      : "The request limit was reached. Wait a few minutes, then try again.";
   }
   if (error.status === 404) {
     return "The requested job or paper is not available in this browser session. Check the selection and try again.";

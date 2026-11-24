@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     api_host: str = "127.0.0.1"
     api_port: int = Field(default=8000, ge=1, le=65535)
     database_url: SecretStr
+    privacy_hash_key: SecretStr = SecretStr("")
     cors_origins: str = "http://localhost:3000"
     embedding_provider: Literal["local", "api"]
     embedding_model: str = Field(min_length=1)
@@ -49,6 +50,7 @@ class Settings(BaseSettings):
     chunk_overlap_tokens: int = Field(default=100, ge=0, le=7999)
     rate_limit_chat_per_minute: int = Field(default=5, ge=1)
     rate_limit_research_per_10min: int = Field(default=2, ge=1)
+    rate_limit_upload_per_hour: int = Field(default=3, ge=1)
     max_agent_iterations: int = Field(default=4, ge=1, le=4)
     max_tool_calls: int = Field(default=6, ge=1, le=6)
     llm_timeout_seconds: int = Field(default=90, gt=0, le=180)
@@ -92,6 +94,10 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def provider_configuration(self) -> "Settings":
+        if self.app_env == "production" and len(self.privacy_hash_key.get_secret_value()) < 32:
+            raise ValueError(
+                "production requires a persistent PRIVACY_HASH_KEY of at least32 characters"
+            )
         if not self.chunk_overlap_tokens < self.chunk_min_tokens <= self.chunk_max_tokens:
             raise ValueError("chunk budgets require overlap < minimum <= maximum")
         if self.embedding_provider == "api" and not self.embedding_api_key.get_secret_value():

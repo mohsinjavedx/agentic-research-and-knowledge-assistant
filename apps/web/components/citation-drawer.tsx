@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { Check, Copy, FileText, Quotes, X } from "@phosphor-icons/react";
+import { Check, Copy, FileText, Quote, X } from "lucide-react";
 import { sampleDocumentLabel } from "@/lib/samples";
 import { useSourceLibrary } from "@/components/source-library";
 import type { AnswerEvidence, ResearchCitation } from "@/lib/api";
@@ -9,10 +9,12 @@ import type { AnswerEvidence, ResearchCitation } from "@/lib/api";
 export function CitationBadge({
   citation,
   disabled = false,
+  referenceNumber,
   onOpen,
 }: {
   citation: ResearchCitation;
   disabled?: boolean;
+  referenceNumber?: number;
   onOpen: (citation: ResearchCitation, trigger: HTMLButtonElement) => void;
 }) {
   const { documents } = useSourceLibrary();
@@ -22,19 +24,26 @@ export function CitationBadge({
     : (source?.shortTitle ?? `Source ${citation.document_id.slice(0, 8)}`);
   return (
     <button
-      className="citation-badge"
+      className={`citation-badge${referenceNumber ? " is-inline" : ""}`}
       type="button"
       disabled={disabled}
       aria-label={`Open ${source?.shortTitle ?? label}, page ${citation.page_number}`}
+      title={`${source?.title ?? label}\nPage ${citation.page_number}\n${citation.quote}`}
       onClick={(event) => onOpen(citation, event.currentTarget)}
     >
-      <FileText size={13} />
-      {label}, p. {citation.page_number}
+      {referenceNumber ? (
+        `[${referenceNumber}]`
+      ) : (
+        <>
+          <FileText size={13} />
+          {label}, p. {citation.page_number}
+        </>
+      )}
     </button>
   );
 }
 
-function SourceText({
+export function SourceText({
   evidence,
   citation,
 }: {
@@ -86,7 +95,17 @@ export function CitationDrawer({
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     element?.showModal();
-    element?.querySelector<HTMLButtonElement>("button")?.focus();
+    const passage = element?.querySelector<HTMLElement>(".citation-source-text");
+    const highlight = passage?.querySelector("mark");
+    if (passage && highlight) {
+      passage.scrollTop +=
+        highlight.getBoundingClientRect().top - passage.getBoundingClientRect().top - 24;
+    }
+    element?.querySelector<HTMLButtonElement>("button")?.focus({ preventScroll: true });
+    if (element && highlight) {
+      element.scrollTop +=
+        highlight.getBoundingClientRect().top - element.getBoundingClientRect().top - 120;
+    }
     return () => {
       element?.close();
       document.body.style.overflow = overflow;
@@ -147,7 +166,7 @@ export function CitationDrawer({
       <div className="drawer-heading">
         <div>
           <span className="context-label">
-            <Quotes size={16} />
+            <Quote size={16} />
             Behind the answer
           </span>
           <h2 id="citation-drawer-title">Source details</h2>
@@ -164,7 +183,7 @@ export function CitationDrawer({
       </div>
       <div className="drawer-paper">
         <span className="paper-icon paper-color-0">
-          <FileText size={26} weight="duotone" />
+          <FileText size={26} />
         </span>
         <div>
           <strong>{paper?.title ?? `Source ${citation.document_id.slice(0, 8)}`}</strong>

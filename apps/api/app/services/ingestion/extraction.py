@@ -1,5 +1,6 @@
 """Page-preserving Markdown extraction for structurally validated PDFs."""
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from importlib.metadata import version
 from typing import Any, cast
@@ -92,7 +93,9 @@ class PDFMarkdownExtractor:
                     text=pymupdf.PDF_REDACT_TEXT_NONE,
                 )
 
-    def extract(self, pdf: ValidatedPDF) -> ExtractedDocument:
+    def extract(
+        self, pdf: ValidatedPDF, *, progress: Callable[[], None] | None = None
+    ) -> ExtractedDocument:
         """Read the UUID-staged file while the validation context is still open.
 
         Raw Markdown is preserved exactly, with one-based PDF page numbers.
@@ -108,16 +111,25 @@ class PDFMarkdownExtractor:
             ) as document:
                 if not document.is_pdf or document.page_count != pdf.page_count:
                     raise PDFExtractionError()
+                if progress:
+                    progress()
                 # Check the original text layer before Markdown, font scanning, or
                 # decorative-graphics handling. The lazy iterator permits early abort.
                 density = self.text_detector.check(
                     (document[index].get_text("text") for index in range(pdf.page_count)),
                     page_count=pdf.page_count,
                 )
+                if progress:
+                    progress()
                 self._remove_text_backgrounds(document)
+                if progress:
+                    progress()
                 # Scan font sizes once per document, not once for every requested page.
                 headers = pymupdf4llm.IdentifyHeaders(document)
+                if progress:
+                    progress()
                 pages = []
+                total_chars = 0
                 for index in range(pdf.page_count):
                     page_number = index + 1
                     result = pymupdf4llm.to_markdown(
@@ -139,6 +151,9 @@ class PDFMarkdownExtractor:
                     page = result[0]
                     if not isinstance(page, dict) or not isinstance(page.get("text"), str):
                         raise PDFExtractionError(page_number)
+                    total_chars += len(page["text"])
+                    if len(page["text"]) > 1_000_000 or total_chars > 2_000_000:
+                        raise PDFExtractionError(page_number)
                     if (
                         density.text_char_counts[index] >= self.text_detector.min_chars
                         and not page["text"].strip()
@@ -150,6 +165,8 @@ class PDFMarkdownExtractor:
                     if not isinstance(metadata, dict) or metadata.get("page") != page_number:
                         raise PDFExtractionError(page_number)
                     pages.append(ExtractedPage(page_number, page["text"]))
+                    if progress:
+                        progress()
         except PDFExtractionError:
             raise
         except Exception:

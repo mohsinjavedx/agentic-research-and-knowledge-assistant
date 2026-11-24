@@ -1,5 +1,12 @@
 import type { Page } from "@playwright/test";
 
+export async function selectIncludedExample(page: Page, name: string) {
+  const button = page.getByRole("button", { name, exact: true });
+  if (!(await button.isVisible()))
+    await page.getByText("Included-paper examples", { exact: true }).click();
+  await button.click();
+}
+
 export const ids = [
   "35d86749-bf13-55ac-8008-231937b43bab",
   "a0fba681-ef99-5f3b-aee3-91ea98269e33",

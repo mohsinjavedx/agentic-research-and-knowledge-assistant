@@ -47,10 +47,10 @@ def main() -> int:
                 # Keep parser imports out of the validation-only command.
                 from app.services.chunking.splitter import MarkdownChunker
                 from app.services.ingestion.detection import PDFTextDensityDetector
-                from app.services.ingestion.extraction import PDFMarkdownExtractor
                 from app.services.ingestion.pipeline import PDFIngestionService
+                from app.services.ingestion.sandbox import SandboxedPDFExtractor
 
-                extractor = PDFMarkdownExtractor(
+                extractor = SandboxedPDFExtractor(
                     text_detector=PDFTextDensityDetector(
                         min_text_chars_per_page=settings.min_text_chars_per_page,
                         max_low_text_page_percent=settings.max_low_text_page_percent,

@@ -22,7 +22,9 @@ def test_instructor_wrapped_timeout_is_classified_as_timeout(
         timeout_seconds=1,
     )
 
-    def raise_wrapped_timeout(messages: list[ChatCompletionMessageParam]) -> GroundedResponse:
+    def raise_wrapped_timeout(
+        messages: list[ChatCompletionMessageParam], usage: object
+    ) -> GroundedResponse:
         del messages
         timeout = APITimeoutError(
             request=httpx.Request("POST", "http://localhost:11434/v1/chat/completions")

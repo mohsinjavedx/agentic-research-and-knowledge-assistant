@@ -12,6 +12,8 @@ from uuid import uuid4
 from pypdf import PdfReader
 from pypdf.errors import PyPdfError
 
+from app.services.ingestion.control import check_cancelled
+
 MEBIBYTE = 1024 * 1024
 COPY_CHUNK_SIZE = 64 * 1024
 
@@ -108,6 +110,7 @@ class PDFValidator:
         with path.open("xb") as target:
             target.write(header)
             while part := source.read(min(COPY_CHUNK_SIZE, self.max_bytes - size + 1)):
+                check_cancelled()
                 size += len(part)
                 if size > self.max_bytes:
                     raise PDFValidationError(
@@ -118,6 +121,12 @@ class PDFValidator:
         return size, checksum.hexdigest()
 
     def _check_structure(self, path: Path) -> int:
+        from app.services.ingestion.sandbox import validate_structure
+
+        return validate_structure(path, self.max_pages)
+
+    def _check_structure_native(self, path: Path) -> int:
+        """Worker-only parser; the API calls the supervised wrapper above."""
         try:
             with path.open("rb") as handle:
                 reader = PdfReader(handle, strict=True)
